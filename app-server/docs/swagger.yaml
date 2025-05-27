@@ -1,0 +1,63 @@
+basePath: /api
+definitions:
+  gin.H:
+    additionalProperties: {}
+    type: object
+  models.User:
+    properties:
+      addr:
+        type: string
+      createTime:
+        type: string
+      gender:
+        type: string
+      headImg:
+        type: string
+      id:
+        type: integer
+      lat:
+        type: number
+      lon:
+        type: number
+      name:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+host: localhost:8081
+info:
+  contact: {}
+  description: HobbyHub 后端 API 文档
+  title: HobbyHub API
+  version: "1.0"
+paths:
+  /v1/user/info/{id}:
+    get:
+      description: 通过用户ID获取用户信息
+      parameters:
+      - description: 用户ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.User'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: 获取用户信息
+      tags:
+      - 用户相关接口
+swagger: "2.0"

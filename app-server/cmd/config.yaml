@@ -1,0 +1,11 @@
+server:
+    host: localhost
+    port: 8081
+database:
+    type: mysql
+    username: root
+    password: "123456"
+    host: localhost
+    port: 3306
+    database: iteam01
+    charset: utf8mb4
