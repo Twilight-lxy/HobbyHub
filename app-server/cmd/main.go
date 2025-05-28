@@ -24,12 +24,11 @@ func main() {
 	configPath := flag.String("config", "config.yaml", "配置文件路径")
 	flag.Parse()
 
-	cfg, err := config.LoadConfig(*configPath)
-	if err != nil {
+	if err := config.LoadConfig(*configPath); err != nil {
 		panic(fmt.Sprintf("加载配置失败: %v", err))
 	}
 	// 这里可以根据 cfg 初始化数据库等
-	config.InitDatabase(cfg)
+	config.InitDatabase(config.GetConfig())
 
 	r := gin.Default()
 
@@ -38,10 +37,12 @@ func main() {
 	{
 		// User routes
 		apiV1.GET("/user/info/", api.GetUserInfo)
+		apiV1.POST("/user/login/", api.UserLogin)
+		apiV1.POST("/user/register/", api.UserRegister)
 	}
 
 	// Swagger 相关路由
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
-	r.Run(fmt.Sprintf("%s:%d", cfg.Server.Host, cfg.Server.Port)) // 按配置文件端口启动
+	r.Run(fmt.Sprintf("%s:%d", config.GetConfig().Server.Host, config.GetConfig().Server.Port)) // 按配置文件端口启动
 }

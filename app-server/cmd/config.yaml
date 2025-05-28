@@ -9,3 +9,5 @@ database:
     port: 3306
     database: iteam01
     charset: utf8mb4
+authentication:
+    jwtsecret: "1234567890"

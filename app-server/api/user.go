@@ -7,6 +7,7 @@ import (
 
 	"hobbyhub-server/controllers"
 	"hobbyhub-server/models"
+	"hobbyhub-server/tools"
 
 	"github.com/gin-gonic/gin"
 )
@@ -52,14 +53,111 @@ func GetUserInfo(c *gin.Context) {
 			return
 		}
 	}
-
+	var tokenIsValid bool = false
 	if jwtToken != "" {
 		// 如果有 JWT Token，验证用户身份
-		log.Println("JWT Token is", jwtToken)
-	} else {
-		// 如果没有 JWT Token，返回部分用户信息
-		user.Password = "" // 不返回密码
-		c.SetCookie("jwt_token", "token_test", 3600, "/", "", false, true)
+		jwtUser, err := tools.ParseJWT(jwtToken)
+		if err == nil {
+			if jwtUser.ID == user.ID {
+				// 如果 JWT Token 验证通过，设置 tokenIsValid 为 true
+				tokenIsValid = true
+			}
+		} else {
+			log.Println("Invalid JWT token:", err)
+		}
 	}
+	if !tokenIsValid {
+		// 如果没有 JWT Token，返回部分用户信息
+		user.Username = ""
+		user.Addr = ""
+		user.CreateTime = ""
+		user.Lat = 0
+		user.Lon = 0
+	}
+	user.Password = "" // 不返回密码
 	c.JSON(http.StatusOK, user)
+}
+
+type UsernameAndPassword struct {
+	Username string `json:"username" binding:"required"`
+	Password string `json:"password" binding:"required"`
+}
+
+// @Summary 用户登录
+// @Description 用户名密码登录
+// @Tags 用户相关接口
+// @Accept json
+// @Produce json
+// @Param loginRequest body UsernameAndPassword true "登录请求体，包含用户名和密码"
+// @Success 200 {string} string "JWT Token"
+// @Failure 400 {object} models.ErrorResponse
+// @Failure 404 {object} models.ErrorResponse
+// @Router /v1/user/login [post]
+func UserLogin(c *gin.Context) {
+	var req UsernameAndPassword
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, &models.ErrorResponse{ErrorMessage: "username and password are required"})
+		return
+	}
+	dbUser, err := controllers.GetUserByUserName(req.Username)
+	if err != nil {
+		c.JSON(http.StatusNotFound, &models.ErrorResponse{ErrorMessage: "user not found or invalid credentials"})
+		return
+	}
+	if dbUser.Password != req.Password {
+		c.JSON(http.StatusNotFound, &models.ErrorResponse{ErrorMessage: "username or password is incorrect"})
+		return
+	}
+	// 设置 JWT Token
+	jwtToken, err := tools.GenerateJWT(dbUser)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, &models.ErrorResponse{ErrorMessage: "failed to generate JWT token"})
+		return
+	}
+	c.SetCookie("jwt_token", jwtToken, 3600*24*3, "/", "", false, true)
+
+	c.JSON(http.StatusOK, jwtToken)
+}
+
+// @Summary 用户注册
+// @Description 用户名密码注册
+// @Tags 用户相关接口
+// @Accept json
+// @Produce json
+// @Param loginRequest body UsernameAndPassword true "注册请求体，包含用户名和密码"
+// @Success 200 {string} string "JWT Token"
+// @Failure 400 {object} models.ErrorResponse
+// @Failure 404 {object} models.ErrorResponse
+// @Router /v1/user/register [post]
+func UserRegister(c *gin.Context) {
+	var req UsernameAndPassword
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, &models.ErrorResponse{ErrorMessage: "username and password are required"})
+		return
+	}
+	// 检查用户名是否已存在
+	existingUser, err := controllers.GetUserByUserName(req.Username)
+	if err == nil && existingUser != nil {
+		c.JSON(http.StatusBadRequest, &models.ErrorResponse{ErrorMessage: "username already exists"})
+		return
+	}
+	// 创建新用户
+	newUser := &models.User{
+		Username: req.Username,
+		Password: req.Password,
+	}
+	if err := controllers.AddUser(newUser); err != nil {
+		c.JSON(http.StatusInternalServerError, &models.ErrorResponse{ErrorMessage: "failed to create user"})
+		return
+	}
+	// 设置 JWT Token
+	jwtToken, err := tools.GenerateJWT(newUser)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, &models.ErrorResponse{ErrorMessage: "failed to generate JWT token"})
+		return
+	}
+	c.SetCookie("jwt_token", jwtToken, 3600*24*3, "/", "", false, true)
+
+	c.JSON(http.StatusOK, jwtToken)
+
 }

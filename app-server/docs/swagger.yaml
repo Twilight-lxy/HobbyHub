@@ -1,5 +1,15 @@
 basePath: /api
 definitions:
+  api.UsernameAndPassword:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
   models.ErrorResponse:
     properties:
       errorMessage:
@@ -63,6 +73,66 @@ paths:
           schema:
             $ref: '#/definitions/models.ErrorResponse'
       summary: 获取用户信息
+      tags:
+      - 用户相关接口
+  /v1/user/login:
+    post:
+      consumes:
+      - application/json
+      description: 用户名密码登录
+      parameters:
+      - description: 登录请求体，包含用户名和密码
+        in: body
+        name: loginRequest
+        required: true
+        schema:
+          $ref: '#/definitions/api.UsernameAndPassword'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: JWT Token
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: 用户登录
+      tags:
+      - 用户相关接口
+  /v1/user/register:
+    post:
+      consumes:
+      - application/json
+      description: 用户名密码注册
+      parameters:
+      - description: 注册请求体，包含用户名和密码
+        in: body
+        name: loginRequest
+        required: true
+        schema:
+          $ref: '#/definitions/api.UsernameAndPassword'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: JWT Token
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: 用户注册
       tags:
       - 用户相关接口
 swagger: "2.0"
