@@ -1,7 +1,9 @@
 basePath: /api
 definitions:
-  gin.H:
-    additionalProperties: {}
+  models.ErrorResponse:
+    properties:
+      errorMessage:
+        type: string
     type: object
   models.User:
     properties:
@@ -33,15 +35,18 @@ info:
   title: HobbyHub API
   version: "1.0"
 paths:
-  /v1/user/info/{id}:
+  /v1/user/info:
     get:
-      description: 通过用户ID获取用户信息
+      description: 通过用户ID获取用户信息，可选用户id或用户名查询，优先使用用户id
       parameters:
       - description: 用户ID
-        in: path
+        in: query
         name: id
-        required: true
         type: integer
+      - description: 用户名
+        in: query
+        name: username
+        type: string
       produces:
       - application/json
       responses:
@@ -52,11 +57,11 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/gin.H'
+            $ref: '#/definitions/models.ErrorResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/gin.H'
+            $ref: '#/definitions/models.ErrorResponse'
       summary: 获取用户信息
       tags:
       - 用户相关接口

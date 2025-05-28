@@ -37,7 +37,7 @@ func main() {
 	apiV1 := r.Group("/api/v1")
 	{
 		// User routes
-		apiV1.GET("/user/info/:id", api.GetUserInfo)
+		apiV1.GET("/user/info/", api.GetUserInfo)
 	}
 
 	// Swagger 相关路由

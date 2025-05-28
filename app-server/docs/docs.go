@@ -16,9 +16,9 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/v1/user/info/{id}": {
+        "/v1/user/info": {
             "get": {
-                "description": "通过用户ID获取用户信息",
+                "description": "通过用户ID获取用户信息，可选用户id或用户名查询，优先使用用户id",
                 "produces": [
                     "application/json"
                 ],
@@ -31,8 +31,13 @@ const docTemplate = `{
                         "type": "integer",
                         "description": "用户ID",
                         "name": "id",
-                        "in": "path",
-                        "required": true
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "用户名",
+                        "name": "username",
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -45,13 +50,13 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/gin.H"
+                            "$ref": "#/definitions/models.ErrorResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/gin.H"
+                            "$ref": "#/definitions/models.ErrorResponse"
                         }
                     }
                 }
@@ -59,9 +64,13 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "gin.H": {
+        "models.ErrorResponse": {
             "type": "object",
-            "additionalProperties": {}
+            "properties": {
+                "errorMessage": {
+                    "type": "string"
+                }
+            }
         },
         "models.User": {
             "type": "object",
