@@ -38,6 +38,12 @@ const docTemplate = `{
                         "description": "用户名",
                         "name": "username",
                         "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "JWT Token",
+                        "name": "Authorization",
+                        "in": "header"
                     }
                 ],
                 "responses": {
@@ -137,6 +143,59 @@ const docTemplate = `{
                         "description": "JWT Token",
                         "schema": {
                             "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/user/update": {
+            "put": {
+                "description": "更新用户信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "用户相关接口"
+                ],
+                "summary": "更新用户信息",
+                "parameters": [
+                    {
+                        "description": "用户数据，必须包含id",
+                        "name": "userInfo",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.User"
+                        }
+                    },
+                    {
+                        "type": "string",
+                        "description": "JWT Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "修改后的用户信息",
+                        "schema": {
+                            "$ref": "#/definitions/models.User"
                         }
                     },
                     "400": {

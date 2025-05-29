@@ -2,6 +2,7 @@ package tools
 
 import (
 	"hobbyhub-server/config"
+	"hobbyhub-server/controllers"
 	"hobbyhub-server/models"
 	"time"
 
@@ -10,9 +11,8 @@ import (
 
 func GenerateJWT(u *models.User) (string, error) {
 	claims := jwt.MapClaims{
-		"id":   u.ID,
-		"role": "user",
-		"exp":  time.Now().Add(time.Hour * 72).Unix(), // 72小时后过期
+		"id":  u.ID,
+		"exp": time.Now().Add(time.Hour * 72).Unix(), // 72小时后过期
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	return token.SignedString([]byte(config.GetConfig().Authentication.JwtSecret))
@@ -38,6 +38,11 @@ func ParseJWT(tokenString string) (*models.User, error) {
 
 	user := &models.User{
 		ID: int64(claims["id"].(float64)),
+	}
+
+	user, err = controllers.GetUserByUserId(user.ID)
+	if err != nil {
+		return nil, err
 	}
 
 	return user, nil

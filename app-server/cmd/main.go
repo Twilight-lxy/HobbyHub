@@ -39,6 +39,7 @@ func main() {
 		apiV1.GET("/user/info/", api.GetUserInfo)
 		apiV1.POST("/user/login/", api.UserLogin)
 		apiV1.POST("/user/register/", api.UserRegister)
+		apiV1.POST("/user/update/", api.UpdateUserInfo)
 	}
 
 	// Swagger 相关路由

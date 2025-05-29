@@ -49,9 +49,8 @@ func TestParseJWT_ExpiredToken(t *testing.T) {
 	defer restore()
 
 	claims := jwt.MapClaims{
-		"id":   456,
-		"role": "user",
-		"exp":  time.Now().Add(-time.Hour).Unix(), // 已过期
+		"id":  456,
+		"exp": time.Now().Add(-time.Hour).Unix(), // 已过期
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	tokenString, err := token.SignedString([]byte("testsecret"))
@@ -67,9 +66,8 @@ func TestParseJWT_InvalidSignature(t *testing.T) {
 	defer restore()
 
 	claims := jwt.MapClaims{
-		"id":   789,
-		"role": "user",
-		"exp":  time.Now().Add(time.Hour).Unix(),
+		"id":  789,
+		"exp": time.Now().Add(time.Hour).Unix(),
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	tokenString, err := token.SignedString([]byte("wrongsecret")) // 用错误密钥签名

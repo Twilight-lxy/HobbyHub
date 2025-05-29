@@ -57,6 +57,10 @@ paths:
         in: query
         name: username
         type: string
+      - description: JWT Token
+        in: header
+        name: Authorization
+        type: string
       produces:
       - application/json
       responses:
@@ -133,6 +137,41 @@ paths:
           schema:
             $ref: '#/definitions/models.ErrorResponse'
       summary: 用户注册
+      tags:
+      - 用户相关接口
+  /v1/user/update:
+    put:
+      consumes:
+      - application/json
+      description: 更新用户信息
+      parameters:
+      - description: 用户数据，必须包含id
+        in: body
+        name: userInfo
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      - description: JWT Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 修改后的用户信息
+          schema:
+            $ref: '#/definitions/models.User'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: 更新用户信息
       tags:
       - 用户相关接口
 swagger: "2.0"

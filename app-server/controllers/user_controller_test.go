@@ -113,7 +113,7 @@ func TestGetUserByUserName(t *testing.T) {
 	mock2, teardown2 := setupMockDB(t)
 	defer teardown2()
 
-	mock2.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `it_user` WHERE user_name = ? ORDER BY `it_user`.`id` LIMIT ?")).
+	mock2.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `it_user` WHERE username = ? ORDER BY `it_user`.`id` LIMIT ?")).
 		WithArgs(userName, 1).
 		WillReturnError(gorm.ErrRecordNotFound)
 

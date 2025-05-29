@@ -18,6 +18,7 @@ import (
 // @Produce json
 // @Param id query int false "用户ID"
 // @Param username query string false "用户名"
+// @Param Authorization header string false "JWT Token"
 // @Success 200 {object} models.User
 // @Failure 400 {object} models.ErrorResponse
 // @Failure 404 {object} models.ErrorResponse
@@ -25,11 +26,9 @@ import (
 func GetUserInfo(c *gin.Context) {
 	idStr := c.Query("id")
 	usernameStr := c.Query("username")
-	jwtToken, err := c.Cookie("jwt_token")
-	if err != nil {
-		jwtToken = ""
-	}
+	jwtToken := c.GetHeader("Authorization")
 	var user *models.User
+	var err error
 	if idStr == "" && usernameStr == "" {
 		c.JSON(http.StatusBadRequest, &models.ErrorResponse{ErrorMessage: "id or username parameter is required"})
 		return
@@ -114,8 +113,6 @@ func UserLogin(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, &models.ErrorResponse{ErrorMessage: "failed to generate JWT token"})
 		return
 	}
-	c.SetCookie("jwt_token", jwtToken, 3600*24*3, "/", "", false, true)
-
 	c.JSON(http.StatusOK, jwtToken)
 }
 
@@ -156,8 +153,40 @@ func UserRegister(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, &models.ErrorResponse{ErrorMessage: "failed to generate JWT token"})
 		return
 	}
-	c.SetCookie("jwt_token", jwtToken, 3600*24*3, "/", "", false, true)
-
 	c.JSON(http.StatusOK, jwtToken)
+}
 
+// @Summary 更新用户信息
+// @Description 更新用户信息
+// @Tags 用户相关接口
+// @Accept json
+// @Produce json
+// @Param userInfo body models.User true "用户数据，必须包含id"
+// @Param Authorization header string true "JWT Token"
+// @Success 200 {object} models.User "修改后的用户信息"
+// @Failure 400 {object} models.ErrorResponse
+// @Failure 404 {object} models.ErrorResponse
+// @Router /v1/user/update [put]
+func UpdateUserInfo(c *gin.Context) {
+	var user models.User
+	if err := c.ShouldBindJSON(&user); err != nil {
+		c.JSON(http.StatusBadRequest, &models.ErrorResponse{ErrorMessage: "invalid user data"})
+		return
+	}
+	jwtToken := c.GetHeader("Authorization")
+	if jwtToken == "" {
+		c.JSON(http.StatusBadRequest, &models.ErrorResponse{ErrorMessage: "jwt token is required"})
+		return
+	}
+	jwtUser, err := tools.ParseJWT(jwtToken)
+	if err != nil || jwtUser.ID != user.ID {
+		c.JSON(http.StatusUnauthorized, &models.ErrorResponse{ErrorMessage: "unauthorized"})
+		return
+	}
+	jwtUser.UpdateUserFields(user)
+	if err := controllers.UpdateUser(*jwtUser); err != nil {
+		c.JSON(http.StatusInternalServerError, &models.ErrorResponse{ErrorMessage: "failed to update user"})
+		return
+	}
+	c.JSON(http.StatusOK, user)
 }
