@@ -14,7 +14,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func setupMockDB(t *testing.T) (sqlmock.Sqlmock, func()) {
+func SetupMockDB(t *testing.T) (sqlmock.Sqlmock, func()) {
 	db, mock, err := sqlmock.New()
 	assert.NoError(t, err)
 	gdb, err := gorm.Open(mysql.New(mysql.Config{
@@ -31,7 +31,7 @@ func setupMockDB(t *testing.T) (sqlmock.Sqlmock, func()) {
 }
 
 func TestAddUser(t *testing.T) {
-	mock, teardown := setupMockDB(t)
+	mock, teardown := SetupMockDB(t)
 	defer teardown()
 
 	user := &models.User{Username: "testuser"}
@@ -44,7 +44,7 @@ func TestAddUser(t *testing.T) {
 	assert.NoError(t, err)
 	assert.NoError(t, mock.ExpectationsWereMet())
 
-	mock2, teardown2 := setupMockDB(t)
+	mock2, teardown2 := SetupMockDB(t)
 	defer teardown2()
 	mock2.ExpectBegin()
 	mock2.ExpectExec(regexp.QuoteMeta("INSERT INTO `it_user`")).
@@ -57,7 +57,7 @@ func TestAddUser(t *testing.T) {
 }
 
 func TestGetUserByUserId(t *testing.T) {
-	mock, teardown := setupMockDB(t)
+	mock, teardown := SetupMockDB(t)
 	defer teardown()
 
 	userId := int64(1)
@@ -76,7 +76,7 @@ func TestGetUserByUserId(t *testing.T) {
 	assert.NoError(t, mock.ExpectationsWereMet())
 
 	// Test not found
-	mock2, teardown2 := setupMockDB(t)
+	mock2, teardown2 := SetupMockDB(t)
 	defer teardown2()
 
 	mock2.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `it_user` WHERE id = ? ORDER BY `it_user`.`id` LIMIT ?")).
@@ -90,7 +90,7 @@ func TestGetUserByUserId(t *testing.T) {
 }
 
 func TestGetUserByUserName(t *testing.T) {
-	mock, teardown := setupMockDB(t)
+	mock, teardown := SetupMockDB(t)
 	defer teardown()
 
 	userName := "testuser"
@@ -110,7 +110,7 @@ func TestGetUserByUserName(t *testing.T) {
 	assert.NoError(t, mock.ExpectationsWereMet())
 
 	// Test not found
-	mock2, teardown2 := setupMockDB(t)
+	mock2, teardown2 := SetupMockDB(t)
 	defer teardown2()
 
 	mock2.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `it_user` WHERE username = ? ORDER BY `it_user`.`id` LIMIT ?")).
@@ -124,7 +124,7 @@ func TestGetUserByUserName(t *testing.T) {
 }
 
 func TestUpdateUser(t *testing.T) {
-	mock, teardown := setupMockDB(t)
+	mock, teardown := SetupMockDB(t)
 	defer teardown()
 
 	user := models.User{ID: 1, Username: "updateduser"}
@@ -139,7 +139,7 @@ func TestUpdateUser(t *testing.T) {
 	assert.NoError(t, mock.ExpectationsWereMet())
 
 	// Test update error
-	mock2, teardown2 := setupMockDB(t)
+	mock2, teardown2 := SetupMockDB(t)
 	defer teardown2()
 
 	mock2.ExpectBegin()
@@ -153,7 +153,7 @@ func TestUpdateUser(t *testing.T) {
 }
 
 func TestDeleteUserByUserId(t *testing.T) {
-	mock, teardown := setupMockDB(t)
+	mock, teardown := SetupMockDB(t)
 	defer teardown()
 
 	userId := int64(1)
@@ -169,7 +169,7 @@ func TestDeleteUserByUserId(t *testing.T) {
 	assert.NoError(t, mock.ExpectationsWereMet())
 
 	// Test delete error
-	mock2, teardown2 := setupMockDB(t)
+	mock2, teardown2 := SetupMockDB(t)
 	defer teardown2()
 
 	mock2.ExpectBegin()
