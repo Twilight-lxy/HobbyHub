@@ -4,10 +4,11 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+	"time"
 
 	"hobbyhub-server/controllers"
 	"hobbyhub-server/models"
-	"hobbyhub-server/tools"
+	utils "hobbyhub-server/utils"
 
 	"github.com/gin-gonic/gin"
 )
@@ -55,7 +56,7 @@ func GetUserInfo(c *gin.Context) {
 	var tokenIsValid bool = false
 	if jwtToken != "" {
 		// 如果有 JWT Token，验证用户身份
-		jwtUser, err := tools.ParseJWT(jwtToken)
+		jwtUser, err := utils.ParseJWT(jwtToken)
 		if err == nil {
 			if jwtUser.ID == user.ID {
 				// 如果 JWT Token 验证通过，设置 tokenIsValid 为 true
@@ -69,7 +70,7 @@ func GetUserInfo(c *gin.Context) {
 		// 如果没有 JWT Token，返回部分用户信息
 		user.Username = ""
 		user.Addr = ""
-		user.CreateTime = ""
+		user.CreateTime = time.Time{} // 不返回创建时间
 		user.Lat = 0
 		user.Lon = 0
 	}
@@ -108,7 +109,7 @@ func UserLogin(c *gin.Context) {
 		return
 	}
 	// 设置 JWT Token
-	jwtToken, err := tools.GenerateJWT(dbUser)
+	jwtToken, err := utils.GenerateJWT(dbUser)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, &models.ErrorResponse{ErrorMessage: "failed to generate JWT token"})
 		return
@@ -148,7 +149,7 @@ func UserRegister(c *gin.Context) {
 		return
 	}
 	// 设置 JWT Token
-	jwtToken, err := tools.GenerateJWT(newUser)
+	jwtToken, err := utils.GenerateJWT(newUser)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, &models.ErrorResponse{ErrorMessage: "failed to generate JWT token"})
 		return
@@ -178,7 +179,7 @@ func UpdateUserInfo(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, &models.ErrorResponse{ErrorMessage: "jwt token is required"})
 		return
 	}
-	jwtUser, err := tools.ParseJWT(jwtToken)
+	jwtUser, err := utils.ParseJWT(jwtToken)
 	if err != nil || jwtUser.ID != user.ID {
 		c.JSON(http.StatusUnauthorized, &models.ErrorResponse{ErrorMessage: "unauthorized"})
 		return

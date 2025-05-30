@@ -82,39 +82,48 @@ func TestGetFriendById(t *testing.T) {
 	assert.NoError(t, mock2.ExpectationsWereMet())
 }
 
-func TestGetAllFriendsIdByUserID(t *testing.T) {
+func TestGetAllFriendsByUserId(t *testing.T) {
 	mock, teardown := SetupMockDB(t)
 	defer teardown()
 
 	userId := int64(1)
-	expectedIds := []int64{1, 2, 3}
+	expectedFriends := []models.Friend{
+		{ID: 1, UserID: userId, FriendID: 10},
+		{ID: 2, UserID: userId, FriendID: 11},
+		{ID: 3, UserID: userId, FriendID: 12},
+	}
 
-	rows := sqlmock.NewRows([]string{"id"}).
-		AddRow(expectedIds[0]).
-		AddRow(expectedIds[1]).
-		AddRow(expectedIds[2])
+	rows := sqlmock.NewRows([]string{"id", "user_id", "friend_id"})
+	for _, f := range expectedFriends {
+		rows.AddRow(f.ID, f.UserID, f.FriendID)
+	}
 
-	// Test successful retrieval of all friend IDs
-	mock.ExpectQuery(regexp.QuoteMeta("SELECT `id` FROM `friends` WHERE user_id = ?")).
+	// 测试成功获取所有好友
+	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `friends` WHERE user_id = ?")).
 		WithArgs(userId).
 		WillReturnRows(rows)
 
-	friendIds, err := GetAllFriendsIdByUserId(userId)
+	friends, err := GetAllFriendsByUserId(userId)
 	assert.NoError(t, err)
-	assert.Equal(t, expectedIds, friendIds)
+	assert.Equal(t, len(expectedFriends), len(friends))
+	for i, f := range friends {
+		assert.Equal(t, expectedFriends[i].ID, f.ID)
+		assert.Equal(t, expectedFriends[i].UserID, f.UserID)
+		assert.Equal(t, expectedFriends[i].FriendID, f.FriendID)
+	}
 	assert.NoError(t, mock.ExpectationsWereMet())
 
-	// Test error case
+	// 测试查询错误情况
 	mock2, teardown2 := SetupMockDB(t)
 	defer teardown2()
 
-	mock2.ExpectQuery(regexp.QuoteMeta("SELECT `id` FROM `friends` WHERE user_id = ?")).
+	mock2.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `friends` WHERE user_id = ?")).
 		WithArgs(userId).
 		WillReturnError(errors.New("query error"))
 
-	friendIds, err = GetAllFriendsIdByUserId(userId)
-	assert.Nil(t, friendIds)
-	assert.Error(t, err)
+	friends, err = GetAllFriendsByUserId(userId)
+	assert.Nil(t, friends)
+	assert.EqualError(t, err, "query error")
 	assert.NoError(t, mock2.ExpectationsWereMet())
 }
 

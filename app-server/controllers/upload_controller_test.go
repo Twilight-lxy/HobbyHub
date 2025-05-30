@@ -4,6 +4,7 @@ import (
 	"errors"
 	"regexp"
 	"testing"
+	"time"
 
 	"hobbyhub-server/models"
 
@@ -47,13 +48,14 @@ func TestGetFileById(t *testing.T) {
 	defer teardown()
 
 	fileId := int64(1)
+	createTime, _ := time.Parse("2006-01-02 15:04:05", "2023-06-15 10:00:00")
 	expectedFile := &models.File{
 		ID:         fileId,
 		FileName:   "test.jpg",
 		FileType:   "image/jpeg",
 		FileSize:   1024,
 		FileHash:   "abc123",
-		CreateTime: "2023-06-15 10:00:00",
+		CreateTime: createTime,
 	}
 
 	rows := sqlmock.NewRows([]string{"id", "file_name", "file_type", "file_size", "file_hash", "create_time"}).
@@ -90,13 +92,14 @@ func TestGetFileByHash(t *testing.T) {
 	defer teardown()
 
 	fileHash := "abc123"
+	createTime, _ := time.Parse("2006-01-02 15:04:05", "2023-06-15 10:00:00")
 	expectedFile := &models.File{
 		ID:         1,
 		FileName:   "test.jpg",
 		FileType:   "image/jpeg",
 		FileSize:   1024,
 		FileHash:   fileHash,
-		CreateTime: "2023-06-15 10:00:00",
+		CreateTime: createTime,
 	}
 
 	rows := sqlmock.NewRows([]string{"id", "file_name", "file_type", "file_size", "file_hash", "create_time"}).

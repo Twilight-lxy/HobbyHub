@@ -16,6 +16,135 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/v1/chat/history": {
+            "get": {
+                "description": "根据两个用户的id获取聊天记录列表",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "聊天相关接口"
+                ],
+                "summary": "获取聊天记录",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "发送者用户ID",
+                        "name": "from_user_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "接收者用户ID",
+                        "name": "to_user_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "开始时间，格式为YYYY-MM-DD HH:MM:SS",
+                        "name": "starttime",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "结束时间，格式为YYYY-MM-DD HH:MM:SS",
+                        "name": "endtime",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "JWT Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Chat"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/chat/send": {
+            "post": {
+                "description": "发送聊天消息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "聊天相关接口"
+                ],
+                "summary": "发送聊天消息",
+                "parameters": [
+                    {
+                        "description": "聊天记录内容",
+                        "name": "chat",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/api.newChatRequest"
+                        }
+                    },
+                    {
+                        "type": "string",
+                        "description": "JWT Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Chat"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/v1/user/info": {
             "get": {
                 "description": "通过用户ID获取用户信息，可选用户id或用户名查询，优先使用用户id",
@@ -227,6 +356,49 @@ const docTemplate = `{
                 },
                 "username": {
                     "type": "string"
+                }
+            }
+        },
+        "api.newChatRequest": {
+            "type": "object",
+            "required": [
+                "content",
+                "user_id_to"
+            ],
+            "properties": {
+                "content": {
+                    "description": "聊天内容",
+                    "type": "string"
+                },
+                "user_id_to": {
+                    "description": "接收者用户ID",
+                    "type": "integer"
+                }
+            }
+        },
+        "models.Chat": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "type": "string"
+                },
+                "create_time": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "status_from": {
+                    "type": "integer"
+                },
+                "status_to": {
+                    "type": "integer"
+                },
+                "user_id_from": {
+                    "type": "integer"
+                },
+                "user_id_to": {
+                    "type": "integer"
                 }
             }
         },

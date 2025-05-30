@@ -2,11 +2,13 @@ package models
 
 import (
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 )
 
 func TestUpdateUserFields(t *testing.T) {
+	createTime, _ := time.Parse("2006-01-02 15:04:05", "2024-01-01 10:00:00")
 	origin := &User{
 		ID:         1,
 		Username:   "olduser",
@@ -15,7 +17,7 @@ func TestUpdateUserFields(t *testing.T) {
 		Gender:     "M",
 		Addr:       "Old Addr",
 		HeadImg:    "old.png",
-		CreateTime: "2024-01-01",
+		CreateTime: createTime,
 		Lat:        10.0,
 		Lon:        20.0,
 	}
@@ -36,8 +38,8 @@ func TestUpdateUserFields(t *testing.T) {
 	assert.Equal(t, "New Name", origin.Name)
 	assert.Equal(t, "M", origin.Gender) // 未更新
 	assert.Equal(t, "New Addr", origin.Addr)
-	assert.Equal(t, "old.png", origin.HeadImg)       // 未更新
-	assert.Equal(t, "2024-01-01", origin.CreateTime) // 未更新
+	assert.Equal(t, "old.png", origin.HeadImg)     // 未更新
+	assert.Equal(t, createTime, origin.CreateTime) // 未更新
 	assert.Equal(t, 30.0, origin.Lat)
 	assert.Equal(t, 20.0, origin.Lon) // 未更新
 }

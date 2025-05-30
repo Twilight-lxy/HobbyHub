@@ -88,39 +88,49 @@ func TestGetChatById(t *testing.T) {
 	assert.NoError(t, mock2.ExpectationsWereMet())
 }
 
-func TestGetAllChatIdByFromUserIDToUserID(t *testing.T) {
+func TestGetAllChatByFromUserIDToUserID(t *testing.T) {
 	mock, teardown := SetupMockDB(t)
 	defer teardown()
 
 	fromUserId := int64(1)
 	toUserId := int64(2)
-	expectedIds := []int64{1, 2, 3}
+	expectedChats := []models.Chat{
+		{ID: 1, UserIDFrom: fromUserId, UserIDTo: toUserId, Content: "Message 1"},
+		{ID: 2, UserIDFrom: fromUserId, UserIDTo: toUserId, Content: "Message 2"},
+		{ID: 3, UserIDFrom: fromUserId, UserIDTo: toUserId, Content: "Message 3"},
+	}
 
-	rows := sqlmock.NewRows([]string{"id"}).
-		AddRow(expectedIds[0]).
-		AddRow(expectedIds[1]).
-		AddRow(expectedIds[2])
+	rows := sqlmock.NewRows([]string{"id", "user_id_from", "user_id_to", "content"})
+	for _, chat := range expectedChats {
+		rows.AddRow(chat.ID, chat.UserIDFrom, chat.UserIDTo, chat.Content)
+	}
 
-	// 测试成功获取所有聊天ID
-	mock.ExpectQuery(regexp.QuoteMeta("SELECT `id` FROM `it_chat` WHERE user_id_from = ? AND user_id_to = ?")).
+	// 测试成功获取所有聊天记录
+	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `it_chat` WHERE from_user_id = ? AND to_user_id = ?")).
 		WithArgs(fromUserId, toUserId).
 		WillReturnRows(rows)
 
-	chatIds, err := GetAllChatIdByFromUserIDToUserID(fromUserId, toUserId)
+	chats, err := GetAllChatByFromUserIDToUserID(fromUserId, toUserId)
 	assert.NoError(t, err)
-	assert.Equal(t, expectedIds, chatIds)
+	assert.Equal(t, len(expectedChats), len(chats))
+	for i, chat := range chats {
+		assert.Equal(t, expectedChats[i].ID, chat.ID)
+		assert.Equal(t, expectedChats[i].UserIDFrom, chat.UserIDFrom)
+		assert.Equal(t, expectedChats[i].UserIDTo, chat.UserIDTo)
+		assert.Equal(t, expectedChats[i].Content, chat.Content)
+	}
 	assert.NoError(t, mock.ExpectationsWereMet())
 
-	// 测试获取聊天ID出错
+	// 测试获取聊天记录出错
 	mock2, teardown2 := SetupMockDB(t)
 	defer teardown2()
 
-	mock2.ExpectQuery(regexp.QuoteMeta("SELECT `id` FROM `it_chat` WHERE user_id_from = ? AND user_id_to = ?")).
+	mock2.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `it_chat` WHERE from_user_id = ? AND to_user_id = ?")).
 		WithArgs(fromUserId, toUserId).
 		WillReturnError(errors.New("query error"))
 
-	chatIds, err = GetAllChatIdByFromUserIDToUserID(fromUserId, toUserId)
-	assert.Nil(t, chatIds)
+	chats, err = GetAllChatByFromUserIDToUserID(fromUserId, toUserId)
+	assert.Nil(t, chats)
 	assert.EqualError(t, err, "query error")
 	assert.NoError(t, mock2.ExpectationsWereMet())
 }

@@ -10,6 +10,35 @@ definitions:
     - password
     - username
     type: object
+  api.newChatRequest:
+    properties:
+      content:
+        description: 聊天内容
+        type: string
+      user_id_to:
+        description: 接收者用户ID
+        type: integer
+    required:
+    - content
+    - user_id_to
+    type: object
+  models.Chat:
+    properties:
+      content:
+        type: string
+      create_time:
+        type: string
+      id:
+        type: integer
+      status_from:
+        type: integer
+      status_to:
+        type: integer
+      user_id_from:
+        type: integer
+      user_id_to:
+        type: integer
+    type: object
   models.ErrorResponse:
     properties:
       errorMessage:
@@ -45,6 +74,92 @@ info:
   title: HobbyHub API
   version: "1.0"
 paths:
+  /v1/chat/history:
+    get:
+      consumes:
+      - application/json
+      description: 根据两个用户的id获取聊天记录列表
+      parameters:
+      - description: 发送者用户ID
+        in: query
+        name: from_user_id
+        required: true
+        type: integer
+      - description: 接收者用户ID
+        in: query
+        name: to_user_id
+        required: true
+        type: integer
+      - description: 开始时间，格式为YYYY-MM-DD HH:MM:SS
+        in: query
+        name: starttime
+        type: string
+      - description: 结束时间，格式为YYYY-MM-DD HH:MM:SS
+        in: query
+        name: endtime
+        type: string
+      - description: JWT Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Chat'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: 获取聊天记录
+      tags:
+      - 聊天相关接口
+  /v1/chat/send:
+    post:
+      consumes:
+      - application/json
+      description: 发送聊天消息
+      parameters:
+      - description: 聊天记录内容
+        in: body
+        name: chat
+        required: true
+        schema:
+          $ref: '#/definitions/api.newChatRequest'
+      - description: JWT Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Chat'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: 发送聊天消息
+      tags:
+      - 聊天相关接口
   /v1/user/info:
     get:
       description: 通过用户ID获取用户信息，可选用户id或用户名查询，优先使用用户id

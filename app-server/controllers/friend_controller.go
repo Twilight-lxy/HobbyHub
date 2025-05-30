@@ -20,14 +20,12 @@ func GetFriendById(friendId int64) (*models.Friend, error) {
 	return &friend, nil
 }
 
-func GetAllFriendsIdByUserId(userId int64) ([]int64, error) {
-	var friendIds []int64
-	if err := config.DB.Model(&models.Friend{}).
-		Where("user_id = ?", userId).
-		Pluck("id", &friendIds).Error; err != nil {
+func GetAllFriendsByUserId(userId int64) ([]models.Friend, error) {
+	var friends []models.Friend
+	if err := config.DB.Where("user_id = ?", userId).Find(&friends).Error; err != nil {
 		return nil, err
 	}
-	return friendIds, nil
+	return friends, nil
 }
 func UpdateFriend(friend *models.Friend) error {
 	if err := config.DB.Save(friend).Error; err != nil {

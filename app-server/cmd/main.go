@@ -36,10 +36,19 @@ func main() {
 	apiV1 := r.Group("/api/v1")
 	{
 		// User routes
-		apiV1.GET("/user/info/", api.GetUserInfo)
-		apiV1.POST("/user/login/", api.UserLogin)
-		apiV1.POST("/user/register/", api.UserRegister)
-		apiV1.POST("/user/update/", api.UpdateUserInfo)
+		user := apiV1.Group("/user")
+		{
+			user.GET("/info/", api.GetUserInfo)
+			user.POST("/login/", api.UserLogin)
+			user.POST("/register/", api.UserRegister)
+			user.POST("/update/", api.UpdateUserInfo)
+		}
+		// Chat routes
+		chat := apiV1.Group("/chat")
+		{
+			chat.GET("/history", api.GetChatHistory) // 获取聊天记录
+			chat.POST("/send", api.SendChat)         // 发送聊天消息
+		}
 	}
 
 	// Swagger 相关路由
