@@ -23,7 +23,7 @@ func TestAddActivity(t *testing.T) {
 		Intro:      "这是一个测试活动",
 		Addr:       "测试地点",
 		HeadImg:    "test.jpg",
-		UserID:     1,
+		UserId:     1,
 		CreateTime: now,
 		UpdateTime: now,
 		StartTime:  now.Add(time.Hour),
@@ -64,12 +64,12 @@ func TestGetActivityById(t *testing.T) {
 	activityId := int64(1)
 	now := time.Now()
 	expectedActivity := &models.Activity{
-		ID:         activityId,
+		Id:         activityId,
 		Name:       "测试活动",
 		Intro:      "这是一个测试活动",
 		Addr:       "测试地点",
 		HeadImg:    "test.jpg",
-		UserID:     1,
+		UserId:     1,
 		CreateTime: now,
 		UpdateTime: now,
 		StartTime:  now.Add(time.Hour),
@@ -83,8 +83,8 @@ func TestGetActivityById(t *testing.T) {
 		"id", "name", "addr", "intro", "head_img", "user_id", "create_time",
 		"update_time", "start_time", "state", "if_delete", "lat", "lon",
 	}).AddRow(
-		expectedActivity.ID, expectedActivity.Name, expectedActivity.Addr,
-		expectedActivity.Intro, expectedActivity.HeadImg, expectedActivity.UserID,
+		expectedActivity.Id, expectedActivity.Name, expectedActivity.Addr,
+		expectedActivity.Intro, expectedActivity.HeadImg, expectedActivity.UserId,
 		expectedActivity.CreateTime, expectedActivity.UpdateTime, expectedActivity.StartTime,
 		expectedActivity.State, expectedActivity.IfDelete, expectedActivity.Lat, expectedActivity.Lon,
 	)
@@ -96,11 +96,11 @@ func TestGetActivityById(t *testing.T) {
 
 	activity, err := GetActivityById(activityId)
 	assert.NoError(t, err)
-	assert.Equal(t, expectedActivity.ID, activity.ID)
+	assert.Equal(t, expectedActivity.Id, activity.Id)
 	assert.Equal(t, expectedActivity.Name, activity.Name)
 	assert.Equal(t, expectedActivity.Intro, activity.Intro)
 	assert.Equal(t, expectedActivity.Addr, activity.Addr)
-	assert.Equal(t, expectedActivity.UserID, activity.UserID)
+	assert.Equal(t, expectedActivity.UserId, activity.UserId)
 	assert.NoError(t, mock.ExpectationsWereMet())
 
 	// 测试找不到活动
@@ -123,12 +123,12 @@ func TestUpdateActivity(t *testing.T) {
 
 	now := time.Now()
 	activity := &models.Activity{
-		ID:         1,
+		Id:         1,
 		Name:       "更新后的活动",
 		Intro:      "这是更新后的活动描述",
 		Addr:       "更新后的地点",
 		HeadImg:    "updated.jpg",
-		UserID:     1,
+		UserId:     1,
 		CreateTime: now.Add(-time.Hour),
 		UpdateTime: now,
 		StartTime:  now.Add(time.Hour * 3),
@@ -202,8 +202,8 @@ func TestAddActivityMember(t *testing.T) {
 	createTime, err := time.Parse("2006-01-02 15:04:05", "2025-05-30 10:00:00")
 	assert.NoError(t, err)
 	activityMember := &models.ActivityMember{
-		EventID:    1,
-		UserID:     2,
+		EventId:    1,
+		UserId:     2,
 		CreateTime: createTime,
 	}
 
@@ -231,7 +231,7 @@ func TestAddActivityMember(t *testing.T) {
 	assert.NoError(t, mock2.ExpectationsWereMet())
 }
 
-// TestGetActivityMembersByActivityId 测试根据活动ID获取成员列表
+// TestGetActivityMembersByActivityId 测试根据活动Id获取成员列表
 func TestGetActivityMembersByActivityId(t *testing.T) {
 	mock, teardown := SetupMockDB(t)
 	defer teardown()
@@ -242,14 +242,14 @@ func TestGetActivityMembersByActivityId(t *testing.T) {
 	createTime2, _ := time.Parse(layout, "2025-05-30 11:00:00")
 	createTime3, _ := time.Parse(layout, "2025-05-30 12:00:00")
 	expectedMembers := []models.ActivityMember{
-		{ID: 1, EventID: activityId, UserID: 101, CreateTime: createTime1},
-		{ID: 2, EventID: activityId, UserID: 102, CreateTime: createTime2},
-		{ID: 3, EventID: activityId, UserID: 103, CreateTime: createTime3},
+		{Id: 1, EventId: activityId, UserId: 101, CreateTime: createTime1},
+		{Id: 2, EventId: activityId, UserId: 102, CreateTime: createTime2},
+		{Id: 3, EventId: activityId, UserId: 103, CreateTime: createTime3},
 	}
 
 	rows := sqlmock.NewRows([]string{"id", "event_id", "user_id", "create_time"})
 	for _, m := range expectedMembers {
-		rows.AddRow(m.ID, m.EventID, m.UserID, m.CreateTime)
+		rows.AddRow(m.Id, m.EventId, m.UserId, m.CreateTime)
 	}
 
 	// 测试成功获取活动成员
@@ -261,9 +261,9 @@ func TestGetActivityMembersByActivityId(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, len(expectedMembers), len(members))
 	for i, m := range members {
-		assert.Equal(t, expectedMembers[i].ID, m.ID)
-		assert.Equal(t, expectedMembers[i].EventID, m.EventID)
-		assert.Equal(t, expectedMembers[i].UserID, m.UserID)
+		assert.Equal(t, expectedMembers[i].Id, m.Id)
+		assert.Equal(t, expectedMembers[i].EventId, m.EventId)
+		assert.Equal(t, expectedMembers[i].UserId, m.UserId)
 	}
 	assert.NoError(t, mock.ExpectationsWereMet())
 
@@ -281,7 +281,7 @@ func TestGetActivityMembersByActivityId(t *testing.T) {
 	assert.NoError(t, mock2.ExpectationsWereMet())
 }
 
-// TestGetActivityMembersByUserId 测试根据用户ID获取活动成员列表
+// TestGetActivityMembersByUserId 测试根据用户Id获取活动成员列表
 func TestGetActivityMembersByUserId(t *testing.T) {
 	mock, teardown := SetupMockDB(t)
 	defer teardown()
@@ -292,14 +292,14 @@ func TestGetActivityMembersByUserId(t *testing.T) {
 	createTime2, _ := time.Parse(layout, "2025-05-30 11:00:00")
 	createTime3, _ := time.Parse(layout, "2025-05-30 12:00:00")
 	expectedMembers := []models.ActivityMember{
-		{ID: 1, EventID: 101, UserID: userId, CreateTime: createTime1},
-		{ID: 2, EventID: 102, UserID: userId, CreateTime: createTime2},
-		{ID: 3, EventID: 103, UserID: userId, CreateTime: createTime3},
+		{Id: 1, EventId: 101, UserId: userId, CreateTime: createTime1},
+		{Id: 2, EventId: 102, UserId: userId, CreateTime: createTime2},
+		{Id: 3, EventId: 103, UserId: userId, CreateTime: createTime3},
 	}
 
 	rows := sqlmock.NewRows([]string{"id", "event_id", "user_id", "create_time"})
 	for _, m := range expectedMembers {
-		rows.AddRow(m.ID, m.EventID, m.UserID, m.CreateTime)
+		rows.AddRow(m.Id, m.EventId, m.UserId, m.CreateTime)
 	}
 
 	// 测试成功获取用户参与的活动
@@ -311,9 +311,9 @@ func TestGetActivityMembersByUserId(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, len(expectedMembers), len(members))
 	for i, m := range members {
-		assert.Equal(t, expectedMembers[i].ID, m.ID)
-		assert.Equal(t, expectedMembers[i].EventID, m.EventID)
-		assert.Equal(t, expectedMembers[i].UserID, m.UserID)
+		assert.Equal(t, expectedMembers[i].Id, m.Id)
+		assert.Equal(t, expectedMembers[i].EventId, m.EventId)
+		assert.Equal(t, expectedMembers[i].UserId, m.UserId)
 	}
 	assert.NoError(t, mock.ExpectationsWereMet())
 
@@ -341,9 +341,9 @@ func TestUpdateActivityMember(t *testing.T) {
 	assert.NoError(t, err)
 
 	activityMember := &models.ActivityMember{
-		ID:         1,
-		EventID:    1,
-		UserID:     2,
+		Id:         1,
+		EventId:    1,
+		UserId:     2,
 		CreateTime: createTime,
 	}
 
@@ -412,8 +412,8 @@ func TestAddActivityComment(t *testing.T) {
 
 	now := time.Now()
 	activityComment := &models.ActivityComment{
-		EventID:    1,
-		UserID:     2,
+		EventId:    1,
+		UserId:     2,
 		Content:    "这是一条测试评论",
 		CreateTime: now,
 	}
@@ -442,7 +442,7 @@ func TestAddActivityComment(t *testing.T) {
 	assert.NoError(t, mock2.ExpectationsWereMet())
 }
 
-// TestGetActivityCommentsByActivityId 测试通过活动ID获取评论
+// TestGetActivityCommentsByActivityId 测试通过活动Id获取评论
 func TestGetActivityCommentsByActivityId(t *testing.T) {
 	mock, teardown := SetupMockDB(t)
 	defer teardown()
@@ -450,14 +450,14 @@ func TestGetActivityCommentsByActivityId(t *testing.T) {
 	activityId := int64(1)
 	now := time.Now()
 	expectedComments := []models.ActivityComment{
-		{ID: 1, EventID: activityId, UserID: 101, Content: "评论1", CreateTime: now.Add(-time.Hour * 2)},
-		{ID: 2, EventID: activityId, UserID: 102, Content: "评论2", CreateTime: now.Add(-time.Hour)},
-		{ID: 3, EventID: activityId, UserID: 103, Content: "评论3", CreateTime: now},
+		{Id: 1, EventId: activityId, UserId: 101, Content: "评论1", CreateTime: now.Add(-time.Hour * 2)},
+		{Id: 2, EventId: activityId, UserId: 102, Content: "评论2", CreateTime: now.Add(-time.Hour)},
+		{Id: 3, EventId: activityId, UserId: 103, Content: "评论3", CreateTime: now},
 	}
 
 	rows := sqlmock.NewRows([]string{"id", "event_id", "user_id", "content", "create_time"})
 	for _, c := range expectedComments {
-		rows.AddRow(c.ID, c.EventID, c.UserID, c.Content, c.CreateTime)
+		rows.AddRow(c.Id, c.EventId, c.UserId, c.Content, c.CreateTime)
 	}
 
 	// 测试成功获取评论
@@ -469,9 +469,9 @@ func TestGetActivityCommentsByActivityId(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, len(expectedComments), len(comments))
 	for i, c := range comments {
-		assert.Equal(t, expectedComments[i].ID, c.ID)
-		assert.Equal(t, expectedComments[i].EventID, c.EventID)
-		assert.Equal(t, expectedComments[i].UserID, c.UserID)
+		assert.Equal(t, expectedComments[i].Id, c.Id)
+		assert.Equal(t, expectedComments[i].EventId, c.EventId)
+		assert.Equal(t, expectedComments[i].UserId, c.UserId)
 		assert.Equal(t, expectedComments[i].Content, c.Content)
 	}
 	assert.NoError(t, mock.ExpectationsWereMet())
@@ -490,7 +490,7 @@ func TestGetActivityCommentsByActivityId(t *testing.T) {
 	assert.NoError(t, mock2.ExpectationsWereMet())
 }
 
-// TestGetActivityCommentsByUserId 测试通过用户ID获取评论
+// TestGetActivityCommentsByUserId 测试通过用户Id获取评论
 func TestGetActivityCommentsByUserId(t *testing.T) {
 	mock, teardown := SetupMockDB(t)
 	defer teardown()
@@ -498,14 +498,14 @@ func TestGetActivityCommentsByUserId(t *testing.T) {
 	userId := int64(1)
 	now := time.Now()
 	expectedComments := []models.ActivityComment{
-		{ID: 1, EventID: 101, UserID: userId, Content: "评论1", CreateTime: now.Add(-time.Hour * 2)},
-		{ID: 2, EventID: 102, UserID: userId, Content: "评论2", CreateTime: now.Add(-time.Hour)},
-		{ID: 3, EventID: 103, UserID: userId, Content: "评论3", CreateTime: now},
+		{Id: 1, EventId: 101, UserId: userId, Content: "评论1", CreateTime: now.Add(-time.Hour * 2)},
+		{Id: 2, EventId: 102, UserId: userId, Content: "评论2", CreateTime: now.Add(-time.Hour)},
+		{Id: 3, EventId: 103, UserId: userId, Content: "评论3", CreateTime: now},
 	}
 
 	rows := sqlmock.NewRows([]string{"id", "event_id", "user_id", "content", "create_time"})
 	for _, c := range expectedComments {
-		rows.AddRow(c.ID, c.EventID, c.UserID, c.Content, c.CreateTime)
+		rows.AddRow(c.Id, c.EventId, c.UserId, c.Content, c.CreateTime)
 	}
 
 	// 测试成功获取评论
@@ -517,9 +517,9 @@ func TestGetActivityCommentsByUserId(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, len(expectedComments), len(comments))
 	for i, c := range comments {
-		assert.Equal(t, expectedComments[i].ID, c.ID)
-		assert.Equal(t, expectedComments[i].EventID, c.EventID)
-		assert.Equal(t, expectedComments[i].UserID, c.UserID)
+		assert.Equal(t, expectedComments[i].Id, c.Id)
+		assert.Equal(t, expectedComments[i].EventId, c.EventId)
+		assert.Equal(t, expectedComments[i].UserId, c.UserId)
 		assert.Equal(t, expectedComments[i].Content, c.Content)
 	}
 	assert.NoError(t, mock.ExpectationsWereMet())
@@ -538,7 +538,7 @@ func TestGetActivityCommentsByUserId(t *testing.T) {
 	assert.NoError(t, mock2.ExpectationsWereMet())
 }
 
-// TestGetActivityCommentsByActivityIdAndUserId 测试通过活动ID和用户ID获取评论
+// TestGetActivityCommentsByActivityIdAndUserId 测试通过活动Id和用户Id获取评论
 func TestGetActivityCommentsByActivityIdAndUserId(t *testing.T) {
 	mock, teardown := SetupMockDB(t)
 	defer teardown()
@@ -547,13 +547,13 @@ func TestGetActivityCommentsByActivityIdAndUserId(t *testing.T) {
 	userId := int64(2)
 	now := time.Now()
 	expectedComments := []models.ActivityComment{
-		{ID: 1, EventID: activityId, UserID: userId, Content: "评论1", CreateTime: now.Add(-time.Hour)},
-		{ID: 2, EventID: activityId, UserID: userId, Content: "评论2", CreateTime: now},
+		{Id: 1, EventId: activityId, UserId: userId, Content: "评论1", CreateTime: now.Add(-time.Hour)},
+		{Id: 2, EventId: activityId, UserId: userId, Content: "评论2", CreateTime: now},
 	}
 
 	rows := sqlmock.NewRows([]string{"id", "event_id", "user_id", "content", "create_time"})
 	for _, c := range expectedComments {
-		rows.AddRow(c.ID, c.EventID, c.UserID, c.Content, c.CreateTime)
+		rows.AddRow(c.Id, c.EventId, c.UserId, c.Content, c.CreateTime)
 	}
 
 	// 测试成功获取评论
@@ -565,9 +565,9 @@ func TestGetActivityCommentsByActivityIdAndUserId(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, len(expectedComments), len(comments))
 	for i, c := range comments {
-		assert.Equal(t, expectedComments[i].ID, c.ID)
-		assert.Equal(t, expectedComments[i].EventID, c.EventID)
-		assert.Equal(t, expectedComments[i].UserID, c.UserID)
+		assert.Equal(t, expectedComments[i].Id, c.Id)
+		assert.Equal(t, expectedComments[i].EventId, c.EventId)
+		assert.Equal(t, expectedComments[i].UserId, c.UserId)
 		assert.Equal(t, expectedComments[i].Content, c.Content)
 	}
 	assert.NoError(t, mock.ExpectationsWereMet())
@@ -593,9 +593,9 @@ func TestUpdateActivityComment(t *testing.T) {
 
 	now := time.Now()
 	activityComment := &models.ActivityComment{
-		ID:         1,
-		EventID:    1,
-		UserID:     2,
+		Id:         1,
+		EventId:    1,
+		UserId:     2,
 		Content:    "这是更新后的评论",
 		CreateTime: now,
 	}

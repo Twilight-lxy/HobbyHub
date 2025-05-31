@@ -58,7 +58,7 @@ func GetUserInfo(c *gin.Context) {
 		// 如果有 JWT Token，验证用户身份
 		jwtUser, err := utils.ParseJWT(jwtToken)
 		if err == nil {
-			if jwtUser.ID == user.ID {
+			if jwtUser.Id == user.Id {
 				// 如果 JWT Token 验证通过，设置 tokenIsValid 为 true
 				tokenIsValid = true
 			}
@@ -180,7 +180,7 @@ func UpdateUserInfo(c *gin.Context) {
 		return
 	}
 	jwtUser, err := utils.ParseJWT(jwtToken)
-	if err != nil || jwtUser.ID != user.ID {
+	if err != nil || jwtUser.Id != user.Id {
 		c.JSON(http.StatusUnauthorized, &models.ErrorResponse{ErrorMessage: "unauthorized"})
 		return
 	}

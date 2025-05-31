@@ -50,7 +50,7 @@ func TestGetFileById(t *testing.T) {
 	fileId := int64(1)
 	createTime, _ := time.Parse("2006-01-02 15:04:05", "2023-06-15 10:00:00")
 	expectedFile := &models.File{
-		ID:         fileId,
+		Id:         fileId,
 		FileName:   "test.jpg",
 		FileType:   "image/jpeg",
 		FileSize:   1024,
@@ -59,7 +59,7 @@ func TestGetFileById(t *testing.T) {
 	}
 
 	rows := sqlmock.NewRows([]string{"id", "file_name", "file_type", "file_size", "file_hash", "create_time"}).
-		AddRow(expectedFile.ID, expectedFile.FileName, expectedFile.FileType, expectedFile.FileSize, expectedFile.FileHash, expectedFile.CreateTime)
+		AddRow(expectedFile.Id, expectedFile.FileName, expectedFile.FileType, expectedFile.FileSize, expectedFile.FileHash, expectedFile.CreateTime)
 
 	// Test successful file retrieval
 	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `files` WHERE id = ? ORDER BY `files`.`id` LIMIT ?")).
@@ -68,7 +68,7 @@ func TestGetFileById(t *testing.T) {
 
 	file, err := GetFileById(fileId)
 	assert.NoError(t, err)
-	assert.Equal(t, expectedFile.ID, file.ID)
+	assert.Equal(t, expectedFile.Id, file.Id)
 	assert.Equal(t, expectedFile.FileName, file.FileName)
 	assert.Equal(t, expectedFile.FileHash, file.FileHash)
 	assert.NoError(t, mock.ExpectationsWereMet())
@@ -94,7 +94,7 @@ func TestGetFileByHash(t *testing.T) {
 	fileHash := "abc123"
 	createTime, _ := time.Parse("2006-01-02 15:04:05", "2023-06-15 10:00:00")
 	expectedFile := &models.File{
-		ID:         1,
+		Id:         1,
 		FileName:   "test.jpg",
 		FileType:   "image/jpeg",
 		FileSize:   1024,
@@ -103,7 +103,7 @@ func TestGetFileByHash(t *testing.T) {
 	}
 
 	rows := sqlmock.NewRows([]string{"id", "file_name", "file_type", "file_size", "file_hash", "create_time"}).
-		AddRow(expectedFile.ID, expectedFile.FileName, expectedFile.FileType, expectedFile.FileSize, expectedFile.FileHash, expectedFile.CreateTime)
+		AddRow(expectedFile.Id, expectedFile.FileName, expectedFile.FileType, expectedFile.FileSize, expectedFile.FileHash, expectedFile.CreateTime)
 
 	// Test successful file retrieval by hash
 	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `files` WHERE file_hash = ? ORDER BY `files`.`id` LIMIT ?")).
@@ -112,7 +112,7 @@ func TestGetFileByHash(t *testing.T) {
 
 	file, err := GetFileByHash(fileHash)
 	assert.NoError(t, err)
-	assert.Equal(t, expectedFile.ID, file.ID)
+	assert.Equal(t, expectedFile.Id, file.Id)
 	assert.Equal(t, expectedFile.FileHash, file.FileHash)
 	assert.NoError(t, mock.ExpectationsWereMet())
 
@@ -134,7 +134,7 @@ func TestUpdateFile(t *testing.T) {
 	mock, teardown := SetupMockDB(t)
 	defer teardown()
 
-	file := models.File{ID: 1, FileName: "updated.jpg", FileType: "image/jpeg", FileSize: 2048, FileHash: "xyz789"}
+	file := models.File{Id: 1, FileName: "updated.jpg", FileType: "image/jpeg", FileSize: 2048, FileHash: "xyz789"}
 
 	// Test successful file update
 	mock.ExpectBegin()

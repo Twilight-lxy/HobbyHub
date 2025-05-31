@@ -11,7 +11,7 @@ import (
 
 func GenerateJWT(u *models.User) (string, error) {
 	claims := jwt.MapClaims{
-		"id":  u.ID,
+		"id":  u.Id,
 		"exp": time.Now().Add(time.Hour * 72).Unix(), // 72小时后过期
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
@@ -37,10 +37,10 @@ func ParseJWT(tokenString string) (*models.User, error) {
 	}
 
 	user := &models.User{
-		ID: int64(claims["id"].(float64)),
+		Id: int64(claims["id"].(float64)),
 	}
 
-	user, err = controllers.GetUserByUserId(user.ID)
+	user, err = controllers.GetUserByUserId(user.Id)
 	if err != nil {
 		return nil, err
 	}

@@ -61,17 +61,17 @@ func TestGetUserByUserId(t *testing.T) {
 	defer teardown()
 
 	userId := int64(1)
-	expectedUser := &models.User{ID: userId, Username: "testuser"}
+	expectedUser := &models.User{Id: userId, Username: "testuser"}
 
 	rows := sqlmock.NewRows([]string{"id", "username"}).
-		AddRow(expectedUser.ID, expectedUser.Username)
+		AddRow(expectedUser.Id, expectedUser.Username)
 
 	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `it_user` WHERE id = ? ORDER BY `it_user`.`id` LIMIT ?")).
 		WithArgs(userId, 1).
 		WillReturnRows(rows)
 	user, err := GetUserByUserId(userId)
 	assert.NoError(t, err)
-	assert.Equal(t, expectedUser.ID, user.ID)
+	assert.Equal(t, expectedUser.Id, user.Id)
 	assert.Equal(t, expectedUser.Username, user.Username)
 	assert.NoError(t, mock.ExpectationsWereMet())
 
@@ -94,10 +94,10 @@ func TestGetUserByUserName(t *testing.T) {
 	defer teardown()
 
 	userName := "testuser"
-	expectedUser := &models.User{ID: 1, Username: userName}
+	expectedUser := &models.User{Id: 1, Username: userName}
 
 	rows := sqlmock.NewRows([]string{"id", "username"}).
-		AddRow(expectedUser.ID, expectedUser.Username)
+		AddRow(expectedUser.Id, expectedUser.Username)
 
 	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `it_user` WHERE username = ? ORDER BY `it_user`.`id` LIMIT ?")).
 		WithArgs(userName, 1).
@@ -105,7 +105,7 @@ func TestGetUserByUserName(t *testing.T) {
 
 	user, err := GetUserByUserName(userName)
 	assert.NoError(t, err)
-	assert.Equal(t, expectedUser.ID, user.ID)
+	assert.Equal(t, expectedUser.Id, user.Id)
 	assert.Equal(t, expectedUser.Username, user.Username)
 	assert.NoError(t, mock.ExpectationsWereMet())
 
@@ -127,7 +127,7 @@ func TestUpdateUser(t *testing.T) {
 	mock, teardown := SetupMockDB(t)
 	defer teardown()
 
-	user := models.User{ID: 1, Username: "updateduser"}
+	user := models.User{Id: 1, Username: "updateduser"}
 
 	mock.ExpectBegin()
 	mock.ExpectExec(regexp.QuoteMeta("UPDATE `it_user` SET")).

@@ -65,14 +65,14 @@ func TestGenerateJWTAndParseJWT(t *testing.T) {
 	dbRestore := setupDBMock()
 	defer dbRestore()
 
-	user := &models.User{ID: 123}
+	user := &models.User{Id: 123}
 	tokenString, err := GenerateJWT(user)
 	assert.NoError(t, err)          // 断言生成token无错误
 	assert.NotEmpty(t, tokenString) // 断言token字符串不为空
 
 	parsedUser, err := ParseJWT(tokenString)
 	assert.NoError(t, err)                  // 断言解析token无错误
-	assert.Equal(t, user.ID, parsedUser.ID) // 断言解析出的用户ID一致
+	assert.Equal(t, user.Id, parsedUser.Id) // 断言解析出的用户ID一致
 }
 
 // 测试解析非法token字符串

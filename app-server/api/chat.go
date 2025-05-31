@@ -28,26 +28,26 @@ import (
 // @Router /v1/chat/history [get]
 func GetChatHistory(c *gin.Context) {
 	// 解析参数
-	fromUserIDStr := c.Query("from_user_id")
-	toUserIDStr := c.Query("to_user_id")
+	fromUserIdStr := c.Query("from_user_id")
+	toUserIdStr := c.Query("to_user_id")
 	startTime := c.Query("starttime")
 	endTime := c.Query("endtime")
 	jwtToken := c.GetHeader("Authorization")
 
 	// 验证必需参数
-	if fromUserIDStr == "" || toUserIDStr == "" {
+	if fromUserIdStr == "" || toUserIdStr == "" {
 		c.JSON(http.StatusBadRequest, &models.ErrorResponse{ErrorMessage: "from_user_id and to_user_id are required"})
 		return
 	}
 
 	// 将用户ID从字符串转换为int64
-	fromUserID, err := strconv.ParseInt(fromUserIDStr, 10, 64)
+	fromUserId, err := strconv.ParseInt(fromUserIdStr, 10, 64)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, &models.ErrorResponse{ErrorMessage: "invalid from_user_id"})
 		return
 	}
 
-	toUserID, err := strconv.ParseInt(toUserIDStr, 10, 64)
+	toUserId, err := strconv.ParseInt(toUserIdStr, 10, 64)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, &models.ErrorResponse{ErrorMessage: "invalid to_user_id"})
 		return
@@ -60,20 +60,20 @@ func GetChatHistory(c *gin.Context) {
 	}
 
 	jwtUser, err := utils.ParseJWT(jwtToken)
-	if err != nil || (jwtUser.ID != fromUserID && jwtUser.ID != toUserID) {
+	if err != nil || (jwtUser.Id != fromUserId && jwtUser.Id != toUserId) {
 		c.JSON(http.StatusUnauthorized, &models.ErrorResponse{ErrorMessage: "unauthorized"})
 		return
 	}
 
-	// 获取从fromUserID到toUserID的聊天记录
-	chatsForward, err := controllers.GetAllChatByFromUserIDToUserID(fromUserID, toUserID)
+	// 获取从fromUserId到toUserId的聊天记录
+	chatsForward, err := controllers.GetAllChatByFromUserIdToUserId(fromUserId, toUserId)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, &models.ErrorResponse{ErrorMessage: "failed to get chat history"})
 		return
 	}
 
-	// 获取从toUserID到fromUserID的聊天记录
-	chatsBackward, err := controllers.GetAllChatByFromUserIDToUserID(toUserID, fromUserID)
+	// 获取从toUserId到fromUserId的聊天记录
+	chatsBackward, err := controllers.GetAllChatByFromUserIdToUserId(toUserId, fromUserId)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, &models.ErrorResponse{ErrorMessage: "failed to get chat history"})
 		return
@@ -123,7 +123,7 @@ func GetChatHistory(c *gin.Context) {
 }
 
 type newChatRequest struct {
-	UserIDTo int64  `json:"user_id_to" binding:"required"` // 接收者用户ID
+	UserIdTo int64  `json:"user_id_to" binding:"required"` // 接收者用户Id
 	Content  string `json:"content" binding:"required"`    // 聊天内容
 }
 
@@ -145,7 +145,7 @@ func SendChat(c *gin.Context) {
 		return
 	}
 
-	// 验证JWT并获取发送者ID
+	// 验证JWT并获取发送者Id
 	jwtToken := c.GetHeader("Authorization")
 	if jwtToken == "" {
 		c.JSON(http.StatusUnauthorized, &models.ErrorResponse{ErrorMessage: "jwt token is required"})
@@ -157,16 +157,31 @@ func SendChat(c *gin.Context) {
 		c.JSON(http.StatusUnauthorized, &models.ErrorResponse{ErrorMessage: "invalid jwt token"})
 		return
 	}
-	// 验证接收者用户ID是否是发送者用户的好友
-
+	// 验证接收者用户Id是否是发送者用户的好友
+	friends, err := controllers.GetAllFriendsByUserId(jwtUser.Id)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, &models.ErrorResponse{ErrorMessage: "failed to get friends list"})
+		return
+	}
+	isFriend := false
+	for _, friend := range friends {
+		if friend.Id == req.UserIdTo {
+			isFriend = true
+			break
+		}
+	}
+	if !isFriend {
+		c.JSON(http.StatusForbidden, &models.ErrorResponse{ErrorMessage: "you can only send messages to your friends"})
+		return
+	}
 	// 创建聊天记录
 	chat := &models.Chat{
-		UserIDFrom: jwtUser.ID,
-		UserIDTo:   req.UserIDTo,
+		UserIdFrom: jwtUser.Id,
+		UserIdTo:   req.UserIdTo,
 		Content:    req.Content,
 		CreateTime: time.Now(),
-		StatusFrom: 1, // 已发送状态
-		StatusTo:   0, // 未读状态
+		StatusFrom: 0,
+		StatusTo:   0,
 	}
 
 	if err := controllers.AddChat(chat); err != nil {

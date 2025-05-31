@@ -6,12 +6,12 @@ import (
 )
 
 type Activity struct {
-	ID         int64     `json:"id"`
+	Id         int64     `json:"id"`
 	Name       string    `json:"name"`
 	Addr       string    `json:"addr"`
 	Intro      string    `json:"intro"`
 	HeadImg    string    `json:"headImg"`
-	UserID     int64     `json:"userId"`
+	UserId     int64     `json:"userId"`
 	CreateTime time.Time `json:"createTime"`
 	UpdateTime time.Time `json:"updateTime"`
 	StartTime  time.Time `json:"startTime"`
@@ -52,9 +52,9 @@ func (u *Activity) UpdateActivityFields(newu Activity) {
 }
 
 type ActivityMember struct {
-	ID         int64     `json:"id"`
-	EventID    int64     `json:"eventId"`
-	UserID     int64     `json:"userId"`
+	Id         int64     `json:"id"`
+	EventId    int64     `json:"eventId"`
+	UserId     int64     `json:"userId"`
 	CreateTime time.Time `json:"createTime"`
 }
 
@@ -63,9 +63,9 @@ func (ActivityMember) TableName() string {
 }
 
 type ActivityComment struct {
-	ID         int64     `json:"id"`
-	EventID    int64     `json:"eventId"`
-	UserID     int64     `json:"userId"`
+	Id         int64     `json:"id"`
+	EventId    int64     `json:"eventId"`
+	UserId     int64     `json:"userId"`
 	Content    string    `json:"content"`
 	CreateTime time.Time `json:"createTime"`
 }

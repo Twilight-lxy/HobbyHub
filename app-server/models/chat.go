@@ -6,9 +6,9 @@ import (
 )
 
 type Chat struct {
-	ID         int64     `json:"id"`
-	UserIDFrom int64     `json:"user_id_from"`
-	UserIDTo   int64     `json:"user_id_to"`
+	Id         int64     `json:"id"`
+	UserIdFrom int64     `json:"user_id_from"`
+	UserIdTo   int64     `json:"user_id_to"`
 	Content    string    `json:"content"`
 	CreateTime time.Time `json:"create_time"`
 	StatusFrom int32     `json:"status_from"`

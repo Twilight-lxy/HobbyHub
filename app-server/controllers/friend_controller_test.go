@@ -16,7 +16,7 @@ func TestAddFriend(t *testing.T) {
 	mock, teardown := SetupMockDB(t)
 	defer teardown()
 
-	friend := &models.Friend{UserID: 1, FriendID: 2}
+	friend := &models.Friend{UserId: 1, FriendId: 2}
 
 	// Test successful friend creation
 	mock.ExpectBegin()
@@ -48,13 +48,13 @@ func TestGetFriendById(t *testing.T) {
 
 	friendId := int64(1)
 	expectedFriend := &models.Friend{
-		ID:       friendId,
-		UserID:   1,
-		FriendID: 2,
+		Id:       friendId,
+		UserId:   1,
+		FriendId: 2,
 	}
 
 	rows := sqlmock.NewRows([]string{"id", "user_id", "friend_id"}).
-		AddRow(expectedFriend.ID, expectedFriend.UserID, expectedFriend.FriendID)
+		AddRow(expectedFriend.Id, expectedFriend.UserId, expectedFriend.FriendId)
 
 	// Test successful friend retrieval
 	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `friends` WHERE id = ? ORDER BY `friends`.`id` LIMIT ?")).
@@ -63,9 +63,9 @@ func TestGetFriendById(t *testing.T) {
 
 	friend, err := GetFriendById(friendId)
 	assert.NoError(t, err)
-	assert.Equal(t, expectedFriend.ID, friend.ID)
-	assert.Equal(t, expectedFriend.UserID, friend.UserID)
-	assert.Equal(t, expectedFriend.FriendID, friend.FriendID)
+	assert.Equal(t, expectedFriend.Id, friend.Id)
+	assert.Equal(t, expectedFriend.UserId, friend.UserId)
+	assert.Equal(t, expectedFriend.FriendId, friend.FriendId)
 	assert.NoError(t, mock.ExpectationsWereMet())
 
 	// Test friend not found
@@ -88,14 +88,14 @@ func TestGetAllFriendsByUserId(t *testing.T) {
 
 	userId := int64(1)
 	expectedFriends := []models.Friend{
-		{ID: 1, UserID: userId, FriendID: 10},
-		{ID: 2, UserID: userId, FriendID: 11},
-		{ID: 3, UserID: userId, FriendID: 12},
+		{Id: 1, UserId: userId, FriendId: 10},
+		{Id: 2, UserId: userId, FriendId: 11},
+		{Id: 3, UserId: userId, FriendId: 12},
 	}
 
 	rows := sqlmock.NewRows([]string{"id", "user_id", "friend_id"})
 	for _, f := range expectedFriends {
-		rows.AddRow(f.ID, f.UserID, f.FriendID)
+		rows.AddRow(f.Id, f.UserId, f.FriendId)
 	}
 
 	// 测试成功获取所有好友
@@ -107,9 +107,9 @@ func TestGetAllFriendsByUserId(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, len(expectedFriends), len(friends))
 	for i, f := range friends {
-		assert.Equal(t, expectedFriends[i].ID, f.ID)
-		assert.Equal(t, expectedFriends[i].UserID, f.UserID)
-		assert.Equal(t, expectedFriends[i].FriendID, f.FriendID)
+		assert.Equal(t, expectedFriends[i].Id, f.Id)
+		assert.Equal(t, expectedFriends[i].UserId, f.UserId)
+		assert.Equal(t, expectedFriends[i].FriendId, f.FriendId)
 	}
 	assert.NoError(t, mock.ExpectationsWereMet())
 
@@ -131,7 +131,7 @@ func TestUpdateFriend(t *testing.T) {
 	mock, teardown := SetupMockDB(t)
 	defer teardown()
 
-	friend := models.Friend{ID: 1, UserID: 1, FriendID: 3}
+	friend := models.Friend{Id: 1, UserId: 1, FriendId: 3}
 
 	// Test successful friend update
 	mock.ExpectBegin()
@@ -189,20 +189,20 @@ func TestDeleteFriendById(t *testing.T) {
 	assert.NoError(t, mock2.ExpectationsWereMet())
 }
 
-func TestGetFriendByUserIDAndFriendID(t *testing.T) {
+func TestGetFriendByUserIdAndFriendId(t *testing.T) {
 	mock, teardown := SetupMockDB(t)
 	defer teardown()
 
 	userId := int64(1)
 	friendId := int64(2)
 	expectedFriend := &models.Friend{
-		ID:       1,
-		UserID:   userId,
-		FriendID: friendId,
+		Id:       1,
+		UserId:   userId,
+		FriendId: friendId,
 	}
 
 	rows := sqlmock.NewRows([]string{"id", "user_id", "friend_id"}).
-		AddRow(expectedFriend.ID, expectedFriend.UserID, expectedFriend.FriendID)
+		AddRow(expectedFriend.Id, expectedFriend.UserId, expectedFriend.FriendId)
 
 	// Test successful friend retrieval
 	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `friends` WHERE user_id = ? AND friend_id = ? ORDER BY `friends`.`id` LIMIT ?")).
@@ -211,9 +211,9 @@ func TestGetFriendByUserIDAndFriendID(t *testing.T) {
 
 	friend, err := GetFriendByUserIdAndFriendId(userId, friendId)
 	assert.NoError(t, err)
-	assert.Equal(t, expectedFriend.ID, friend.ID)
-	assert.Equal(t, expectedFriend.UserID, friend.UserID)
-	assert.Equal(t, expectedFriend.FriendID, friend.FriendID)
+	assert.Equal(t, expectedFriend.Id, friend.Id)
+	assert.Equal(t, expectedFriend.UserId, friend.UserId)
+	assert.Equal(t, expectedFriend.FriendId, friend.FriendId)
 	assert.NoError(t, mock.ExpectationsWereMet())
 
 	// Test friend not found

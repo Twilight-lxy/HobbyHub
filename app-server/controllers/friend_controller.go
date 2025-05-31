@@ -9,6 +9,15 @@ func AddFriend(friend *models.Friend) error {
 	if err := config.DB.Create(friend).Error; err != nil {
 		return err
 	}
+	_friend := models.Friend{
+		UserId:     friend.FriendId,
+		FriendId:   friend.UserId,
+		Status:     friend.Status,
+		CreateTime: friend.CreateTime,
+	}
+	if err := config.DB.Create(&_friend).Error; err != nil {
+		return err
+	}
 	return nil
 }
 

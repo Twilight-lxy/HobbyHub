@@ -10,7 +10,7 @@ import (
 func TestUpdateUserFields(t *testing.T) {
 	createTime, _ := time.Parse("2006-01-02 15:04:05", "2024-01-01 10:00:00")
 	origin := &User{
-		ID:         1,
+		Id:         1,
 		Username:   "olduser",
 		Password:   "oldpass",
 		Name:       "Old Name",
@@ -32,7 +32,7 @@ func TestUpdateUserFields(t *testing.T) {
 
 	origin.UpdateUserFields(update)
 
-	assert.Equal(t, int64(1), origin.ID) // ID不变
+	assert.Equal(t, int64(1), origin.Id) // ID不变
 	assert.Equal(t, "newuser", origin.Username)
 	assert.Equal(t, "oldpass", origin.Password) // 未更新
 	assert.Equal(t, "New Name", origin.Name)
