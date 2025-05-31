@@ -9,8 +9,12 @@ type Friend struct {
 	Id         int64     `json:"id"`
 	UserId     int64     `json:"user_id"`
 	FriendId   int64     `json:"friend_id"`
-	Status     int       `json:"apply"` // 0: Pending, 1: Accepted, 2: Rejected
+	Status     int       `json:"status"` // 0: Pending, 1: Accepted, 2: Rejected
 	CreateTime time.Time `json:"create_time"`
+}
+
+func (f *Friend) TableName() string {
+	return "it_friend"
 }
 
 func (u *Friend) UpdateFriendFields(newu Friend) {

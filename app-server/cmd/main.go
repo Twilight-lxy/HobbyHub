@@ -35,19 +35,28 @@ func main() {
 	// 设置路由前缀 /api/v1
 	apiV1 := r.Group("/api/v1")
 	{
+		//login
+		apiV1.POST("/login", api.UserLogin)
 		// User routes
 		user := apiV1.Group("/user")
 		{
-			user.GET("/info/", api.GetUserInfo)
-			user.POST("/login/", api.UserLogin)
-			user.POST("/register/", api.UserRegister)
-			user.POST("/update/", api.UpdateUserInfo)
+			user.GET("/", api.GetUserInfo)
+			user.PUT("/", api.UserRegister)
+			user.POST("/", api.UpdateUserInfo)
 		}
 		// Chat routes
 		chat := apiV1.Group("/chat")
 		{
-			chat.GET("/history", api.GetChatHistory) // 获取聊天记录
-			chat.POST("/send", api.SendChat)         // 发送聊天消息
+			chat.GET("/", api.GetChatHistory) // 获取聊天记录
+			chat.POST("/", api.SendChat)      // 发送聊天消息
+		}
+		// Friend routes
+		friend := apiV1.Group("/friend")
+		{
+			friend.GET("/", api.GetFriendList)      // 获取好友列表
+			friend.POST("/", api.SendFriendRequest) // 发送好友申请
+			friend.PUT("/", api.UpdateFriendStatus) // 更新好友申请状态
+			friend.DELETE("/:id", api.DeleteFriend) // 删除好友
 		}
 	}
 

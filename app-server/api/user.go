@@ -14,7 +14,7 @@ import (
 )
 
 // @Summary 获取用户信息
-// @Description 通过用户ID获取用户信息，可选用户id或用户名查询，优先使用用户id
+// @Description 通过用户ID获取用户信息；可选用户id或用户名查询，优先使用用户id；不填写id或用户名，使用jwt token获取
 // @Tags 用户相关接口
 // @Produce json
 // @Param id query int false "用户ID"
@@ -23,16 +23,31 @@ import (
 // @Success 200 {object} models.User
 // @Failure 400 {object} models.ErrorResponse
 // @Failure 404 {object} models.ErrorResponse
-// @Router /v1/user/info [get]
+// @Router /v1/user [get]
 func GetUserInfo(c *gin.Context) {
 	idStr := c.Query("id")
 	usernameStr := c.Query("username")
 	jwtToken := c.GetHeader("Authorization")
 	var user *models.User
 	var err error
-	if idStr == "" && usernameStr == "" {
-		c.JSON(http.StatusBadRequest, &models.ErrorResponse{ErrorMessage: "id or username parameter is required"})
+	var tokenIsValid bool = false
+	if idStr == "" && usernameStr == "" && jwtToken == "" {
+		c.JSON(http.StatusBadRequest, &models.ErrorResponse{ErrorMessage: "id or username or Authorization parameter is required"})
 		return
+	} else if idStr == "" && usernameStr == "" && jwtToken != "" {
+		// 如果没有提供 id 和 username，但有 JWT Token，则使用 JWT Token 获取用户信息
+		log.Println("GetUserInfo called with JWT token")
+		jwtUser, err := utils.ParseJWT(jwtToken)
+		if err != nil {
+			c.JSON(http.StatusUnauthorized, &models.ErrorResponse{ErrorMessage: "invalid jwt token"})
+			return
+		}
+		tokenIsValid = true
+		user, err = controllers.GetUserByUserId(jwtUser.Id)
+		if err != nil {
+			c.JSON(http.StatusNotFound, &models.ErrorResponse{ErrorMessage: "user not found"})
+			return
+		}
 	} else if idStr != "" {
 		log.Println("GetUserInfo called with id:", idStr)
 		id, err := strconv.ParseInt(idStr, 10, 64)
@@ -53,8 +68,8 @@ func GetUserInfo(c *gin.Context) {
 			return
 		}
 	}
-	var tokenIsValid bool = false
-	if jwtToken != "" {
+
+	if jwtToken != "" && !tokenIsValid {
 		// 如果有 JWT Token，验证用户身份
 		jwtUser, err := utils.ParseJWT(jwtToken)
 		if err == nil {
@@ -92,7 +107,7 @@ type UsernameAndPassword struct {
 // @Success 200 {string} string "JWT Token"
 // @Failure 400 {object} models.ErrorResponse
 // @Failure 404 {object} models.ErrorResponse
-// @Router /v1/user/login [post]
+// @Router /v1/login [post]
 func UserLogin(c *gin.Context) {
 	var req UsernameAndPassword
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -126,7 +141,7 @@ func UserLogin(c *gin.Context) {
 // @Success 200 {string} string "JWT Token"
 // @Failure 400 {object} models.ErrorResponse
 // @Failure 404 {object} models.ErrorResponse
-// @Router /v1/user/register [post]
+// @Router /v1/user [put]
 func UserRegister(c *gin.Context) {
 	var req UsernameAndPassword
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -141,8 +156,9 @@ func UserRegister(c *gin.Context) {
 	}
 	// 创建新用户
 	newUser := &models.User{
-		Username: req.Username,
-		Password: req.Password,
+		Username:   req.Username,
+		Password:   req.Password,
+		CreateTime: time.Now(),
 	}
 	if err := controllers.AddUser(newUser); err != nil {
 		c.JSON(http.StatusInternalServerError, &models.ErrorResponse{ErrorMessage: "failed to create user"})
@@ -167,7 +183,7 @@ func UserRegister(c *gin.Context) {
 // @Success 200 {object} models.User "修改后的用户信息"
 // @Failure 400 {object} models.ErrorResponse
 // @Failure 404 {object} models.ErrorResponse
-// @Router /v1/user/update [put]
+// @Router /v1/user [post]
 func UpdateUserInfo(c *gin.Context) {
 	var user models.User
 	if err := c.ShouldBindJSON(&user); err != nil {
@@ -180,7 +196,7 @@ func UpdateUserInfo(c *gin.Context) {
 		return
 	}
 	jwtUser, err := utils.ParseJWT(jwtToken)
-	if err != nil || jwtUser.Id != user.Id {
+	if err != nil {
 		c.JSON(http.StatusUnauthorized, &models.ErrorResponse{ErrorMessage: "unauthorized"})
 		return
 	}
@@ -189,5 +205,6 @@ func UpdateUserInfo(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, &models.ErrorResponse{ErrorMessage: "failed to update user"})
 		return
 	}
-	c.JSON(http.StatusOK, user)
+	jwtUser.Password = "" // 不返回密码
+	c.JSON(http.StatusOK, jwtUser)
 }

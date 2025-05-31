@@ -22,7 +22,7 @@ func GetChatById(chatId int64) (*models.Chat, error) {
 
 func GetAllChatByFromUserIdToUserId(fromUserId, toUserId int64) ([]models.Chat, error) {
 	var chats []models.Chat
-	if err := config.DB.Where("from_user_id = ? AND to_user_id = ?", fromUserId, toUserId).Find(&chats).Error; err != nil {
+	if err := config.DB.Where("user_id_from = ? AND user_id_to = ?", fromUserId, toUserId).Find(&chats).Error; err != nil {
 		return nil, err
 	}
 	return chats, nil

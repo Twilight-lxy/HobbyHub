@@ -16,7 +16,7 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/v1/chat/history": {
+        "/v1/chat": {
             "get": {
                 "description": "根据两个用户的id获取聊天记录列表",
                 "consumes": [
@@ -32,14 +32,7 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "integer",
-                        "description": "发送者用户ID",
-                        "name": "from_user_id",
-                        "in": "query",
-                        "required": true
-                    },
-                    {
-                        "type": "integer",
-                        "description": "接收者用户ID",
+                        "description": "对方用户ID",
                         "name": "to_user_id",
                         "in": "query",
                         "required": true
@@ -87,9 +80,7 @@ const docTemplate = `{
                         }
                     }
                 }
-            }
-        },
-        "/v1/chat/send": {
+            },
             "post": {
                 "description": "发送聊天消息",
                 "consumes": [
@@ -145,7 +136,241 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/user/info": {
+        "/v1/friend": {
+            "get": {
+                "description": "通过用户ID获取好友列表",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "好友相关接口"
+                ],
+                "summary": "获取好友列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "JWT Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.User"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "通过ID更新好友状态",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "好友相关接口"
+                ],
+                "summary": "更新好友状态",
+                "parameters": [
+                    {
+                        "description": "好友申请信息",
+                        "name": "friendRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/api.FriendRequest"
+                        }
+                    },
+                    {
+                        "type": "string",
+                        "description": "JWT Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Friend"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "通过用户ID发送好友申请",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "好友相关接口"
+                ],
+                "summary": "发送好友申请",
+                "parameters": [
+                    {
+                        "description": "好友申请信息",
+                        "name": "friendRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/api.FriendRequest"
+                        }
+                    },
+                    {
+                        "type": "string",
+                        "description": "JWT Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.SuccessResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/friend/:id": {
+            "delete": {
+                "description": "通过ID删除好友状态",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "好友相关接口"
+                ],
+                "summary": "删除好友",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "需要删除的Friend ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "JWT Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.SuccessResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/login": {
+            "post": {
+                "description": "用户名密码登录",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "用户相关接口"
+                ],
+                "summary": "用户登录",
+                "parameters": [
+                    {
+                        "description": "登录请求体，包含用户名和密码",
+                        "name": "loginRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/api.UsernameAndPassword"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "JWT Token",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/user": {
             "get": {
                 "description": "通过用户ID获取用户信息，可选用户id或用户名查询，优先使用用户id",
                 "produces": [
@@ -195,56 +420,8 @@ const docTemplate = `{
                         }
                     }
                 }
-            }
-        },
-        "/v1/user/login": {
-            "post": {
-                "description": "用户名密码登录",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "用户相关接口"
-                ],
-                "summary": "用户登录",
-                "parameters": [
-                    {
-                        "description": "登录请求体，包含用户名和密码",
-                        "name": "loginRequest",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/api.UsernameAndPassword"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "JWT Token",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/models.ErrorResponse"
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/models.ErrorResponse"
-                        }
-                    }
-                }
-            }
-        },
-        "/v1/user/register": {
-            "post": {
+            },
+            "put": {
                 "description": "用户名密码注册",
                 "consumes": [
                     "application/json"
@@ -287,10 +464,8 @@ const docTemplate = `{
                         }
                     }
                 }
-            }
-        },
-        "/v1/user/update": {
-            "put": {
+            },
+            "post": {
                 "description": "更新用户信息",
                 "consumes": [
                     "application/json"
@@ -344,6 +519,18 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "api.FriendRequest": {
+            "type": "object",
+            "required": [
+                "user_id"
+            ],
+            "properties": {
+                "user_id": {
+                    "description": "好友用户ID",
+                    "type": "integer"
+                }
+            }
+        },
         "api.UsernameAndPassword": {
             "type": "object",
             "required": [
@@ -371,7 +558,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "user_id_to": {
-                    "description": "接收者用户ID",
+                    "description": "接收者用户Id",
                     "type": "integer"
                 }
             }
@@ -406,6 +593,35 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "errorMessage": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.Friend": {
+            "type": "object",
+            "properties": {
+                "apply": {
+                    "description": "0: Pending, 1: Accepted, 2: Rejected",
+                    "type": "integer"
+                },
+                "create_time": {
+                    "type": "string"
+                },
+                "friend_id": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.SuccessResponse": {
+            "type": "object",
+            "properties": {
+                "successMessage": {
                     "type": "string"
                 }
             }

@@ -12,7 +12,7 @@ func AddFriend(friend *models.Friend) error {
 	_friend := models.Friend{
 		UserId:     friend.FriendId,
 		FriendId:   friend.UserId,
-		Status:     friend.Status,
+		Status:     3,
 		CreateTime: friend.CreateTime,
 	}
 	if err := config.DB.Create(&_friend).Error; err != nil {
@@ -42,16 +42,51 @@ func UpdateFriend(friend *models.Friend) error {
 	}
 	return nil
 }
+func UpdateFriendSynchronize(friend1 *models.Friend, friend2 *models.Friend) error {
+	// 开启事务
+	tx := config.DB.Begin()
+
+	// 事务操作出错时进行回滚的函数
+	defer func() {
+		if r := recover(); r != nil {
+			tx.Rollback()
+		}
+	}()
+
+	// 在事务中更新第一个好友关系
+	if err := tx.Save(friend1).Error; err != nil {
+		tx.Rollback() // 回滚事务
+		return err
+	}
+
+	// 在事务中更新第二个好友关系
+	if err := tx.Save(friend2).Error; err != nil {
+		tx.Rollback() // 回滚事务
+		return err
+	}
+
+	// 提交事务
+	return tx.Commit().Error
+}
+
 func DeleteFriendById(friendId int64) error {
 	if err := config.DB.Delete(&models.Friend{}, friendId).Error; err != nil {
 		return err
 	}
 	return nil
 }
-func GetFriendByUserIdAndFriendId(userId, friendId int64) (*models.Friend, error) {
-	var friend models.Friend
-	if err := config.DB.Where("user_id = ? AND friend_id = ?", userId, friendId).First(&friend).Error; err != nil {
-		return nil, err
+func GetFriendByUserIdAndFriendId(userId, friendId int64) (*models.Friend, *models.Friend, error) {
+	var friends1 *models.Friend
+	var friends2 *models.Friend
+
+	// First query
+	if err := config.DB.Where("user_id = ? AND friend_id = ?", userId, friendId).Find(&friends1).Error; err != nil {
+		return nil, nil, err
 	}
-	return &friend, nil
+
+	// Second query
+	if err := config.DB.Where("user_id = ? AND friend_id = ?", friendId, userId).Find(&friends2).Error; err != nil {
+		return nil, nil, err
+	}
+	return friends1, friends2, nil
 }

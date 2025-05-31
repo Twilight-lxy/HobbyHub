@@ -1,5 +1,13 @@
 basePath: /api
 definitions:
+  api.FriendRequest:
+    properties:
+      user_id:
+        description: 好友用户ID
+        type: integer
+    required:
+    - user_id
+    type: object
   api.UsernameAndPassword:
     properties:
       password:
@@ -16,7 +24,7 @@ definitions:
         description: 聊天内容
         type: string
       user_id_to:
-        description: 接收者用户ID
+        description: 接收者用户Id
         type: integer
     required:
     - content
@@ -42,6 +50,25 @@ definitions:
   models.ErrorResponse:
     properties:
       errorMessage:
+        type: string
+    type: object
+  models.Friend:
+    properties:
+      apply:
+        description: '0: Pending, 1: Accepted, 2: Rejected'
+        type: integer
+      create_time:
+        type: string
+      friend_id:
+        type: integer
+      id:
+        type: integer
+      user_id:
+        type: integer
+    type: object
+  models.SuccessResponse:
+    properties:
+      successMessage:
         type: string
     type: object
   models.User:
@@ -74,18 +101,13 @@ info:
   title: HobbyHub API
   version: "1.0"
 paths:
-  /v1/chat/history:
+  /v1/chat:
     get:
       consumes:
       - application/json
       description: 根据两个用户的id获取聊天记录列表
       parameters:
-      - description: 发送者用户ID
-        in: query
-        name: from_user_id
-        required: true
-        type: integer
-      - description: 接收者用户ID
+      - description: 对方用户ID
         in: query
         name: to_user_id
         required: true
@@ -123,7 +145,6 @@ paths:
       summary: 获取聊天记录
       tags:
       - 聊天相关接口
-  /v1/chat/send:
     post:
       consumes:
       - application/json
@@ -160,7 +181,162 @@ paths:
       summary: 发送聊天消息
       tags:
       - 聊天相关接口
-  /v1/user/info:
+  /v1/friend:
+    get:
+      description: 通过用户ID获取好友列表
+      parameters:
+      - description: JWT Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.User'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: 获取好友列表
+      tags:
+      - 好友相关接口
+    post:
+      description: 通过用户ID发送好友申请
+      parameters:
+      - description: 好友申请信息
+        in: body
+        name: friendRequest
+        required: true
+        schema:
+          $ref: '#/definitions/api.FriendRequest'
+      - description: JWT Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: 发送好友申请
+      tags:
+      - 好友相关接口
+    put:
+      description: 通过ID更新好友状态
+      parameters:
+      - description: 好友申请信息
+        in: body
+        name: friendRequest
+        required: true
+        schema:
+          $ref: '#/definitions/api.FriendRequest'
+      - description: JWT Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Friend'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: 更新好友状态
+      tags:
+      - 好友相关接口
+  /v1/friend/:id:
+    delete:
+      description: 通过ID删除好友状态
+      parameters:
+      - description: 需要删除的Friend ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: JWT Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: 删除好友
+      tags:
+      - 好友相关接口
+  /v1/login:
+    post:
+      consumes:
+      - application/json
+      description: 用户名密码登录
+      parameters:
+      - description: 登录请求体，包含用户名和密码
+        in: body
+        name: loginRequest
+        required: true
+        schema:
+          $ref: '#/definitions/api.UsernameAndPassword'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: JWT Token
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: 用户登录
+      tags:
+      - 用户相关接口
+  /v1/user:
     get:
       description: 通过用户ID获取用户信息，可选用户id或用户名查询，优先使用用户id
       parameters:
@@ -194,68 +370,7 @@ paths:
       summary: 获取用户信息
       tags:
       - 用户相关接口
-  /v1/user/login:
     post:
-      consumes:
-      - application/json
-      description: 用户名密码登录
-      parameters:
-      - description: 登录请求体，包含用户名和密码
-        in: body
-        name: loginRequest
-        required: true
-        schema:
-          $ref: '#/definitions/api.UsernameAndPassword'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: JWT Token
-          schema:
-            type: string
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/models.ErrorResponse'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/models.ErrorResponse'
-      summary: 用户登录
-      tags:
-      - 用户相关接口
-  /v1/user/register:
-    post:
-      consumes:
-      - application/json
-      description: 用户名密码注册
-      parameters:
-      - description: 注册请求体，包含用户名和密码
-        in: body
-        name: loginRequest
-        required: true
-        schema:
-          $ref: '#/definitions/api.UsernameAndPassword'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: JWT Token
-          schema:
-            type: string
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/models.ErrorResponse'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/models.ErrorResponse'
-      summary: 用户注册
-      tags:
-      - 用户相关接口
-  /v1/user/update:
-    put:
       consumes:
       - application/json
       description: 更新用户信息
@@ -287,6 +402,35 @@ paths:
           schema:
             $ref: '#/definitions/models.ErrorResponse'
       summary: 更新用户信息
+      tags:
+      - 用户相关接口
+    put:
+      consumes:
+      - application/json
+      description: 用户名密码注册
+      parameters:
+      - description: 注册请求体，包含用户名和密码
+        in: body
+        name: loginRequest
+        required: true
+        schema:
+          $ref: '#/definitions/api.UsernameAndPassword'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: JWT Token
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: 用户注册
       tags:
       - 用户相关接口
 swagger: "2.0"

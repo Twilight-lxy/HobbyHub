@@ -106,7 +106,7 @@ func TestGetAllChatByFromUserIdToUserId(t *testing.T) {
 	}
 
 	// 测试成功获取所有聊天记录
-	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `it_chat` WHERE from_user_id = ? AND to_user_id = ?")).
+	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `it_chat` WHERE user_id_from = ? AND user_id_to = ?")).
 		WithArgs(fromUserId, toUserId).
 		WillReturnRows(rows)
 
@@ -125,7 +125,7 @@ func TestGetAllChatByFromUserIdToUserId(t *testing.T) {
 	mock2, teardown2 := SetupMockDB(t)
 	defer teardown2()
 
-	mock2.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `it_chat` WHERE from_user_id = ? AND to_user_id = ?")).
+	mock2.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `it_chat` WHERE user_id_from = ? AND user_id_to = ?")).
 		WithArgs(fromUserId, toUserId).
 		WillReturnError(errors.New("query error"))
 
