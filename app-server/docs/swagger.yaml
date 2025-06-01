@@ -73,6 +73,21 @@ definitions:
       errorMessage:
         type: string
     type: object
+  models.File:
+    properties:
+      create_time:
+        type: string
+      file_hash:
+        type: string
+      file_name:
+        type: string
+      file_size:
+        type: integer
+      file_type:
+        type: string
+      id:
+        type: integer
+    type: object
   models.Friend:
     properties:
       create_time:
@@ -239,6 +254,50 @@ paths:
       summary: 删除聊天消息
       tags:
       - 聊天相关接口
+  /v1/file:
+    post:
+      consumes:
+      - multipart/form-data
+      description: 上传文件
+      parameters:
+      - description: JWT token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 文件名
+        in: formData
+        name: filename
+        required: true
+        type: string
+      - description: 文件Hash
+        in: formData
+        name: filehash
+        required: true
+        type: string
+      - description: 文件数据
+        in: formData
+        name: file
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.File'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: 上传文件
+      tags:
+      - 文件相关接口
   /v1/friend:
     get:
       description: 通过用户ID获取好友列表

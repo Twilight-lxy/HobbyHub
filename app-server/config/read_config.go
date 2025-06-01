@@ -25,10 +25,16 @@ type AuthenticationConfig struct {
 	JwtSecret string `yaml:"jwtsecret"`
 }
 
+type FileConfig struct {
+	UploadPath   string   `yaml:"upload_path"`   // 文件上传路径
+	MaxSize      int64    `yaml:"max_size"`      // 最大文件大小，单位为字节
+	AllowedTypes []string `yaml:"allowed_types"` // 允许的文件类型
+}
 type Config struct {
 	Server         ServerConfig         `yaml:"server"`
 	Database       DatabaseConfig       `yaml:"database"`
 	Authentication AuthenticationConfig `yaml:"authentication"`
+	File           FileConfig           `yaml:"file"` // 文件上传配置
 }
 
 // 默认配置
@@ -49,6 +55,11 @@ func defaultConfig() *Config {
 		},
 		Authentication: AuthenticationConfig{
 			JwtSecret: "defaultsecret",
+		},
+		File: FileConfig{
+			UploadPath:   "./uploads",
+			MaxSize:      10, // 10MB
+			AllowedTypes: []string{"png", "jpg", "jpeg", "gif", "pdf", "doc", "docx"},
 		},
 	}
 }

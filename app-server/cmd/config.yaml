@@ -11,3 +11,7 @@ database:
     charset: utf8mb4
 authentication:
     jwtsecret: "1234567890"
+file:
+    upload_path: ./uploads
+    max_size: 10 # in MB
+    allowed_types: ["png", "jpg", "jpeg", "gif", "pdf", "doc", "docx"]
