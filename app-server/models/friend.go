@@ -6,15 +6,17 @@ import (
 )
 
 type Friend struct {
-	Id         int64     `json:"id"`
-	UserId     int64     `json:"user_id"`
-	FriendId   int64     `json:"friend_id"`
-	Status     int       `json:"status"` // 0: Pending, 1: Accepted, 2: Rejected
-	CreateTime time.Time `json:"create_time"`
+	Id         int64     `json:"id" gorm:"primaryKey;autoIncrement;comment:'记录Id'"`
+	UserId     int64     `json:"user_id" gorm:"index;not null;foreignKey:Id;references:id;comment:'用户Id'"`
+	User       User      `json:"user" gorm:"foreignKey:UserId;references:Id;comment:'用户'"`
+	FriendId   int64     `json:"friend_id" gorm:"index;not null;foreignKey:Id;references:id;comment:'好友Id'"`
+	FriendUser User      `json:"friend_user" gorm:"foreignKey:FriendId;references:Id;comment:'好友用户'"`
+	Status     int       `json:"status" gorm:"not null default:0;comment:'状态（0: 拒绝, 1: 接受, 2: 等待接受, 3：已发出申请）"`
+	CreateTime time.Time `json:"create_time" gorm:"not null;comment:'创建时间'"`
 }
 
 func (f *Friend) TableName() string {
-	return "it_friend"
+	return "friend"
 }
 
 func (u *Friend) UpdateFriendFields(newu Friend) {

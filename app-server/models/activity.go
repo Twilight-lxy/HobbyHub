@@ -6,23 +6,26 @@ import (
 )
 
 type Activity struct {
-	Id         int64     `json:"id"`
-	Name       string    `json:"name"`
-	Addr       string    `json:"addr"`
-	Intro      string    `json:"intro"`
-	HeadImg    string    `json:"headImg"`
-	UserId     int64     `json:"userId"`
-	CreateTime time.Time `json:"createTime"`
-	UpdateTime time.Time `json:"updateTime"`
-	StartTime  time.Time `json:"startTime"`
-	State      int       `json:"state"`
-	IfDelete   int       `json:"ifDelete"`
-	Lat        float64   `json:"lat"`
-	Lon        float64   `json:"lon"`
+	Id         int64             `json:"id" gorm:"primaryKey;autoIncrement;comment:'活动Id'"`
+	Name       string            `json:"name" gorm:"type:varchar(255);not null;comment:'活动名称'"`
+	Addr       string            `json:"addr" gorm:"type:varchar(255);comment:'活动地址'"`
+	Intro      string            `json:"intro" gorm:"type:text;comment:'活动简介'"`
+	HeadImg    string            `json:"headImg" gorm:"type:varchar(255);comment:'活动封面图片'"`
+	UserId     int64             `json:"userId" gorm:"index;not null;foreignKey:Id;references:id;comment:'创建者Id'"`
+	User       User              `json:"user" gorm:"foreignKey:UserId;references:Id;comment:'创建者'"`
+	CreateTime time.Time         `json:"createTime" gorm:"not null;comment:'创建时间'"`
+	UpdateTime time.Time         `json:"updateTime" gorm:"not null;comment:'更新时间'"`
+	StartTime  time.Time         `json:"startTime" gorm:"not null;comment:'活动开始时间'"`
+	State      int               `json:"state" gorm:"not null;default:0;comment:'活动状态（0: 未开始, 1: 进行中, 2: 已结束, 3: 已取消）'"`
+	IfDelete   int               `json:"ifDelete" gorm:"not null;default:0;comment:'删除状态（0: 正常, 1: 已删除）'"`
+	Lat        float64           `json:"lat" gorm:"comment:'纬度'"`
+	Lon        float64           `json:"lon" gorm:"comment:'经度'"`
+	Members    []ActivityMember  `json:"members" gorm:"foreignKey:EventId;references:Id;comment:'活动成员列表'"`
+	Comments   []ActivityComment `json:"comments" gorm:"foreignKey:EventId;references:Id;comment:'活动评论列表'"`
 }
 
 func (Activity) TableName() string {
-	return "it_event"
+	return "activity"
 }
 
 func (u *Activity) UpdateActivityFields(newu Activity) {
@@ -52,26 +55,56 @@ func (u *Activity) UpdateActivityFields(newu Activity) {
 }
 
 type ActivityMember struct {
-	Id         int64     `json:"id"`
-	EventId    int64     `json:"eventId"`
-	UserId     int64     `json:"userId"`
-	CreateTime time.Time `json:"createTime"`
+	Id         int64     `json:"id" gorm:"primaryKey;autoIncrement;comment:'记录Id'"`
+	EventId    int64     `json:"eventId" gorm:"index;not null;foreignKey:Id;references:id;comment:'活动Id'"`
+	Activity   Activity  `json:"-" gorm:"foreignKey:EventId;references:Id;comment:'活动'"`
+	UserId     int64     `json:"userId" gorm:"index;not null;foreignKey:Id;references:id;comment:'用户Id'"`
+	User       User      `json:"user" gorm:"foreignKey:UserId;references:Id;comment:'用户'"`
+	CreateTime time.Time `json:"createTime" gorm:"not null;comment:'创建时间'"`
 }
 
 func (ActivityMember) TableName() string {
-	return "it_event_member"
+	return "activity_member"
+}
+
+func (u *ActivityMember) UpdateActivityMemberFields(newu ActivityMember) {
+	// 使用反射来检查字段是否为零值，避免硬编码每个字段
+	v := reflect.ValueOf(newu)
+	t := reflect.TypeOf(newu)
+
+	dbv := reflect.ValueOf(u).Elem()
+
+	for i := range v.NumField() {
+		field := v.Field(i)
+		fieldType := t.Field(i)
+
+		// 检查字段是否为零值
+		if !reflect.DeepEqual(field.Interface(), reflect.Zero(field.Type()).Interface()) {
+			// 跳过 ID 字段，通常不希望更新主键
+			if fieldType.Name == "ID" {
+				continue
+			}
+			// 更新非零值字段
+			dbField := dbv.FieldByName(fieldType.Name)
+			if dbField.IsValid() && dbField.CanSet() {
+				dbField.Set(field)
+			}
+		}
+	}
 }
 
 type ActivityComment struct {
-	Id         int64     `json:"id"`
-	EventId    int64     `json:"eventId"`
-	UserId     int64     `json:"userId"`
-	Content    string    `json:"content"`
-	CreateTime time.Time `json:"createTime"`
+	Id         int64     `json:"id" gorm:"primaryKey;autoIncrement;comment:'记录Id'"`
+	EventId    int64     `json:"eventId" gorm:"index;not null;foreignKey:Id;references:id;comment:'活动Id'"`
+	Activity   Activity  `json:"-" gorm:"foreignKey:EventId;references:Id;comment:'活动'"`
+	UserId     int64     `json:"userId" gorm:"index;not null;foreignKey:Id;references:id;comment:'用户Id'"`
+	User       User      `json:"user" gorm:"foreignKey:UserId;references:Id;comment:'用户'"`
+	Content    string    `json:"content" gorm:"type:text;not null;comment:'评论内容'"`
+	CreateTime time.Time `json:"createTime" gorm:"not null;comment:'创建时间'"`
 }
 
 func (ActivityComment) TableName() string {
-	return "it_event_comment"
+	return "activity_comment"
 }
 
 func (u *ActivityComment) UpdateActivityCommentFields(newu ActivityComment) {

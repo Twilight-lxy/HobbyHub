@@ -22,13 +22,13 @@ func TestAddFriend(t *testing.T) {
 	// 测试成功场景：两个INSERT都成功
 	// 第一次插入原始朋友关系
 	mock.ExpectBegin()
-	mock.ExpectExec(regexp.QuoteMeta("INSERT INTO `it_friend`")).
+	mock.ExpectExec(regexp.QuoteMeta("INSERT INTO `friend`")).
 		WillReturnResult(sqlmock.NewResult(1, 1))
 	mock.ExpectCommit()
 
 	// 第二次插入反向朋友关系
 	mock.ExpectBegin()
-	mock.ExpectExec(regexp.QuoteMeta("INSERT INTO `it_friend`")).
+	mock.ExpectExec(regexp.QuoteMeta("INSERT INTO `friend`")).
 		WillReturnResult(sqlmock.NewResult(2, 1))
 	mock.ExpectCommit()
 
@@ -41,7 +41,7 @@ func TestAddFriend(t *testing.T) {
 	defer teardown2()
 
 	mock2.ExpectBegin()
-	mock2.ExpectExec(regexp.QuoteMeta("INSERT INTO `it_friend`")).
+	mock2.ExpectExec(regexp.QuoteMeta("INSERT INTO `friend`")).
 		WillReturnError(errors.New("insert error"))
 	mock2.ExpectRollback()
 
@@ -55,13 +55,13 @@ func TestAddFriend(t *testing.T) {
 
 	// 第一次插入成功
 	mock3.ExpectBegin()
-	mock3.ExpectExec(regexp.QuoteMeta("INSERT INTO `it_friend`")).
+	mock3.ExpectExec(regexp.QuoteMeta("INSERT INTO `friend`")).
 		WillReturnResult(sqlmock.NewResult(1, 1))
 	mock3.ExpectCommit()
 
 	// 第二次插入失败
 	mock3.ExpectBegin()
-	mock3.ExpectExec(regexp.QuoteMeta("INSERT INTO `it_friend`")).
+	mock3.ExpectExec(regexp.QuoteMeta("INSERT INTO `friend`")).
 		WillReturnError(errors.New("second insert error"))
 	mock3.ExpectRollback()
 
@@ -85,7 +85,7 @@ func TestGetFriendById(t *testing.T) {
 		AddRow(expectedFriend.Id, expectedFriend.UserId, expectedFriend.FriendId)
 
 	// Test successful friend retrieval
-	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `it_friend` WHERE id = ? ORDER BY `it_friend`.`id` LIMIT ?")).
+	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `friend` WHERE id = ? ORDER BY `friend`.`id` LIMIT ?")).
 		WithArgs(friendId, 1).
 		WillReturnRows(rows)
 
@@ -100,7 +100,7 @@ func TestGetFriendById(t *testing.T) {
 	mock2, teardown2 := SetupMockDB(t)
 	defer teardown2()
 
-	mock2.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `it_friend` WHERE id = ? ORDER BY `it_friend`.`id` LIMIT ?")).
+	mock2.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `friend` WHERE id = ? ORDER BY `friend`.`id` LIMIT ?")).
 		WithArgs(friendId, 1).
 		WillReturnError(gorm.ErrRecordNotFound)
 
@@ -127,7 +127,7 @@ func TestGetAllFriendsByUserId(t *testing.T) {
 	}
 
 	// 测试成功获取所有好友
-	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `it_friend` WHERE user_id = ?")).
+	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `friend` WHERE user_id = ?")).
 		WithArgs(userId).
 		WillReturnRows(rows)
 
@@ -145,7 +145,7 @@ func TestGetAllFriendsByUserId(t *testing.T) {
 	mock2, teardown2 := SetupMockDB(t)
 	defer teardown2()
 
-	mock2.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `it_friend` WHERE user_id = ?")).
+	mock2.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `friend` WHERE user_id = ?")).
 		WithArgs(userId).
 		WillReturnError(errors.New("query error"))
 
@@ -163,7 +163,7 @@ func TestUpdateFriend(t *testing.T) {
 
 	// Test successful friend update
 	mock.ExpectBegin()
-	mock.ExpectExec(regexp.QuoteMeta("UPDATE `it_friend` SET")).
+	mock.ExpectExec(regexp.QuoteMeta("UPDATE `friend` SET")).
 		WillReturnResult(sqlmock.NewResult(1, 1))
 	mock.ExpectCommit()
 
@@ -176,7 +176,7 @@ func TestUpdateFriend(t *testing.T) {
 	defer teardown2()
 
 	mock2.ExpectBegin()
-	mock2.ExpectExec(regexp.QuoteMeta("UPDATE `it_friend` SET")).
+	mock2.ExpectExec(regexp.QuoteMeta("UPDATE `friend` SET")).
 		WillReturnError(errors.New("update error"))
 	mock2.ExpectRollback()
 
@@ -193,7 +193,7 @@ func TestDeleteFriendById(t *testing.T) {
 
 	// Test successful friend deletion
 	mock.ExpectBegin()
-	mock.ExpectExec(regexp.QuoteMeta("DELETE FROM `it_friend` WHERE `it_friend`.`id` = ?")).
+	mock.ExpectExec(regexp.QuoteMeta("DELETE FROM `friend` WHERE `friend`.`id` = ?")).
 		WithArgs(friendId).
 		WillReturnResult(sqlmock.NewResult(1, 1))
 	mock.ExpectCommit()
@@ -207,7 +207,7 @@ func TestDeleteFriendById(t *testing.T) {
 	defer teardown2()
 
 	mock2.ExpectBegin()
-	mock2.ExpectExec(regexp.QuoteMeta("DELETE FROM `it_friend` WHERE `it_friend`.`id` = ?")).
+	mock2.ExpectExec(regexp.QuoteMeta("DELETE FROM `friend` WHERE `friend`.`id` = ?")).
 		WithArgs(friendId).
 		WillReturnError(errors.New("delete error"))
 	mock2.ExpectRollback()
@@ -247,11 +247,11 @@ func TestGetFriendByUserIdAndFriendId(t *testing.T) {
 		AddRow(friend2.Id, friend2.UserId, friend2.FriendId)
 
 	// 测试成功获取两个方向的好友关系
-	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `it_friend` WHERE user_id = ? AND friend_id = ?")).
+	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `friend` WHERE user_id = ? AND friend_id = ?")).
 		WithArgs(userId, friendId).
 		WillReturnRows(rows1)
 
-	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `it_friend` WHERE user_id = ? AND friend_id = ?")).
+	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `friend` WHERE user_id = ? AND friend_id = ?")).
 		WithArgs(friendId, userId).
 		WillReturnRows(rows2)
 
@@ -276,7 +276,7 @@ func TestGetFriendByUserIdAndFriendId(t *testing.T) {
 	mock2, teardown2 := SetupMockDB(t)
 	defer teardown2()
 
-	mock2.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `it_friend` WHERE user_id = ? AND friend_id = ?")).
+	mock2.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `friend` WHERE user_id = ? AND friend_id = ?")).
 		WithArgs(userId, friendId).
 		WillReturnError(errors.New("query error"))
 
@@ -310,7 +310,7 @@ func TestUpdateFriendSynchronize(t *testing.T) {
 	mock.ExpectBegin()
 
 	// 期望更新第一个好友关系成功
-	mock.ExpectExec(regexp.QuoteMeta("UPDATE `it_friend` SET")).
+	mock.ExpectExec(regexp.QuoteMeta("UPDATE `friend` SET")).
 		WithArgs(
 			friend1.UserId,
 			friend1.FriendId,
@@ -320,7 +320,7 @@ func TestUpdateFriendSynchronize(t *testing.T) {
 		).WillReturnResult(sqlmock.NewResult(1, 1))
 
 	// 期望更新第二个好友关系成功
-	mock.ExpectExec(regexp.QuoteMeta("UPDATE `it_friend` SET")).
+	mock.ExpectExec(regexp.QuoteMeta("UPDATE `friend` SET")).
 		WithArgs(
 			friend2.UserId,
 			friend2.FriendId,
@@ -345,11 +345,11 @@ func TestUpdateFriendSynchronize(t *testing.T) {
 	mock2.ExpectBegin()
 
 	// 期望更新第一个好友关系成功
-	mock2.ExpectExec(regexp.QuoteMeta("UPDATE `it_friend` SET")).
+	mock2.ExpectExec(regexp.QuoteMeta("UPDATE `friend` SET")).
 		WillReturnResult(sqlmock.NewResult(1, 1))
 
 	// 期望更新第二个好友关系失败
-	mock2.ExpectExec(regexp.QuoteMeta("UPDATE `it_friend` SET")).
+	mock2.ExpectExec(regexp.QuoteMeta("UPDATE `friend` SET")).
 		WillReturnError(errors.New("update error"))
 
 	// 期望回滚事务

@@ -36,7 +36,7 @@ func TestAddUser(t *testing.T) {
 
 	user := &models.User{Username: "testuser"}
 	mock.ExpectBegin()
-	mock.ExpectExec(regexp.QuoteMeta("INSERT INTO `it_user`")).
+	mock.ExpectExec(regexp.QuoteMeta("INSERT INTO `user`")).
 		WillReturnResult(sqlmock.NewResult(1, 1))
 	mock.ExpectCommit()
 
@@ -47,7 +47,7 @@ func TestAddUser(t *testing.T) {
 	mock2, teardown2 := SetupMockDB(t)
 	defer teardown2()
 	mock2.ExpectBegin()
-	mock2.ExpectExec(regexp.QuoteMeta("INSERT INTO `it_user`")).
+	mock2.ExpectExec(regexp.QuoteMeta("INSERT INTO `user`")).
 		WillReturnError(errors.New("insert error"))
 	mock2.ExpectRollback()
 
@@ -66,7 +66,7 @@ func TestGetUserByUserId(t *testing.T) {
 	rows := sqlmock.NewRows([]string{"id", "username"}).
 		AddRow(expectedUser.Id, expectedUser.Username)
 
-	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `it_user` WHERE id = ? ORDER BY `it_user`.`id` LIMIT ?")).
+	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `user` WHERE id = ? ORDER BY `user`.`id` LIMIT ?")).
 		WithArgs(userId, 1).
 		WillReturnRows(rows)
 	user, err := GetUserByUserId(userId)
@@ -79,7 +79,7 @@ func TestGetUserByUserId(t *testing.T) {
 	mock2, teardown2 := SetupMockDB(t)
 	defer teardown2()
 
-	mock2.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `it_user` WHERE id = ? ORDER BY `it_user`.`id` LIMIT ?")).
+	mock2.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `user` WHERE id = ? ORDER BY `user`.`id` LIMIT ?")).
 		WithArgs(userId, 1).
 		WillReturnError(gorm.ErrRecordNotFound)
 
@@ -99,7 +99,7 @@ func TestGetUserByUserName(t *testing.T) {
 	rows := sqlmock.NewRows([]string{"id", "username"}).
 		AddRow(expectedUser.Id, expectedUser.Username)
 
-	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `it_user` WHERE username = ? ORDER BY `it_user`.`id` LIMIT ?")).
+	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `user` WHERE username = ? ORDER BY `user`.`id` LIMIT ?")).
 		WithArgs(userName, 1).
 		WillReturnRows(rows)
 
@@ -113,7 +113,7 @@ func TestGetUserByUserName(t *testing.T) {
 	mock2, teardown2 := SetupMockDB(t)
 	defer teardown2()
 
-	mock2.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `it_user` WHERE username = ? ORDER BY `it_user`.`id` LIMIT ?")).
+	mock2.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `user` WHERE username = ? ORDER BY `user`.`id` LIMIT ?")).
 		WithArgs(userName, 1).
 		WillReturnError(gorm.ErrRecordNotFound)
 
@@ -130,7 +130,7 @@ func TestUpdateUser(t *testing.T) {
 	user := models.User{Id: 1, Username: "updateduser"}
 
 	mock.ExpectBegin()
-	mock.ExpectExec(regexp.QuoteMeta("UPDATE `it_user` SET")).
+	mock.ExpectExec(regexp.QuoteMeta("UPDATE `user` SET")).
 		WillReturnResult(sqlmock.NewResult(1, 1))
 	mock.ExpectCommit()
 
@@ -143,7 +143,7 @@ func TestUpdateUser(t *testing.T) {
 	defer teardown2()
 
 	mock2.ExpectBegin()
-	mock2.ExpectExec(regexp.QuoteMeta("UPDATE `it_user` SET")).
+	mock2.ExpectExec(regexp.QuoteMeta("UPDATE `user` SET")).
 		WillReturnError(errors.New("update error"))
 	mock2.ExpectRollback()
 
@@ -159,7 +159,7 @@ func TestDeleteUserByUserId(t *testing.T) {
 	userId := int64(1)
 
 	mock.ExpectBegin()
-	mock.ExpectExec(regexp.QuoteMeta("DELETE FROM `it_user` WHERE `it_user`.`id` = ?")).
+	mock.ExpectExec(regexp.QuoteMeta("DELETE FROM `user` WHERE `user`.`id` = ?")).
 		WithArgs(userId).
 		WillReturnResult(sqlmock.NewResult(1, 1))
 	mock.ExpectCommit()
@@ -173,7 +173,7 @@ func TestDeleteUserByUserId(t *testing.T) {
 	defer teardown2()
 
 	mock2.ExpectBegin()
-	mock2.ExpectExec(regexp.QuoteMeta("DELETE FROM `it_user` WHERE `it_user`.`id` = ?")).
+	mock2.ExpectExec(regexp.QuoteMeta("DELETE FROM `user` WHERE `user`.`id` = ?")).
 		WithArgs(userId).
 		WillReturnError(errors.New("delete error"))
 	mock2.ExpectRollback()

@@ -46,7 +46,7 @@ func setupDBMock() func() {
 	config.DB = gormDB
 
 	// 为模拟GetUserByUserId的调用准备数据
-	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `it_user` WHERE id = ? ORDER BY `it_user`.`id` LIMIT ?")).
+	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `user` WHERE id = ? ORDER BY `user`.`id` LIMIT ?")).
 		WithArgs(int64(123), 1).
 		WillReturnRows(sqlmock.NewRows([]string{"id", "username"}).
 			AddRow(123, "test_user"))

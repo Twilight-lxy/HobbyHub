@@ -7,7 +7,7 @@ database:
     password: "123456"
     host: localhost
     port: 3306
-    database: iteam01
+    database: hobbyhub
     charset: utf8mb4
 authentication:
     jwtsecret: "1234567890"

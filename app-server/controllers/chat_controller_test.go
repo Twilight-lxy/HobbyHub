@@ -24,7 +24,7 @@ func TestAddChat(t *testing.T) {
 
 	// 测试成功添加聊天记录
 	mock.ExpectBegin()
-	mock.ExpectExec(regexp.QuoteMeta("INSERT INTO `it_chat`")).
+	mock.ExpectExec(regexp.QuoteMeta("INSERT INTO `chat`")).
 		WillReturnResult(sqlmock.NewResult(1, 1))
 	mock.ExpectCommit()
 
@@ -37,7 +37,7 @@ func TestAddChat(t *testing.T) {
 	defer teardown2()
 
 	mock2.ExpectBegin()
-	mock2.ExpectExec(regexp.QuoteMeta("INSERT INTO `it_chat`")).
+	mock2.ExpectExec(regexp.QuoteMeta("INSERT INTO `chat`")).
 		WillReturnError(errors.New("insert error"))
 	mock2.ExpectRollback()
 
@@ -62,7 +62,7 @@ func TestGetChatById(t *testing.T) {
 		AddRow(expectedChat.Id, expectedChat.UserIdFrom, expectedChat.UserIdTo, expectedChat.Content)
 
 	// 测试成功获取聊天记录
-	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `it_chat` WHERE id = ? ORDER BY `it_chat`.`id` LIMIT ?")).
+	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `chat` WHERE id = ? ORDER BY `chat`.`id` LIMIT ?")).
 		WithArgs(chatId, 1).
 		WillReturnRows(rows)
 
@@ -78,7 +78,7 @@ func TestGetChatById(t *testing.T) {
 	mock2, teardown2 := SetupMockDB(t)
 	defer teardown2()
 
-	mock2.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `it_chat` WHERE id = ? ORDER BY `it_chat`.`id` LIMIT ?")).
+	mock2.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `chat` WHERE id = ? ORDER BY `chat`.`id` LIMIT ?")).
 		WithArgs(chatId, 1).
 		WillReturnError(gorm.ErrRecordNotFound)
 
@@ -106,7 +106,7 @@ func TestGetAllChatByFromUserIdToUserId(t *testing.T) {
 	}
 
 	// 测试成功获取所有聊天记录
-	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `it_chat` WHERE user_id_from = ? AND user_id_to = ?")).
+	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `chat` WHERE user_id_from = ? AND user_id_to = ?")).
 		WithArgs(fromUserId, toUserId).
 		WillReturnRows(rows)
 
@@ -125,7 +125,7 @@ func TestGetAllChatByFromUserIdToUserId(t *testing.T) {
 	mock2, teardown2 := SetupMockDB(t)
 	defer teardown2()
 
-	mock2.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `it_chat` WHERE user_id_from = ? AND user_id_to = ?")).
+	mock2.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `chat` WHERE user_id_from = ? AND user_id_to = ?")).
 		WithArgs(fromUserId, toUserId).
 		WillReturnError(errors.New("query error"))
 
@@ -148,7 +148,7 @@ func TestUpdateChat(t *testing.T) {
 
 	// 测试成功更新聊天记录
 	mock.ExpectBegin()
-	mock.ExpectExec(regexp.QuoteMeta("UPDATE `it_chat` SET")).
+	mock.ExpectExec(regexp.QuoteMeta("UPDATE `chat` SET")).
 		WillReturnResult(sqlmock.NewResult(1, 1))
 	mock.ExpectCommit()
 
@@ -161,7 +161,7 @@ func TestUpdateChat(t *testing.T) {
 	defer teardown2()
 
 	mock2.ExpectBegin()
-	mock2.ExpectExec(regexp.QuoteMeta("UPDATE `it_chat` SET")).
+	mock2.ExpectExec(regexp.QuoteMeta("UPDATE `chat` SET")).
 		WillReturnError(errors.New("update error"))
 	mock2.ExpectRollback()
 
@@ -178,7 +178,7 @@ func TestDeleteChatById(t *testing.T) {
 
 	// 测试成功删除聊天记录
 	mock.ExpectBegin()
-	mock.ExpectExec(regexp.QuoteMeta("DELETE FROM `it_chat` WHERE `it_chat`.`id` = ?")).
+	mock.ExpectExec(regexp.QuoteMeta("DELETE FROM `chat` WHERE `chat`.`id` = ?")).
 		WithArgs(chatId).
 		WillReturnResult(sqlmock.NewResult(1, 1))
 	mock.ExpectCommit()
@@ -192,7 +192,7 @@ func TestDeleteChatById(t *testing.T) {
 	defer teardown2()
 
 	mock2.ExpectBegin()
-	mock2.ExpectExec(regexp.QuoteMeta("DELETE FROM `it_chat` WHERE `it_chat`.`id` = ?")).
+	mock2.ExpectExec(regexp.QuoteMeta("DELETE FROM `chat` WHERE `chat`.`id` = ?")).
 		WithArgs(chatId).
 		WillReturnError(errors.New("delete error"))
 	mock2.ExpectRollback()

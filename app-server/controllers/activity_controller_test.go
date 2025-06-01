@@ -35,7 +35,7 @@ func TestAddActivity(t *testing.T) {
 
 	// 测试成功添加活动
 	mock.ExpectBegin()
-	mock.ExpectExec(regexp.QuoteMeta("INSERT INTO `it_event`")).
+	mock.ExpectExec(regexp.QuoteMeta("INSERT INTO `activity`")).
 		WillReturnResult(sqlmock.NewResult(1, 1))
 	mock.ExpectCommit()
 
@@ -48,7 +48,7 @@ func TestAddActivity(t *testing.T) {
 	defer teardown2()
 
 	mock2.ExpectBegin()
-	mock2.ExpectExec(regexp.QuoteMeta("INSERT INTO `it_event`")).
+	mock2.ExpectExec(regexp.QuoteMeta("INSERT INTO `activity`")).
 		WillReturnError(errors.New("insert error"))
 	mock2.ExpectRollback()
 
@@ -90,7 +90,7 @@ func TestGetActivityById(t *testing.T) {
 	)
 
 	// 测试成功获取活动
-	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `it_event` WHERE id = ? ORDER BY `it_event`.`id` LIMIT ?")).
+	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `activity` WHERE id = ? ORDER BY `activity`.`id` LIMIT ?")).
 		WithArgs(activityId, 1).
 		WillReturnRows(rows)
 
@@ -107,7 +107,7 @@ func TestGetActivityById(t *testing.T) {
 	mock2, teardown2 := SetupMockDB(t)
 	defer teardown2()
 
-	mock2.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `it_event` WHERE id = ? ORDER BY `it_event`.`id` LIMIT ?")).
+	mock2.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `activity` WHERE id = ? ORDER BY `activity`.`id` LIMIT ?")).
 		WithArgs(activityId, 1).
 		WillReturnError(gorm.ErrRecordNotFound)
 
@@ -140,7 +140,7 @@ func TestUpdateActivity(t *testing.T) {
 
 	// 测试成功更新活动
 	mock.ExpectBegin()
-	mock.ExpectExec(regexp.QuoteMeta("UPDATE `it_event` SET")).
+	mock.ExpectExec(regexp.QuoteMeta("UPDATE `activity` SET")).
 		WillReturnResult(sqlmock.NewResult(1, 1))
 	mock.ExpectCommit()
 
@@ -153,7 +153,7 @@ func TestUpdateActivity(t *testing.T) {
 	defer teardown2()
 
 	mock2.ExpectBegin()
-	mock2.ExpectExec(regexp.QuoteMeta("UPDATE `it_event` SET")).
+	mock2.ExpectExec(regexp.QuoteMeta("UPDATE `activity` SET")).
 		WillReturnError(errors.New("update error"))
 	mock2.ExpectRollback()
 
@@ -170,7 +170,7 @@ func TestDeleteActivityById(t *testing.T) {
 
 	// 测试成功删除活动
 	mock.ExpectBegin()
-	mock.ExpectExec(regexp.QuoteMeta("DELETE FROM `it_event` WHERE `it_event`.`id` = ?")).
+	mock.ExpectExec(regexp.QuoteMeta("DELETE FROM `activity` WHERE `activity`.`id` = ?")).
 		WithArgs(activityId).
 		WillReturnResult(sqlmock.NewResult(1, 1))
 	mock.ExpectCommit()
@@ -184,7 +184,7 @@ func TestDeleteActivityById(t *testing.T) {
 	defer teardown2()
 
 	mock2.ExpectBegin()
-	mock2.ExpectExec(regexp.QuoteMeta("DELETE FROM `it_event` WHERE `it_event`.`id` = ?")).
+	mock2.ExpectExec(regexp.QuoteMeta("DELETE FROM `activity` WHERE `activity`.`id` = ?")).
 		WithArgs(activityId).
 		WillReturnError(errors.New("delete error"))
 	mock2.ExpectRollback()
@@ -209,7 +209,7 @@ func TestAddActivityMember(t *testing.T) {
 
 	// 测试成功添加活动成员
 	mock.ExpectBegin()
-	mock.ExpectExec(regexp.QuoteMeta("INSERT INTO `it_event_member`")).
+	mock.ExpectExec(regexp.QuoteMeta("INSERT INTO `activity_member`")).
 		WillReturnResult(sqlmock.NewResult(1, 1))
 	mock.ExpectCommit()
 
@@ -222,7 +222,7 @@ func TestAddActivityMember(t *testing.T) {
 	defer teardown2()
 
 	mock2.ExpectBegin()
-	mock2.ExpectExec(regexp.QuoteMeta("INSERT INTO `it_event_member`")).
+	mock2.ExpectExec(regexp.QuoteMeta("INSERT INTO `activity_member`")).
 		WillReturnError(errors.New("insert error"))
 	mock2.ExpectRollback()
 
@@ -253,7 +253,7 @@ func TestGetActivityMembersByActivityId(t *testing.T) {
 	}
 
 	// 测试成功获取活动成员
-	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `it_event_member` WHERE activity_id = ?")).
+	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `activity_member` WHERE activity_id = ?")).
 		WithArgs(activityId).
 		WillReturnRows(rows)
 
@@ -271,7 +271,7 @@ func TestGetActivityMembersByActivityId(t *testing.T) {
 	mock2, teardown2 := SetupMockDB(t)
 	defer teardown2()
 
-	mock2.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `it_event_member` WHERE activity_id = ?")).
+	mock2.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `activity_member` WHERE activity_id = ?")).
 		WithArgs(activityId).
 		WillReturnError(errors.New("query error"))
 
@@ -303,7 +303,7 @@ func TestGetActivityMembersByUserId(t *testing.T) {
 	}
 
 	// 测试成功获取用户参与的活动
-	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `it_event_member` WHERE user_id = ?")).
+	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `activity_member` WHERE user_id = ?")).
 		WithArgs(userId).
 		WillReturnRows(rows)
 
@@ -321,7 +321,7 @@ func TestGetActivityMembersByUserId(t *testing.T) {
 	mock2, teardown2 := SetupMockDB(t)
 	defer teardown2()
 
-	mock2.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `it_event_member` WHERE user_id = ?")).
+	mock2.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `activity_member` WHERE user_id = ?")).
 		WithArgs(userId).
 		WillReturnError(errors.New("query error"))
 
@@ -349,7 +349,7 @@ func TestUpdateActivityMember(t *testing.T) {
 
 	// 测试成功更新活动成员
 	mock.ExpectBegin()
-	mock.ExpectExec(regexp.QuoteMeta("UPDATE `it_event_member` SET")).
+	mock.ExpectExec(regexp.QuoteMeta("UPDATE `activity_member` SET")).
 		WillReturnResult(sqlmock.NewResult(1, 1))
 	mock.ExpectCommit()
 
@@ -362,7 +362,7 @@ func TestUpdateActivityMember(t *testing.T) {
 	defer teardown2()
 
 	mock2.ExpectBegin()
-	mock2.ExpectExec(regexp.QuoteMeta("UPDATE `it_event_member` SET")).
+	mock2.ExpectExec(regexp.QuoteMeta("UPDATE `activity_member` SET")).
 		WillReturnError(errors.New("update error"))
 	mock2.ExpectRollback()
 
@@ -381,7 +381,7 @@ func TestDeleteActivityMember(t *testing.T) {
 
 	// 测试成功删除活动成员
 	mock.ExpectBegin()
-	mock.ExpectExec(regexp.QuoteMeta("DELETE FROM `it_event_member` WHERE activity_id = ? AND user_id = ?")).
+	mock.ExpectExec(regexp.QuoteMeta("DELETE FROM `activity_member` WHERE activity_id = ? AND user_id = ?")).
 		WithArgs(activityId, userId).
 		WillReturnResult(sqlmock.NewResult(1, 1))
 	mock.ExpectCommit()
@@ -395,7 +395,7 @@ func TestDeleteActivityMember(t *testing.T) {
 	defer teardown2()
 
 	mock2.ExpectBegin()
-	mock2.ExpectExec(regexp.QuoteMeta("DELETE FROM `it_event_member` WHERE activity_id = ? AND user_id = ?")).
+	mock2.ExpectExec(regexp.QuoteMeta("DELETE FROM `activity_member` WHERE activity_id = ? AND user_id = ?")).
 		WithArgs(activityId, userId).
 		WillReturnError(errors.New("delete error"))
 	mock2.ExpectRollback()
@@ -420,7 +420,7 @@ func TestAddActivityComment(t *testing.T) {
 
 	// 测试成功添加活动评论
 	mock.ExpectBegin()
-	mock.ExpectExec(regexp.QuoteMeta("INSERT INTO `it_event_comment`")).
+	mock.ExpectExec(regexp.QuoteMeta("INSERT INTO `activity_comment`")).
 		WillReturnResult(sqlmock.NewResult(1, 1))
 	mock.ExpectCommit()
 
@@ -433,7 +433,7 @@ func TestAddActivityComment(t *testing.T) {
 	defer teardown2()
 
 	mock2.ExpectBegin()
-	mock2.ExpectExec(regexp.QuoteMeta("INSERT INTO `it_event_comment`")).
+	mock2.ExpectExec(regexp.QuoteMeta("INSERT INTO `activity_comment`")).
 		WillReturnError(errors.New("insert error"))
 	mock2.ExpectRollback()
 
@@ -461,7 +461,7 @@ func TestGetActivityCommentsByActivityId(t *testing.T) {
 	}
 
 	// 测试成功获取评论
-	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `it_event_comment` WHERE event_id = ?")).
+	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `activity_comment` WHERE event_id = ?")).
 		WithArgs(activityId).
 		WillReturnRows(rows)
 
@@ -480,7 +480,7 @@ func TestGetActivityCommentsByActivityId(t *testing.T) {
 	mock2, teardown2 := SetupMockDB(t)
 	defer teardown2()
 
-	mock2.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `it_event_comment` WHERE event_id = ?")).
+	mock2.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `activity_comment` WHERE event_id = ?")).
 		WithArgs(activityId).
 		WillReturnError(errors.New("query error"))
 
@@ -509,7 +509,7 @@ func TestGetActivityCommentsByUserId(t *testing.T) {
 	}
 
 	// 测试成功获取评论
-	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `it_event_comment` WHERE user_id = ?")).
+	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `activity_comment` WHERE user_id = ?")).
 		WithArgs(userId).
 		WillReturnRows(rows)
 
@@ -528,7 +528,7 @@ func TestGetActivityCommentsByUserId(t *testing.T) {
 	mock2, teardown2 := SetupMockDB(t)
 	defer teardown2()
 
-	mock2.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `it_event_comment` WHERE user_id = ?")).
+	mock2.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `activity_comment` WHERE user_id = ?")).
 		WithArgs(userId).
 		WillReturnError(errors.New("query error"))
 
@@ -557,7 +557,7 @@ func TestGetActivityCommentsByActivityIdAndUserId(t *testing.T) {
 	}
 
 	// 测试成功获取评论
-	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `it_event_comment` WHERE event_id = ? AND user_id = ?")).
+	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `activity_comment` WHERE event_id = ? AND user_id = ?")).
 		WithArgs(activityId, userId).
 		WillReturnRows(rows)
 
@@ -576,7 +576,7 @@ func TestGetActivityCommentsByActivityIdAndUserId(t *testing.T) {
 	mock2, teardown2 := SetupMockDB(t)
 	defer teardown2()
 
-	mock2.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `it_event_comment` WHERE event_id = ? AND user_id = ?")).
+	mock2.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `activity_comment` WHERE event_id = ? AND user_id = ?")).
 		WithArgs(activityId, userId).
 		WillReturnError(errors.New("query error"))
 
@@ -602,7 +602,7 @@ func TestUpdateActivityComment(t *testing.T) {
 
 	// 测试成功更新评论
 	mock.ExpectBegin()
-	mock.ExpectExec(regexp.QuoteMeta("UPDATE `it_event_comment` SET")).
+	mock.ExpectExec(regexp.QuoteMeta("UPDATE `activity_comment` SET")).
 		WillReturnResult(sqlmock.NewResult(1, 1))
 	mock.ExpectCommit()
 
@@ -615,7 +615,7 @@ func TestUpdateActivityComment(t *testing.T) {
 	defer teardown2()
 
 	mock2.ExpectBegin()
-	mock2.ExpectExec(regexp.QuoteMeta("UPDATE `it_event_comment` SET")).
+	mock2.ExpectExec(regexp.QuoteMeta("UPDATE `activity_comment` SET")).
 		WillReturnError(errors.New("update error"))
 	mock2.ExpectRollback()
 
@@ -633,7 +633,7 @@ func TestDeleteActivityComment(t *testing.T) {
 
 	// 测试成功删除评论
 	mock.ExpectBegin()
-	mock.ExpectExec(regexp.QuoteMeta("DELETE FROM `it_event_comment` WHERE `it_event_comment`.`id` = ?")).
+	mock.ExpectExec(regexp.QuoteMeta("DELETE FROM `activity_comment` WHERE `activity_comment`.`id` = ?")).
 		WithArgs(commentId).
 		WillReturnResult(sqlmock.NewResult(1, 1))
 	mock.ExpectCommit()
@@ -647,7 +647,7 @@ func TestDeleteActivityComment(t *testing.T) {
 	defer teardown2()
 
 	mock2.ExpectBegin()
-	mock2.ExpectExec(regexp.QuoteMeta("DELETE FROM `it_event_comment` WHERE `it_event_comment`.`id` = ?")).
+	mock2.ExpectExec(regexp.QuoteMeta("DELETE FROM `activity_comment` WHERE `activity_comment`.`id` = ?")).
 		WithArgs(commentId).
 		WillReturnError(errors.New("delete error"))
 	mock2.ExpectRollback()

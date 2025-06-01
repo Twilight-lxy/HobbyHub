@@ -21,7 +21,7 @@ func TestAddFile(t *testing.T) {
 
 	// Test successful file creation
 	mock.ExpectBegin()
-	mock.ExpectExec(regexp.QuoteMeta("INSERT INTO `files`")).
+	mock.ExpectExec(regexp.QuoteMeta("INSERT INTO `file`")).
 		WillReturnResult(sqlmock.NewResult(1, 1))
 	mock.ExpectCommit()
 
@@ -34,7 +34,7 @@ func TestAddFile(t *testing.T) {
 	defer teardown2()
 
 	mock2.ExpectBegin()
-	mock2.ExpectExec(regexp.QuoteMeta("INSERT INTO `files`")).
+	mock2.ExpectExec(regexp.QuoteMeta("INSERT INTO `file`")).
 		WillReturnError(errors.New("insert error"))
 	mock2.ExpectRollback()
 
@@ -62,7 +62,7 @@ func TestGetFileById(t *testing.T) {
 		AddRow(expectedFile.Id, expectedFile.FileName, expectedFile.FileType, expectedFile.FileSize, expectedFile.FileHash, expectedFile.CreateTime)
 
 	// Test successful file retrieval
-	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `files` WHERE id = ? ORDER BY `files`.`id` LIMIT ?")).
+	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `file` WHERE id = ? ORDER BY `file`.`id` LIMIT ?")).
 		WithArgs(fileId, 1).
 		WillReturnRows(rows)
 
@@ -77,7 +77,7 @@ func TestGetFileById(t *testing.T) {
 	mock2, teardown2 := SetupMockDB(t)
 	defer teardown2()
 
-	mock2.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `files` WHERE id = ? ORDER BY `files`.`id` LIMIT ?")).
+	mock2.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `file` WHERE id = ? ORDER BY `file`.`id` LIMIT ?")).
 		WithArgs(fileId, 1).
 		WillReturnError(gorm.ErrRecordNotFound)
 
@@ -106,7 +106,7 @@ func TestGetFileByHash(t *testing.T) {
 		AddRow(expectedFile.Id, expectedFile.FileName, expectedFile.FileType, expectedFile.FileSize, expectedFile.FileHash, expectedFile.CreateTime)
 
 	// Test successful file retrieval by hash
-	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `files` WHERE file_hash = ? ORDER BY `files`.`id` LIMIT ?")).
+	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `file` WHERE file_hash = ? ORDER BY `file`.`id` LIMIT ?")).
 		WithArgs(fileHash, 1).
 		WillReturnRows(rows)
 
@@ -120,7 +120,7 @@ func TestGetFileByHash(t *testing.T) {
 	mock2, teardown2 := SetupMockDB(t)
 	defer teardown2()
 
-	mock2.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `files` WHERE file_hash = ? ORDER BY `files`.`id` LIMIT ?")).
+	mock2.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `file` WHERE file_hash = ? ORDER BY `file`.`id` LIMIT ?")).
 		WithArgs(fileHash, 1).
 		WillReturnError(gorm.ErrRecordNotFound)
 
@@ -138,7 +138,7 @@ func TestUpdateFile(t *testing.T) {
 
 	// Test successful file update
 	mock.ExpectBegin()
-	mock.ExpectExec(regexp.QuoteMeta("UPDATE `files` SET")).
+	mock.ExpectExec(regexp.QuoteMeta("UPDATE `file` SET")).
 		WillReturnResult(sqlmock.NewResult(1, 1))
 	mock.ExpectCommit()
 
@@ -151,7 +151,7 @@ func TestUpdateFile(t *testing.T) {
 	defer teardown2()
 
 	mock2.ExpectBegin()
-	mock2.ExpectExec(regexp.QuoteMeta("UPDATE `files` SET")).
+	mock2.ExpectExec(regexp.QuoteMeta("UPDATE `file` SET")).
 		WillReturnError(errors.New("update error"))
 	mock2.ExpectRollback()
 
@@ -168,7 +168,7 @@ func TestDeleteFileById(t *testing.T) {
 
 	// Test successful file deletion
 	mock.ExpectBegin()
-	mock.ExpectExec(regexp.QuoteMeta("DELETE FROM `files` WHERE `files`.`id` = ?")).
+	mock.ExpectExec(regexp.QuoteMeta("DELETE FROM `file` WHERE `file`.`id` = ?")).
 		WithArgs(fileId).
 		WillReturnResult(sqlmock.NewResult(1, 1))
 	mock.ExpectCommit()
@@ -182,7 +182,7 @@ func TestDeleteFileById(t *testing.T) {
 	defer teardown2()
 
 	mock2.ExpectBegin()
-	mock2.ExpectExec(regexp.QuoteMeta("DELETE FROM `files` WHERE `files`.`id` = ?")).
+	mock2.ExpectExec(regexp.QuoteMeta("DELETE FROM `file` WHERE `file`.`id` = ?")).
 		WithArgs(fileId).
 		WillReturnError(errors.New("delete error"))
 	mock2.ExpectRollback()
