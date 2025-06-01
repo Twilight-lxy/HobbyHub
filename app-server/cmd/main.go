@@ -47,8 +47,9 @@ func main() {
 		// Chat routes
 		chat := apiV1.Group("/chat")
 		{
-			chat.GET("/", api.GetChatHistory) // 获取聊天记录
-			chat.POST("/", api.SendChat)      // 发送聊天消息
+			chat.GET("/", api.GetChatHistory)   // 获取聊天记录
+			chat.POST("/", api.SendChat)        // 发送聊天消息
+			chat.DELETE("/:id", api.DeleteChat) // 删除聊天记录
 		}
 		// Friend routes
 		friend := apiV1.Group("/friend")

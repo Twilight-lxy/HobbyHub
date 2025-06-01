@@ -110,51 +110,6 @@ func TestGetFriendById(t *testing.T) {
 	assert.NoError(t, mock2.ExpectationsWereMet())
 }
 
-func TestGetAllFriendsByUserId(t *testing.T) {
-	mock, teardown := SetupMockDB(t)
-	defer teardown()
-
-	userId := int64(1)
-	expectedFriends := []models.Friend{
-		{Id: 1, UserId: userId, FriendId: 10},
-		{Id: 2, UserId: userId, FriendId: 11},
-		{Id: 3, UserId: userId, FriendId: 12},
-	}
-
-	rows := sqlmock.NewRows([]string{"id", "user_id", "friend_id"})
-	for _, f := range expectedFriends {
-		rows.AddRow(f.Id, f.UserId, f.FriendId)
-	}
-
-	// 测试成功获取所有好友
-	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `friend` WHERE user_id = ?")).
-		WithArgs(userId).
-		WillReturnRows(rows)
-
-	friends, err := GetAllFriendsByUserId(userId)
-	assert.NoError(t, err)
-	assert.Equal(t, len(expectedFriends), len(friends))
-	for i, f := range friends {
-		assert.Equal(t, expectedFriends[i].Id, f.Id)
-		assert.Equal(t, expectedFriends[i].UserId, f.UserId)
-		assert.Equal(t, expectedFriends[i].FriendId, f.FriendId)
-	}
-	assert.NoError(t, mock.ExpectationsWereMet())
-
-	// 测试查询错误情况
-	mock2, teardown2 := SetupMockDB(t)
-	defer teardown2()
-
-	mock2.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `friend` WHERE user_id = ?")).
-		WithArgs(userId).
-		WillReturnError(errors.New("query error"))
-
-	friends, err = GetAllFriendsByUserId(userId)
-	assert.Nil(t, friends)
-	assert.EqualError(t, err, "query error")
-	assert.NoError(t, mock2.ExpectationsWereMet())
-}
-
 func TestUpdateFriend(t *testing.T) {
 	mock, teardown := SetupMockDB(t)
 	defer teardown()

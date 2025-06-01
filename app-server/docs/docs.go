@@ -63,7 +63,7 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/models.Chat"
+                                "$ref": "#/definitions/api.ChatHistoryResponse"
                             }
                         }
                     },
@@ -117,8 +117,59 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/models.Chat"
+                                "$ref": "#/definitions/api.ChatHistoryResponse"
                             }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/chat/{id}": {
+            "delete": {
+                "description": "删除聊天消息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "聊天相关接口"
+                ],
+                "summary": "删除聊天消息",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "需要删除的Chat 记录ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "JWT Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.SuccessResponse"
                         }
                     },
                     "400": {
@@ -191,11 +242,11 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "description": "好友申请信息",
-                        "name": "friendRequest",
+                        "name": "updatefriendRequest",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/api.FriendRequest"
+                            "$ref": "#/definitions/api.UpdateFriendRequest"
                         }
                     },
                     {
@@ -276,7 +327,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/friend/:id": {
+        "/v1/friend/{id}": {
             "delete": {
                 "description": "通过ID删除好友状态",
                 "produces": [
@@ -289,7 +340,7 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "integer",
-                        "description": "需要删除的Friend ID",
+                        "description": "需要删除的Friend 记录ID",
                         "name": "id",
                         "in": "path",
                         "required": true
@@ -372,7 +423,7 @@ const docTemplate = `{
         },
         "/v1/user": {
             "get": {
-                "description": "通过用户ID获取用户信息，可选用户id或用户名查询，优先使用用户id",
+                "description": "通过用户ID获取用户信息；可选用户id或用户名查询，优先使用用户id；不填写id或用户名，使用jwt token获取",
                 "produces": [
                     "application/json"
                 ],
@@ -519,6 +570,37 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "api.ChatHistoryResponse": {
+            "type": "object",
+            "required": [
+                "content",
+                "create_time",
+                "id",
+                "user_id_from",
+                "user_id_to"
+            ],
+            "properties": {
+                "content": {
+                    "description": "聊天内容",
+                    "type": "string"
+                },
+                "create_time": {
+                    "description": "创建时间",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "聊天记录ID",
+                    "type": "integer"
+                },
+                "user_id_from": {
+                    "description": "发送者用户Id",
+                    "type": "integer"
+                },
+                "user_id_to": {
+                    "type": "integer"
+                }
+            }
+        },
         "api.FriendRequest": {
             "type": "object",
             "required": [
@@ -528,6 +610,27 @@ const docTemplate = `{
                 "user_id": {
                     "description": "好友用户ID",
                     "type": "integer"
+                }
+            }
+        },
+        "api.UpdateFriendRequest": {
+            "type": "object",
+            "required": [
+                "friend_id",
+                "status"
+            ],
+            "properties": {
+                "friend_id": {
+                    "description": "好友ID",
+                    "type": "integer"
+                },
+                "status": {
+                    "description": "申请状态，0-拒绝，1-同意",
+                    "type": "integer",
+                    "enum": [
+                        0,
+                        1
+                    ]
                 }
             }
         },
@@ -563,32 +666,6 @@ const docTemplate = `{
                 }
             }
         },
-        "models.Chat": {
-            "type": "object",
-            "properties": {
-                "content": {
-                    "type": "string"
-                },
-                "create_time": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "status_from": {
-                    "type": "integer"
-                },
-                "status_to": {
-                    "type": "integer"
-                },
-                "user_id_from": {
-                    "type": "integer"
-                },
-                "user_id_to": {
-                    "type": "integer"
-                }
-            }
-        },
         "models.ErrorResponse": {
             "type": "object",
             "properties": {
@@ -600,18 +677,23 @@ const docTemplate = `{
         "models.Friend": {
             "type": "object",
             "properties": {
-                "apply": {
-                    "description": "0: Pending, 1: Accepted, 2: Rejected",
-                    "type": "integer"
-                },
                 "create_time": {
                     "type": "string"
                 },
                 "friend_id": {
                     "type": "integer"
                 },
+                "friend_user": {
+                    "$ref": "#/definitions/models.User"
+                },
                 "id": {
                     "type": "integer"
+                },
+                "status": {
+                    "type": "integer"
+                },
+                "user": {
+                    "$ref": "#/definitions/models.User"
                 },
                 "user_id": {
                     "type": "integer"
@@ -629,31 +711,31 @@ const docTemplate = `{
         "models.User": {
             "type": "object",
             "properties": {
-                "addr": {
+                "addr;comment:'地址'": {
                     "type": "string"
                 },
-                "createTime": {
+                "createTime;comment:'创建时间'": {
                     "type": "string"
                 },
-                "gender": {
+                "gender;comment:'性别'": {
                     "type": "string"
                 },
-                "headImg": {
+                "headImg;comment:'头像图片'": {
                     "type": "string"
                 },
                 "id": {
                     "type": "integer"
                 },
-                "lat": {
+                "lat;comment:'纬度'": {
                     "type": "number"
                 },
-                "lon": {
+                "lon;comment:'经度'": {
                     "type": "number"
                 },
-                "name": {
+                "name;comment:'姓名'": {
                     "type": "string"
                 },
-                "password": {
+                "password;comment:'密码'": {
                     "type": "string"
                 },
                 "username": {

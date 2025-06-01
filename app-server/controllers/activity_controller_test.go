@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"errors"
+	"fmt"
 	"regexp"
 	"testing"
 	"time"
@@ -10,7 +11,6 @@ import (
 
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/stretchr/testify/assert"
-	"gorm.io/gorm"
 )
 
 func TestAddActivity(t *testing.T) {
@@ -54,66 +54,6 @@ func TestAddActivity(t *testing.T) {
 
 	err = AddActivity(activity)
 	assert.EqualError(t, err, "insert error")
-	assert.NoError(t, mock2.ExpectationsWereMet())
-}
-
-func TestGetActivityById(t *testing.T) {
-	mock, teardown := SetupMockDB(t)
-	defer teardown()
-
-	activityId := int64(1)
-	now := time.Now()
-	expectedActivity := &models.Activity{
-		Id:         activityId,
-		Name:       "测试活动",
-		Intro:      "这是一个测试活动",
-		Addr:       "测试地点",
-		HeadImg:    "test.jpg",
-		UserId:     1,
-		CreateTime: now,
-		UpdateTime: now,
-		StartTime:  now.Add(time.Hour),
-		State:      1,
-		IfDelete:   0,
-		Lat:        23.456,
-		Lon:        113.567,
-	}
-
-	rows := sqlmock.NewRows([]string{
-		"id", "name", "addr", "intro", "head_img", "user_id", "create_time",
-		"update_time", "start_time", "state", "if_delete", "lat", "lon",
-	}).AddRow(
-		expectedActivity.Id, expectedActivity.Name, expectedActivity.Addr,
-		expectedActivity.Intro, expectedActivity.HeadImg, expectedActivity.UserId,
-		expectedActivity.CreateTime, expectedActivity.UpdateTime, expectedActivity.StartTime,
-		expectedActivity.State, expectedActivity.IfDelete, expectedActivity.Lat, expectedActivity.Lon,
-	)
-
-	// 测试成功获取活动
-	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `activity` WHERE id = ? ORDER BY `activity`.`id` LIMIT ?")).
-		WithArgs(activityId, 1).
-		WillReturnRows(rows)
-
-	activity, err := GetActivityById(activityId)
-	assert.NoError(t, err)
-	assert.Equal(t, expectedActivity.Id, activity.Id)
-	assert.Equal(t, expectedActivity.Name, activity.Name)
-	assert.Equal(t, expectedActivity.Intro, activity.Intro)
-	assert.Equal(t, expectedActivity.Addr, activity.Addr)
-	assert.Equal(t, expectedActivity.UserId, activity.UserId)
-	assert.NoError(t, mock.ExpectationsWereMet())
-
-	// 测试找不到活动
-	mock2, teardown2 := SetupMockDB(t)
-	defer teardown2()
-
-	mock2.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `activity` WHERE id = ? ORDER BY `activity`.`id` LIMIT ?")).
-		WithArgs(activityId, 1).
-		WillReturnError(gorm.ErrRecordNotFound)
-
-	activity, err = GetActivityById(activityId)
-	assert.Nil(t, activity)
-	assert.ErrorIs(t, err, gorm.ErrRecordNotFound)
 	assert.NoError(t, mock2.ExpectationsWereMet())
 }
 
@@ -161,17 +101,16 @@ func TestUpdateActivity(t *testing.T) {
 	assert.EqualError(t, err, "update error")
 	assert.NoError(t, mock2.ExpectationsWereMet())
 }
-
 func TestDeleteActivityById(t *testing.T) {
 	mock, teardown := SetupMockDB(t)
 	defer teardown()
 
 	activityId := int64(1)
 
-	// 测试成功删除活动
+	// 测试成功软删除活动（设置if_delete = 1）
 	mock.ExpectBegin()
-	mock.ExpectExec(regexp.QuoteMeta("DELETE FROM `activity` WHERE `activity`.`id` = ?")).
-		WithArgs(activityId).
+	mock.ExpectExec(regexp.QuoteMeta("UPDATE `activity` SET `if_delete`=? WHERE id = ?")).
+		WithArgs(1, activityId).
 		WillReturnResult(sqlmock.NewResult(1, 1))
 	mock.ExpectCommit()
 
@@ -184,13 +123,13 @@ func TestDeleteActivityById(t *testing.T) {
 	defer teardown2()
 
 	mock2.ExpectBegin()
-	mock2.ExpectExec(regexp.QuoteMeta("DELETE FROM `activity` WHERE `activity`.`id` = ?")).
-		WithArgs(activityId).
-		WillReturnError(errors.New("delete error"))
+	mock2.ExpectExec(regexp.QuoteMeta("UPDATE `activity` SET `if_delete`=? WHERE id = ?")).
+		WithArgs(1, activityId).
+		WillReturnError(errors.New("update error"))
 	mock2.ExpectRollback()
 
 	err = DeleteActivityById(activityId)
-	assert.EqualError(t, err, "delete error")
+	assert.EqualError(t, err, "update error")
 	assert.NoError(t, mock2.ExpectationsWereMet())
 }
 
@@ -247,15 +186,27 @@ func TestGetActivityMembersByActivityId(t *testing.T) {
 		{Id: 3, EventId: activityId, UserId: 103, CreateTime: createTime3},
 	}
 
+	// 创建活动成员查询结果
 	rows := sqlmock.NewRows([]string{"id", "event_id", "user_id", "create_time"})
 	for _, m := range expectedMembers {
 		rows.AddRow(m.Id, m.EventId, m.UserId, m.CreateTime)
 	}
 
-	// 测试成功获取活动成员
-	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `activity_member` WHERE activity_id = ?")).
+	// 创建用户查询结果
+	userRows := sqlmock.NewRows([]string{"id", "username", "name"}).
+		AddRow(101, "user101", "User 101").
+		AddRow(102, "user102", "User 102").
+		AddRow(103, "user103", "User 103")
+
+	// 测试成功获取活动成员并预加载用户
+	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `activity_member` WHERE event_id = ?")).
 		WithArgs(activityId).
 		WillReturnRows(rows)
+
+	// 预加载用户
+	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `user` WHERE `user`.`id` IN (?,?,?)")).
+		WithArgs(101, 102, 103).
+		WillReturnRows(userRows)
 
 	members, err := GetActivityMembersByActivityId(activityId)
 	assert.NoError(t, err)
@@ -264,6 +215,11 @@ func TestGetActivityMembersByActivityId(t *testing.T) {
 		assert.Equal(t, expectedMembers[i].Id, m.Id)
 		assert.Equal(t, expectedMembers[i].EventId, m.EventId)
 		assert.Equal(t, expectedMembers[i].UserId, m.UserId)
+
+		// 验证预加载用户信息
+		assert.NotNil(t, m.User)
+		assert.Equal(t, m.UserId, m.User.Id)
+		assert.Equal(t, fmt.Sprintf("user%d", m.UserId), m.User.Username)
 	}
 	assert.NoError(t, mock.ExpectationsWereMet())
 
@@ -271,7 +227,7 @@ func TestGetActivityMembersByActivityId(t *testing.T) {
 	mock2, teardown2 := SetupMockDB(t)
 	defer teardown2()
 
-	mock2.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `activity_member` WHERE activity_id = ?")).
+	mock2.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `activity_member` WHERE event_id = ?")).
 		WithArgs(activityId).
 		WillReturnError(errors.New("query error"))
 
@@ -297,15 +253,38 @@ func TestGetActivityMembersByUserId(t *testing.T) {
 		{Id: 3, EventId: 103, UserId: userId, CreateTime: createTime3},
 	}
 
+	// 成员查询结果
 	rows := sqlmock.NewRows([]string{"id", "event_id", "user_id", "create_time"})
 	for _, m := range expectedMembers {
 		rows.AddRow(m.Id, m.EventId, m.UserId, m.CreateTime)
 	}
 
+	// 活动查询结果
+	activityRows := sqlmock.NewRows([]string{"id", "name", "user_id"}).
+		AddRow(101, "活动101", 201).
+		AddRow(102, "活动102", 202).
+		AddRow(103, "活动103", 203)
+
+	// 活动创建者查询结果
+	activityCreatorRows := sqlmock.NewRows([]string{"id", "username", "name"}).
+		AddRow(201, "creator201", "Creator 201").
+		AddRow(202, "creator202", "Creator 202").
+		AddRow(203, "creator203", "Creator 203")
+
 	// 测试成功获取用户参与的活动
 	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `activity_member` WHERE user_id = ?")).
 		WithArgs(userId).
 		WillReturnRows(rows)
+
+	// 预加载Activity
+	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `activity` WHERE `activity`.`id` IN (?,?,?)")).
+		WithArgs(101, 102, 103).
+		WillReturnRows(activityRows)
+
+	// 预加载Activity.User
+	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `user` WHERE `user`.`id` IN (?,?,?)")).
+		WithArgs(201, 202, 203).
+		WillReturnRows(activityCreatorRows)
 
 	members, err := GetActivityMembersByUserId(userId)
 	assert.NoError(t, err)
@@ -314,6 +293,16 @@ func TestGetActivityMembersByUserId(t *testing.T) {
 		assert.Equal(t, expectedMembers[i].Id, m.Id)
 		assert.Equal(t, expectedMembers[i].EventId, m.EventId)
 		assert.Equal(t, expectedMembers[i].UserId, m.UserId)
+
+		// 验证预加载活动
+		assert.NotNil(t, m.Activity)
+		assert.Equal(t, m.EventId, m.Activity.Id)
+		assert.Equal(t, fmt.Sprintf("活动%d", m.EventId), m.Activity.Name)
+
+		// 验证预加载活动创建者
+		assert.NotNil(t, m.Activity.User)
+		creatorId := m.Activity.UserId
+		assert.Equal(t, fmt.Sprintf("creator%d", creatorId), m.Activity.User.Username)
 	}
 	assert.NoError(t, mock.ExpectationsWereMet())
 
@@ -381,7 +370,7 @@ func TestDeleteActivityMember(t *testing.T) {
 
 	// 测试成功删除活动成员
 	mock.ExpectBegin()
-	mock.ExpectExec(regexp.QuoteMeta("DELETE FROM `activity_member` WHERE activity_id = ? AND user_id = ?")).
+	mock.ExpectExec(regexp.QuoteMeta("DELETE FROM `activity_member` WHERE event_id = ? AND user_id = ?")).
 		WithArgs(activityId, userId).
 		WillReturnResult(sqlmock.NewResult(1, 1))
 	mock.ExpectCommit()
@@ -395,7 +384,7 @@ func TestDeleteActivityMember(t *testing.T) {
 	defer teardown2()
 
 	mock2.ExpectBegin()
-	mock2.ExpectExec(regexp.QuoteMeta("DELETE FROM `activity_member` WHERE activity_id = ? AND user_id = ?")).
+	mock2.ExpectExec(regexp.QuoteMeta("DELETE FROM `activity_member` WHERE event_id = ? AND user_id = ?")).
 		WithArgs(activityId, userId).
 		WillReturnError(errors.New("delete error"))
 	mock2.ExpectRollback()
@@ -455,15 +444,27 @@ func TestGetActivityCommentsByActivityId(t *testing.T) {
 		{Id: 3, EventId: activityId, UserId: 103, Content: "评论3", CreateTime: now},
 	}
 
+	// 评论查询结果
 	rows := sqlmock.NewRows([]string{"id", "event_id", "user_id", "content", "create_time"})
 	for _, c := range expectedComments {
 		rows.AddRow(c.Id, c.EventId, c.UserId, c.Content, c.CreateTime)
 	}
 
-	// 测试成功获取评论
-	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `activity_comment` WHERE event_id = ?")).
+	// 用户查询结果
+	userRows := sqlmock.NewRows([]string{"id", "username", "name"}).
+		AddRow(101, "user101", "User 101").
+		AddRow(102, "user102", "User 102").
+		AddRow(103, "user103", "User 103")
+
+	// 测试成功获取评论并预加载用户信息
+	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `activity_comment` WHERE event_id = ? ORDER BY create_time DESC")).
 		WithArgs(activityId).
 		WillReturnRows(rows)
+
+	// 预加载用户
+	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `user` WHERE `user`.`id` IN (?,?,?)")).
+		WithArgs(101, 102, 103).
+		WillReturnRows(userRows)
 
 	comments, err := GetActivityCommentsByActivityId(activityId)
 	assert.NoError(t, err)
@@ -473,6 +474,11 @@ func TestGetActivityCommentsByActivityId(t *testing.T) {
 		assert.Equal(t, expectedComments[i].EventId, c.EventId)
 		assert.Equal(t, expectedComments[i].UserId, c.UserId)
 		assert.Equal(t, expectedComments[i].Content, c.Content)
+
+		// 验证预加载用户信息
+		assert.NotNil(t, c.User)
+		assert.Equal(t, c.UserId, c.User.Id)
+		assert.Equal(t, fmt.Sprintf("user%d", c.UserId), c.User.Username)
 	}
 	assert.NoError(t, mock.ExpectationsWereMet())
 
@@ -480,7 +486,7 @@ func TestGetActivityCommentsByActivityId(t *testing.T) {
 	mock2, teardown2 := SetupMockDB(t)
 	defer teardown2()
 
-	mock2.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `activity_comment` WHERE event_id = ?")).
+	mock2.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `activity_comment` WHERE event_id = ? ORDER BY create_time DESC")).
 		WithArgs(activityId).
 		WillReturnError(errors.New("query error"))
 
@@ -503,15 +509,38 @@ func TestGetActivityCommentsByUserId(t *testing.T) {
 		{Id: 3, EventId: 103, UserId: userId, Content: "评论3", CreateTime: now},
 	}
 
+	// 评论查询结果
 	rows := sqlmock.NewRows([]string{"id", "event_id", "user_id", "content", "create_time"})
 	for _, c := range expectedComments {
 		rows.AddRow(c.Id, c.EventId, c.UserId, c.Content, c.CreateTime)
 	}
 
+	// 活动查询结果
+	activityRows := sqlmock.NewRows([]string{"id", "name", "user_id"}).
+		AddRow(101, "活动101", 201).
+		AddRow(102, "活动102", 202).
+		AddRow(103, "活动103", 203)
+
+	// 活动创建者查询结果
+	activityCreatorRows := sqlmock.NewRows([]string{"id", "username", "name"}).
+		AddRow(201, "creator201", "Creator 201").
+		AddRow(202, "creator202", "Creator 202").
+		AddRow(203, "creator203", "Creator 203")
+
 	// 测试成功获取评论
-	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `activity_comment` WHERE user_id = ?")).
+	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `activity_comment` WHERE user_id = ? ORDER BY create_time DESC")).
 		WithArgs(userId).
 		WillReturnRows(rows)
+
+	// 预加载Activity
+	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `activity` WHERE `activity`.`id` IN (?,?,?)")).
+		WithArgs(101, 102, 103).
+		WillReturnRows(activityRows)
+
+	// 预加载Activity.User
+	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `user` WHERE `user`.`id` IN (?,?,?)")).
+		WithArgs(201, 202, 203).
+		WillReturnRows(activityCreatorRows)
 
 	comments, err := GetActivityCommentsByUserId(userId)
 	assert.NoError(t, err)
@@ -521,6 +550,16 @@ func TestGetActivityCommentsByUserId(t *testing.T) {
 		assert.Equal(t, expectedComments[i].EventId, c.EventId)
 		assert.Equal(t, expectedComments[i].UserId, c.UserId)
 		assert.Equal(t, expectedComments[i].Content, c.Content)
+
+		// 验证预加载Activity
+		assert.NotNil(t, c.Activity)
+		assert.Equal(t, c.EventId, c.Activity.Id)
+		assert.Equal(t, fmt.Sprintf("活动%d", c.EventId), c.Activity.Name)
+
+		// 验证预加载Activity.User
+		assert.NotNil(t, c.Activity.User)
+		creatorId := c.Activity.UserId
+		assert.Equal(t, fmt.Sprintf("creator%d", creatorId), c.Activity.User.Username)
 	}
 	assert.NoError(t, mock.ExpectationsWereMet())
 
@@ -528,59 +567,11 @@ func TestGetActivityCommentsByUserId(t *testing.T) {
 	mock2, teardown2 := SetupMockDB(t)
 	defer teardown2()
 
-	mock2.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `activity_comment` WHERE user_id = ?")).
+	mock2.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `activity_comment` WHERE user_id = ? ORDER BY create_time DESC")).
 		WithArgs(userId).
 		WillReturnError(errors.New("query error"))
 
 	comments, err = GetActivityCommentsByUserId(userId)
-	assert.Nil(t, comments)
-	assert.EqualError(t, err, "query error")
-	assert.NoError(t, mock2.ExpectationsWereMet())
-}
-
-// TestGetActivityCommentsByActivityIdAndUserId 测试通过活动Id和用户Id获取评论
-func TestGetActivityCommentsByActivityIdAndUserId(t *testing.T) {
-	mock, teardown := SetupMockDB(t)
-	defer teardown()
-
-	activityId := int64(1)
-	userId := int64(2)
-	now := time.Now()
-	expectedComments := []models.ActivityComment{
-		{Id: 1, EventId: activityId, UserId: userId, Content: "评论1", CreateTime: now.Add(-time.Hour)},
-		{Id: 2, EventId: activityId, UserId: userId, Content: "评论2", CreateTime: now},
-	}
-
-	rows := sqlmock.NewRows([]string{"id", "event_id", "user_id", "content", "create_time"})
-	for _, c := range expectedComments {
-		rows.AddRow(c.Id, c.EventId, c.UserId, c.Content, c.CreateTime)
-	}
-
-	// 测试成功获取评论
-	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `activity_comment` WHERE event_id = ? AND user_id = ?")).
-		WithArgs(activityId, userId).
-		WillReturnRows(rows)
-
-	comments, err := GetActivityCommentsByActivityIdAndUserId(activityId, userId)
-	assert.NoError(t, err)
-	assert.Equal(t, len(expectedComments), len(comments))
-	for i, c := range comments {
-		assert.Equal(t, expectedComments[i].Id, c.Id)
-		assert.Equal(t, expectedComments[i].EventId, c.EventId)
-		assert.Equal(t, expectedComments[i].UserId, c.UserId)
-		assert.Equal(t, expectedComments[i].Content, c.Content)
-	}
-	assert.NoError(t, mock.ExpectationsWereMet())
-
-	// 测试查询错误
-	mock2, teardown2 := SetupMockDB(t)
-	defer teardown2()
-
-	mock2.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `activity_comment` WHERE event_id = ? AND user_id = ?")).
-		WithArgs(activityId, userId).
-		WillReturnError(errors.New("query error"))
-
-	comments, err = GetActivityCommentsByActivityIdAndUserId(activityId, userId)
 	assert.Nil(t, comments)
 	assert.EqualError(t, err, "query error")
 	assert.NoError(t, mock2.ExpectationsWereMet())

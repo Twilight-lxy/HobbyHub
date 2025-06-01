@@ -12,7 +12,7 @@ func AddFriend(friend *models.Friend) error {
 	_friend := models.Friend{
 		UserId:     friend.FriendId,
 		FriendId:   friend.UserId,
-		Status:     3,
+		Status:     2,
 		CreateTime: friend.CreateTime,
 	}
 	if err := config.DB.Create(&_friend).Error; err != nil {
@@ -29,13 +29,21 @@ func GetFriendById(friendId int64) (*models.Friend, error) {
 	return &friend, nil
 }
 
+// GetAllFriendsByUserId 获取用户的所有好友关系，并预加载好友用户信息
 func GetAllFriendsByUserId(userId int64) ([]models.Friend, error) {
 	var friends []models.Friend
-	if err := config.DB.Where("user_id = ?", userId).Find(&friends).Error; err != nil {
+
+	// 使用Preload预加载关联的User和FriendUser数据
+	if err := config.DB.Where("user_id = ?", userId).
+		Preload("User").
+		Preload("FriendUser").
+		Find(&friends).Error; err != nil {
 		return nil, err
 	}
+
 	return friends, nil
 }
+
 func UpdateFriend(friend *models.Friend) error {
 	if err := config.DB.Save(friend).Error; err != nil {
 		return err
