@@ -59,6 +59,11 @@ func main() {
 			friend.PUT("/", api.UpdateFriendStatus) // 更新好友申请状态
 			friend.DELETE("/:id", api.DeleteFriend) // 删除好友
 		}
+		// File routes
+		file := apiV1.Group("/file")
+		{
+			file.POST("/", api.UploadFile) // 上传文件
+		}
 	}
 
 	// Swagger 相关路由
