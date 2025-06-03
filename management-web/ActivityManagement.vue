@@ -1,4 +1,3 @@
-<!-- src/views/admin/ActivityManagement.vue -->
 <template>
   <div class="activity-management">
     <el-card>

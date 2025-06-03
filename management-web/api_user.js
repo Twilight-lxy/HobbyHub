@@ -1,4 +1,3 @@
-// src/api/user.js
 import request from '@/utils/request'
 
 export function getUserList(params) {

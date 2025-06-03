@@ -1,4 +1,3 @@
-// src/store/modules/user.js
 import { login, logout, getUserInfo } from '@/api/auth'
 
 const state = {
