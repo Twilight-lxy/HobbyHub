@@ -25,10 +25,17 @@ func main() {
 	flag.Parse()
 
 	if err := config.LoadConfig(*configPath); err != nil {
-		panic(fmt.Sprintf("加载配置失败: %v", err))
+		fmt.Printf("加载配置失败: %v", err)
+		fmt.Scanln()
+		return
 	}
 	// 这里可以根据 cfg 初始化数据库等
-	config.InitDatabase(config.GetConfig())
+	err := config.InitDatabase(config.GetConfig())
+	if err != nil {
+		fmt.Printf("初始化数据库失败: %v", err)
+		fmt.Scanln()
+		return
+	}
 
 	r := gin.Default()
 
@@ -62,7 +69,15 @@ func main() {
 		// File routes
 		file := apiV1.Group("/file")
 		{
-			file.POST("/", api.UploadFile) // 上传文件
+			file.POST("/", api.UploadFile)      // 上传文件
+			file.GET("/:id", api.DownloadFile)  // 下载文件
+			file.DELETE("/:id", api.DeleteFile) // 删除文件
+		}
+		// Activity routes
+		activity := apiV1.Group("/activity")
+		{
+			activity.GET("/:id", api.GetActivitie) // 获取活动列表
+			activity.GET("/", api.GetAllActivitie) // 获取活动详情
 		}
 	}
 

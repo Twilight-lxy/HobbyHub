@@ -8,14 +8,14 @@ import (
 type User struct {
 	Id         int64     `json:"id" gorm:"primaryKey;autoIncrement;comment:'用户Id'"`
 	Username   string    `json:"username" gorm:"unique;comment:'用户名'"`
-	Password   string    `json:"password;comment:'密码'"`
-	Name       string    `json:"name;comment:'姓名'"`
-	Gender     string    `json:"gender;comment:'性别'"`
-	Addr       string    `json:"addr;comment:'地址'"`
-	HeadImg    string    `json:"headImg;comment:'头像图片'"`
-	CreateTime time.Time `json:"createTime;comment:'创建时间'"`
-	Lat        float64   `json:"lat;comment:'纬度'"`
-	Lon        float64   `json:"lon;comment:'经度'"`
+	Password   string    `json:"password" gorm:"comment:'密码'"`
+	Name       string    `json:"name" gorm:"comment:'姓名'"`
+	Gender     string    `json:"gender" gorm:"comment:'性别'"`
+	Addr       string    `json:"addr" gorm:"comment:'地址'"`
+	HeadImg    string    `json:"headImg" gorm:"comment:'头像图片'"`
+	CreateTime time.Time `json:"createTime" gorm:"comment:'创建时间'"`
+	Lat        float64   `json:"lat" gorm:"comment:'纬度'"`
+	Lon        float64   `json:"lon" gorm:"comment:'经度'"`
 }
 
 func (User) TableName() string {
