@@ -13,35 +13,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type ChatHistoryResponse struct {
-	Id         int64     `json:"id" binding:"required"`           // 聊天记录ID
-	UserIdFrom int64     `json:"user_id_from" binding:"required"` // 发送者用户Id
-	UserIdTo   int64     `json:"user_id_to" binding:"required"`
-	Content    string    `json:"content" binding:"required"`     // 聊天内容
-	CreateTime time.Time `json:"create_time" binding:"required"` // 创建时间
-}
-
-func infoFromModelsChat(chat models.Chat) ChatHistoryResponse {
-	// 将 models.Chat 转换为 ChatHistoryResponse
-	c := ChatHistoryResponse{
-		Id:         chat.Id,
-		UserIdFrom: chat.UserIdFrom,
-		UserIdTo:   chat.UserIdTo,
-		Content:    chat.Content,
-		CreateTime: chat.CreateTime,
-	}
-	// 这里可以添加其他必要的转换逻辑
-	return c
-}
-func infoFromModelsChats(chats []models.Chat) []ChatHistoryResponse {
-	// 将 []models.Chat 转换为 []ChatHistoryResponse
-	var chatHistory []ChatHistoryResponse
-	for _, chat := range chats {
-		chatHistory = append(chatHistory, infoFromModelsChat(chat))
-	}
-	return chatHistory
-}
-
 // @Summary 获取聊天记录
 // @Description 根据两个用户的id获取聊天记录列表
 // @Tags 聊天相关接口
@@ -51,7 +22,7 @@ func infoFromModelsChats(chats []models.Chat) []ChatHistoryResponse {
 // @Param starttime query string false "开始时间，格式为YYYY-MM-DD HH:MM:SS"
 // @Param endtime query string false "结束时间，格式为YYYY-MM-DD HH:MM:SS"
 // @Param Authorization header string true "JWT Token"
-// @Success 200 {array} ChatHistoryResponse
+// @Success 200 {array} models.Chat
 // @Failure 400 {object} models.ErrorResponse
 // @Failure 404 {object} models.ErrorResponse
 // @Router /v1/chat	 [get]
@@ -161,9 +132,9 @@ func GetChatHistory(c *gin.Context) {
 			filteredChats = append(filteredChats, chat)
 		}
 
-		c.JSON(http.StatusOK, infoFromModelsChats(filteredChats))
+		c.JSON(http.StatusOK, filteredChats)
 	} else {
-		c.JSON(http.StatusOK, infoFromModelsChats(allChats))
+		c.JSON(http.StatusOK, allChats)
 	}
 }
 
@@ -179,7 +150,7 @@ type newChatRequest struct {
 // @Produce json
 // @Param chat body newChatRequest true "聊天记录内容"
 // @Param Authorization header string true "JWT Token"
-// @Success 200 {array} ChatHistoryResponse
+// @Success 200 {array} models.Chat
 // @Failure 400 {object} models.ErrorResponse
 // @Failure 404 {object} models.ErrorResponse
 // @Router /v1/chat [post]
@@ -234,44 +205,7 @@ func SendChat(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, infoFromModelsChat(*chat))
-}
-
-// @Summary 删除聊天消息
-// @Description 删除聊天消息
-// @Tags 聊天相关接口
-// @Accept json
-// @Produce json
-// @Param id path integer true "需要删除的Chat 记录ID"
-// @Param Authorization header string true "JWT Token"
-// @Success 200 {object} models.SuccessResponse
-// @Failure 400 {object} models.ErrorResponse
-// @Failure 404 {object} models.ErrorResponse
-// @Router /v1/chat/{id} [delete]
-func DeleteChat(c *gin.Context) {
-	chatIdStr := c.Param("id")
-	jwtToken := c.GetHeader("Authorization")
-
-	if jwtToken == "" {
-		c.JSON(http.StatusUnauthorized, &models.ErrorResponse{ErrorMessage: "jwt token is required"})
-		return
-	}
-	jwtUser, err := utils.ParseJWT(jwtToken)
-	if err != nil {
-		c.JSON(http.StatusUnauthorized, &models.ErrorResponse{ErrorMessage: "unauthorized"})
-		return
-	}
-	chatId, err := strconv.ParseInt(chatIdStr, 10, 64)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, &models.ErrorResponse{ErrorMessage: "invalid chat id"})
-		return
-	}
-	err = controllers.DeleteChatById(chatId, jwtUser.Id)
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, &models.ErrorResponse{ErrorMessage: "failed to delete chat message"})
-		return
-	}
-	c.JSON(http.StatusOK, &models.SuccessResponse{SuccessMessage: "chat message deleted successfully"})
+	c.JSON(http.StatusOK, *chat)
 }
 
 // @Summary 删除聊天消息

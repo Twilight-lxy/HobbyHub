@@ -14,11 +14,6 @@ func AddActivity(activity *models.Activity) error {
 func GetActivityById(activityId int64) (*models.Activity, error) {
 	var activity models.Activity
 	if err := config.DB.Where("id = ? AND if_delete = 0", activityId).
-		Preload("User").
-		Preload("Members").
-		Preload("Members.User").
-		Preload("Comments").
-		Preload("Comments.User").
 		First(&activity).Error; err != nil {
 		return nil, err
 	}
@@ -89,8 +84,7 @@ func AddActivityMember(activityMember *models.ActivityMember) error {
 // GetActivityMembersByActivityId 获取活动的所有成员
 func GetActivityMembersByActivityId(activityId int64) ([]models.ActivityMember, error) {
 	var members []models.ActivityMember
-	if err := config.DB.Where("event_id = ?", activityId).
-		Preload("User").
+	if err := config.DB.Where("activity_id = ?", activityId).
 		Find(&members).Error; err != nil {
 		return nil, err
 	}
@@ -101,8 +95,6 @@ func GetActivityMembersByActivityId(activityId int64) ([]models.ActivityMember, 
 func GetActivityMembersByUserId(userId int64) ([]models.ActivityMember, error) {
 	var members []models.ActivityMember
 	if err := config.DB.Where("user_id = ?", userId).
-		Preload("Activity").
-		Preload("Activity.User").
 		Find(&members).Error; err != nil {
 		return nil, err
 	}
@@ -119,7 +111,7 @@ func UpdateActivityMember(activityMember *models.ActivityMember) error {
 
 // DeleteActivityMember 删除活动成员
 func DeleteActivityMember(activityId, userId int64) error {
-	if err := config.DB.Where("event_id = ? AND user_id = ?", activityId, userId).
+	if err := config.DB.Where("activity_id = ? AND user_id = ?", activityId, userId).
 		Delete(&models.ActivityMember{}).Error; err != nil {
 		return err
 	}
@@ -137,8 +129,7 @@ func AddActivityComment(activityComment *models.ActivityComment) error {
 // GetActivityCommentsByActivityId 获取活动的所有评论
 func GetActivityCommentsByActivityId(activityId int64) ([]models.ActivityComment, error) {
 	var comments []models.ActivityComment
-	if err := config.DB.Where("event_id = ?", activityId).
-		Preload("User").
+	if err := config.DB.Where("activity_id = ?", activityId).
 		Order("create_time DESC").
 		Find(&comments).Error; err != nil {
 		return nil, err
@@ -150,8 +141,6 @@ func GetActivityCommentsByActivityId(activityId int64) ([]models.ActivityComment
 func GetActivityCommentsByUserId(userId int64) ([]models.ActivityComment, error) {
 	var comments []models.ActivityComment
 	if err := config.DB.Where("user_id = ?", userId).
-		Preload("Activity").
-		Preload("Activity.User").
 		Order("create_time DESC").
 		Find(&comments).Error; err != nil {
 		return nil, err
@@ -161,7 +150,7 @@ func GetActivityCommentsByUserId(userId int64) ([]models.ActivityComment, error)
 
 func GetActivityCommentsByActivityIdAndUserId(activityId, userId int64) ([]models.ActivityComment, error) {
 	var comments []models.ActivityComment
-	if err := config.DB.Where("event_id = ? AND user_id = ?", activityId, userId).Find(&comments).Error; err != nil {
+	if err := config.DB.Where("activity_id = ? AND user_id = ?", activityId, userId).Find(&comments).Error; err != nil {
 		return nil, err
 	}
 	return comments, nil

@@ -15,8 +15,6 @@ func AddChat(chat *models.Chat) error {
 func GetChatById(chatId int64) (*models.Chat, error) {
 	var chat models.Chat
 	if err := config.DB.Where("id = ?", chatId).
-		Preload("UserFrom").
-		Preload("UserTo").
 		First(&chat).Error; err != nil {
 		return nil, err
 	}
@@ -27,8 +25,6 @@ func GetChatById(chatId int64) (*models.Chat, error) {
 func GetAllChatByFromUserIdToUserId(fromUserId, toUserId int64) ([]models.Chat, error) {
 	var chats []models.Chat
 	if err := config.DB.Where("user_id_from = ? AND user_id_to = ?", fromUserId, toUserId).
-		Preload("UserFrom").
-		Preload("UserTo").
 		Order("create_time DESC").
 		Find(&chats).Error; err != nil {
 		return nil, err

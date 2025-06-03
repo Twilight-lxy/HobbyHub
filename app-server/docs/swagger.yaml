@@ -1,28 +1,5 @@
 basePath: /api
 definitions:
-  api.ChatHistoryResponse:
-    properties:
-      content:
-        description: 聊天内容
-        type: string
-      create_time:
-        description: 创建时间
-        type: string
-      id:
-        description: 聊天记录ID
-        type: integer
-      user_id_from:
-        description: 发送者用户Id
-        type: integer
-      user_id_to:
-        type: integer
-    required:
-    - content
-    - create_time
-    - id
-    - user_id_from
-    - user_id_to
-    type: object
   api.FriendRequest:
     properties:
       user_id:
@@ -101,28 +78,17 @@ definitions:
     properties:
       content:
         type: string
-      createTime:
+      create_time:
         type: string
-      eventId:
-        type: integer
       id:
         type: integer
-      user:
-        $ref: '#/definitions/models.User'
-      userId:
+      status_from:
         type: integer
-    type: object
-  models.ActivityMember:
-    properties:
-      createTime:
-        type: string
-      eventId:
+      status_to:
         type: integer
-      id:
+      user_id_from:
         type: integer
-      user:
-        $ref: '#/definitions/models.User'
-      userId:
+      user_id_to:
         type: integer
     type: object
   models.ErrorResponse:
@@ -155,14 +121,10 @@ definitions:
         type: string
       friend_id:
         type: integer
-      friend_user:
-        $ref: '#/definitions/models.User'
       id:
         type: integer
       status:
         type: integer
-      user:
-        $ref: '#/definitions/models.User'
       user_id:
         type: integer
     type: object
@@ -173,23 +135,23 @@ definitions:
     type: object
   models.User:
     properties:
-      addr;comment:'地址':
+      addr:
         type: string
-      createTime;comment:'创建时间':
+      createTime:
         type: string
-      gender;comment:'性别':
+      gender:
         type: string
-      headImg;comment:'头像图片':
+      headImg:
         type: string
       id:
         type: integer
-      lat;comment:'纬度':
+      lat:
         type: number
-      lon;comment:'经度':
+      lon:
         type: number
-      name;comment:'姓名':
+      name:
         type: string
-      password;comment:'密码':
+      password:
         type: string
       username:
         type: string
@@ -288,7 +250,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/api.ChatHistoryResponse'
+              $ref: '#/definitions/models.Chat'
             type: array
         "400":
           description: Bad Request
@@ -324,7 +286,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/api.ChatHistoryResponse'
+              $ref: '#/definitions/models.Chat'
             type: array
         "400":
           description: Bad Request

@@ -148,7 +148,7 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/api.ChatHistoryResponse"
+                                "$ref": "#/definitions/models.Chat"
                             }
                         }
                     },
@@ -202,7 +202,7 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/api.ChatHistoryResponse"
+                                "$ref": "#/definitions/models.Chat"
                             }
                         }
                     },
@@ -815,37 +815,6 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "api.ChatHistoryResponse": {
-            "type": "object",
-            "required": [
-                "content",
-                "create_time",
-                "id",
-                "user_id_from",
-                "user_id_to"
-            ],
-            "properties": {
-                "content": {
-                    "description": "聊天内容",
-                    "type": "string"
-                },
-                "create_time": {
-                    "description": "创建时间",
-                    "type": "string"
-                },
-                "id": {
-                    "description": "聊天记录ID",
-                    "type": "integer"
-                },
-                "user_id_from": {
-                    "description": "发送者用户Id",
-                    "type": "integer"
-                },
-                "user_id_to": {
-                    "type": "integer"
-                }
-            }
-        },
         "api.FriendRequest": {
             "type": "object",
             "required": [
@@ -961,39 +930,22 @@ const docTemplate = `{
                 "content": {
                     "type": "string"
                 },
-                "createTime": {
+                "create_time": {
                     "type": "string"
-                },
-                "eventId": {
-                    "type": "integer"
                 },
                 "id": {
                     "type": "integer"
                 },
-                "user": {
-                    "$ref": "#/definitions/models.User"
-                },
-                "userId": {
-                    "type": "integer"
-                }
-            }
-        },
-        "models.ActivityMember": {
-            "type": "object",
-            "properties": {
-                "createTime": {
-                    "type": "string"
-                },
-                "eventId": {
+                "status_from": {
                     "type": "integer"
                 },
-                "id": {
+                "status_to": {
                     "type": "integer"
                 },
-                "user": {
-                    "$ref": "#/definitions/models.User"
+                "user_id_from": {
+                    "type": "integer"
                 },
-                "userId": {
+                "user_id_to": {
                     "type": "integer"
                 }
             }
@@ -1044,9 +996,6 @@ const docTemplate = `{
                 "friend_id": {
                     "type": "integer"
                 },
-                "friend_user": {
-                    "$ref": "#/definitions/models.User"
-                },
                 "id": {
                     "type": "integer"
                 },
@@ -1069,31 +1018,31 @@ const docTemplate = `{
         "models.User": {
             "type": "object",
             "properties": {
-                "addr;comment:'地址'": {
+                "addr": {
                     "type": "string"
                 },
-                "createTime;comment:'创建时间'": {
+                "createTime": {
                     "type": "string"
                 },
-                "gender;comment:'性别'": {
+                "gender": {
                     "type": "string"
                 },
-                "headImg;comment:'头像图片'": {
+                "headImg": {
                     "type": "string"
                 },
                 "id": {
                     "type": "integer"
                 },
-                "lat;comment:'纬度'": {
+                "lat": {
                     "type": "number"
                 },
-                "lon;comment:'经度'": {
+                "lon": {
                     "type": "number"
                 },
-                "name;comment:'姓名'": {
+                "name": {
                     "type": "string"
                 },
-                "password;comment:'密码'": {
+                "password": {
                     "type": "string"
                 },
                 "username": {

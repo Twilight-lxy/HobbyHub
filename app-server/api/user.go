@@ -193,6 +193,9 @@ func UpdateUserInfo(c *gin.Context) {
 	if user.Password != "" {
 		user.Password = utils.HashPassword(user.Password) // 如果提供了密码，进行哈希处理
 	}
+	user.Id = 0                   // 不更新用户ID
+	user.CreateTime = time.Time{} // 不更新创建时间
+	user.Name = ""                // 不更新用户名
 	jwtToken := c.GetHeader("Authorization")
 	if jwtToken == "" {
 		c.JSON(http.StatusBadRequest, &models.ErrorResponse{ErrorMessage: "jwt token is required"})

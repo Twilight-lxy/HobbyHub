@@ -53,7 +53,7 @@ func (u *Activity) UpdateActivityFields(newu Activity) {
 
 type ActivityMember struct {
 	Id         int64     `json:"id" gorm:"primaryKey;autoIncrement;comment:'记录Id'"`
-	EventId    int64     `json:"eventId" gorm:"index;not null;comment:'活动Id'"`
+	ActivityId int64     `json:"activityId" gorm:"index;not null;comment:'活动Id'"`
 	UserId     int64     `json:"userId" gorm:"index;not null;comment:'用户Id'"`
 	CreateTime time.Time `json:"createTime" gorm:"not null;comment:'创建时间'"`
 }
@@ -90,7 +90,7 @@ func (u *ActivityMember) UpdateActivityMemberFields(newu ActivityMember) {
 
 type ActivityComment struct {
 	Id         int64     `json:"id" gorm:"primaryKey;autoIncrement;comment:'记录Id'"`
-	EventId    int64     `json:"eventId" gorm:"index;not null;comment:'活动Id'"`
+	ActivityId int64     `json:"activityId" gorm:"index;not null;comment:'活动Id'"`
 	UserId     int64     `json:"userId" gorm:"index;not null;comment:'用户Id'"`
 	Content    string    `json:"content" gorm:"type:text;not null;comment:'评论内容'"`
 	CreateTime time.Time `json:"createTime" gorm:"not null;comment:'创建时间'"`

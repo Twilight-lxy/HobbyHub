@@ -35,10 +35,7 @@ func GetFriendById(friendId int64) (*models.Friend, error) {
 func GetAllFriendsByUserId(userId int64) ([]models.Friend, error) {
 	var friends []models.Friend
 
-	// 使用Preload预加载关联的User和FriendUser数据
 	if err := config.DB.Where("user_id = ?", userId).
-		Preload("User").
-		Preload("FriendUser").
 		Find(&friends).Error; err != nil {
 		return nil, err
 	}

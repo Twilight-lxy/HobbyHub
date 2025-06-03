@@ -103,7 +103,7 @@ func SendFriendRequest(c *gin.Context) {
 	}
 
 	friend1, friend2, _ := controllers.GetFriendByUserIdAndFriendId(jwtUser.Id, request.UserId)
-	if friend1 != nil && friend2 != nil {
+	if friend1.Id != 0 && friend2.Id != 0 {
 		if friend1.Status == 1 && friend2.Status == 1 {
 			c.JSON(http.StatusBadRequest, &models.ErrorResponse{ErrorMessage: "friend already exists"})
 		} else if friend1.Status == 3 && friend2.Status == 2 {
@@ -118,7 +118,6 @@ func SendFriendRequest(c *gin.Context) {
 			c.JSON(http.StatusOK, &models.SuccessResponse{SuccessMessage: "friend request updated successfully"})
 			return
 		} else if friend1.Status == 0 || friend2.Status == 0 {
-			c.JSON(http.StatusBadRequest, &models.ErrorResponse{ErrorMessage: "friend request already rejected"})
 			friend1.Status = 3 // 更新状态为已发出申请
 			friend2.Status = 2 // 更新状态为等待接受
 			if err := controllers.UpdateFriendSynchronize(friend1, friend2); err != nil {
