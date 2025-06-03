@@ -168,10 +168,10 @@ func TestDeleteActivityById(t *testing.T) {
 
 	activityId := int64(1)
 
-	// 测试成功删除活动
+	// 测试成功软删除活动（设置if_delete = 1）
 	mock.ExpectBegin()
-	mock.ExpectExec(regexp.QuoteMeta("DELETE FROM `activity` WHERE `activity`.`id` = ?")).
-		WithArgs(activityId).
+	mock.ExpectExec(regexp.QuoteMeta("UPDATE `activity` SET `if_delete`=? WHERE id = ?")).
+		WithArgs(1, activityId).
 		WillReturnResult(sqlmock.NewResult(1, 1))
 	mock.ExpectCommit()
 
@@ -184,13 +184,13 @@ func TestDeleteActivityById(t *testing.T) {
 	defer teardown2()
 
 	mock2.ExpectBegin()
-	mock2.ExpectExec(regexp.QuoteMeta("DELETE FROM `activity` WHERE `activity`.`id` = ?")).
-		WithArgs(activityId).
-		WillReturnError(errors.New("delete error"))
+	mock2.ExpectExec(regexp.QuoteMeta("UPDATE `activity` SET `if_delete`=? WHERE id = ?")).
+		WithArgs(1, activityId).
+		WillReturnError(errors.New("update error"))
 	mock2.ExpectRollback()
 
 	err = DeleteActivityById(activityId)
-	assert.EqualError(t, err, "delete error")
+	assert.EqualError(t, err, "update error")
 	assert.NoError(t, mock2.ExpectationsWereMet())
 }
 

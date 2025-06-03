@@ -8,6 +8,21 @@ definitions:
     required:
     - user_id
     type: object
+  api.UpdateFriendRequest:
+    properties:
+      friend_id:
+        description: 好友ID
+        type: integer
+      status:
+        description: 申请状态，0-拒绝，1-同意
+        enum:
+        - 0
+        - 1
+        type: integer
+    required:
+    - friend_id
+    - status
+    type: object
   api.UsernameAndPassword:
     properties:
       password:
@@ -54,14 +69,13 @@ definitions:
     type: object
   models.Friend:
     properties:
-      apply:
-        description: '0: Pending, 1: Accepted, 2: Rejected'
-        type: integer
       create_time:
         type: string
       friend_id:
         type: integer
       id:
+        type: integer
+      status:
         type: integer
       user_id:
         type: integer
@@ -73,23 +87,23 @@ definitions:
     type: object
   models.User:
     properties:
-      addr:
+      addr;comment:'地址':
         type: string
-      createTime:
+      createTime;comment:'创建时间':
         type: string
-      gender:
+      gender;comment:'性别':
         type: string
-      headImg:
+      headImg;comment:'头像图片':
         type: string
       id:
         type: integer
-      lat:
+      lat;comment:'纬度':
         type: number
-      lon:
+      lon;comment:'经度':
         type: number
-      name:
+      name;comment:'姓名':
         type: string
-      password:
+      password;comment:'密码':
         type: string
       username:
         type: string
@@ -181,6 +195,40 @@ paths:
       summary: 发送聊天消息
       tags:
       - 聊天相关接口
+  /v1/chat/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: 删除聊天消息
+      parameters:
+      - description: 需要删除的Chat 记录ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: JWT Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: 删除聊天消息
+      tags:
+      - 聊天相关接口
   /v1/friend:
     get:
       description: 通过用户ID获取好友列表
@@ -247,10 +295,10 @@ paths:
       parameters:
       - description: 好友申请信息
         in: body
-        name: friendRequest
+        name: updatefriendRequest
         required: true
         schema:
-          $ref: '#/definitions/api.FriendRequest'
+          $ref: '#/definitions/api.UpdateFriendRequest'
       - description: JWT Token
         in: header
         name: Authorization
@@ -274,11 +322,11 @@ paths:
       summary: 更新好友状态
       tags:
       - 好友相关接口
-  /v1/friend/:id:
+  /v1/friend/{id}:
     delete:
       description: 通过ID删除好友状态
       parameters:
-      - description: 需要删除的Friend ID
+      - description: 需要删除的Friend 记录ID
         in: path
         name: id
         required: true
@@ -338,7 +386,7 @@ paths:
       - 用户相关接口
   /v1/user:
     get:
-      description: 通过用户ID获取用户信息，可选用户id或用户名查询，优先使用用户id
+      description: 通过用户ID获取用户信息；可选用户id或用户名查询，优先使用用户id；不填写id或用户名，使用jwt token获取
       parameters:
       - description: 用户ID
         in: query

@@ -119,7 +119,7 @@ func UserLogin(c *gin.Context) {
 		c.JSON(http.StatusNotFound, &models.ErrorResponse{ErrorMessage: "user not found or invalid credentials"})
 		return
 	}
-	if dbUser.Password != req.Password {
+	if !utils.CheckPasswordHash(req.Password, dbUser.Password) {
 		c.JSON(http.StatusNotFound, &models.ErrorResponse{ErrorMessage: "username or password is incorrect"})
 		return
 	}
@@ -154,10 +154,10 @@ func UserRegister(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, &models.ErrorResponse{ErrorMessage: "username already exists"})
 		return
 	}
-	// 创建新用户
+	// 创建新用户，存储哈希后的密码
 	newUser := &models.User{
 		Username:   req.Username,
-		Password:   req.Password,
+		Password:   utils.HashPassword(req.Password), // 使用哈希函数处理密码
 		CreateTime: time.Now(),
 	}
 	if err := controllers.AddUser(newUser); err != nil {
@@ -189,6 +189,9 @@ func UpdateUserInfo(c *gin.Context) {
 	if err := c.ShouldBindJSON(&user); err != nil {
 		c.JSON(http.StatusBadRequest, &models.ErrorResponse{ErrorMessage: "invalid user data"})
 		return
+	}
+	if user.Password != "" {
+		user.Password = utils.HashPassword(user.Password) // 如果提供了密码，进行哈希处理
 	}
 	jwtToken := c.GetHeader("Authorization")
 	if jwtToken == "" {

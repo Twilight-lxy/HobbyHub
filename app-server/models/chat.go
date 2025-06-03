@@ -11,8 +11,8 @@ type Chat struct {
 	UserIdTo   int64     `json:"user_id_to" gorm:"index;not null;comment:'接收用户Id'"`
 	Content    string    `json:"content" gorm:"type:text;not null;comment:'消息内容'"`
 	CreateTime time.Time `json:"create_time" gorm:"not null;comment:'创建时间'"`
-	StatusFrom int32     `json:"status_from" gorm:"not null;default:2;comment:'发送方状态（0: 删除, 1: 已读, 2: 未读）'"`
-	StatusTo   int32     `json:"status_to" gorm:"not null;default:2;comment:'接收方状态（0: 删除, 1: 已读, 2: 未读）'"`
+	StatusFrom int32     `json:"status_from" gorm:"not null;default:2;comment:'发送方状态（0: 删除, 1: 正常）'"`
+	StatusTo   int32     `json:"status_to" gorm:"not null;default:2;comment:'接收方状态（0: 删除, 1: 正常）'"`
 }
 
 func (Chat) TableName() string {

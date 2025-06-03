@@ -5,12 +5,12 @@ import (
 	"hobbyhub-server/models"
 )
 
+// AddActivity 添加新活动
 func AddActivity(activity *models.Activity) error {
-	if err := config.DB.Create(activity).Error; err != nil {
-		return err
-	}
-	return nil
+	return config.DB.Create(activity).Error
 }
+
+// GetAllActivitById 获取指定活动
 func GetActivityById(activityId int64) (*models.Activity, error) {
 	var activity models.Activity
 	if err := config.DB.Where("id = ?", activityId).First(&activity).Error; err != nil {
@@ -18,19 +18,50 @@ func GetActivityById(activityId int64) (*models.Activity, error) {
 	}
 	return &activity, nil
 }
+
+// UpdateActivity 更新活动信息
 func UpdateActivity(activity *models.Activity) error {
 	if err := config.DB.Save(activity).Error; err != nil {
 		return err
 	}
 	return nil
 }
+
+// DeleteActivityById 软删除活动(标记删除状态)
 func DeleteActivityById(activityId int64) error {
-	if err := config.DB.Delete(&models.Activity{}, activityId).Error; err != nil {
+	// 使用事务进行软删除
+	tx := config.DB.Begin()
+	if tx.Error != nil {
+		return tx.Error
+	}
+
+	defer func() {
+		if r := recover(); r != nil {
+			tx.Rollback()
+		}
+	}()
+
+	if err := tx.Model(&models.Activity{}).
+		Where("id = ?", activityId).
+		Update("if_delete", 1).Error; err != nil {
+		tx.Rollback()
 		return err
 	}
-	return nil
+
+	return tx.Commit().Error
 }
 
+// GetActivitiesByUserId 获取用户创建的活动
+func GetActivitiesByUserId(userId int64) ([]models.Activity, error) {
+	var activities []models.Activity
+	if err := config.DB.Where("user_id = ? AND if_delete = 0", userId).
+		Find(&activities).Error; err != nil {
+		return nil, err
+	}
+	return activities, nil
+}
+
+// AddActivityMember 添加活动成员
 func AddActivityMember(activityMember *models.ActivityMember) error {
 	if err := config.DB.Create(activityMember).Error; err != nil {
 		return err
@@ -38,6 +69,7 @@ func AddActivityMember(activityMember *models.ActivityMember) error {
 	return nil
 }
 
+// GetActivityMembersByActivityId 获取活动的所有成员
 func GetActivityMembersByActivityId(activityId int64) ([]models.ActivityMember, error) {
 	var members []models.ActivityMember
 	if err := config.DB.Where("activity_id = ?", activityId).Find(&members).Error; err != nil {
@@ -54,6 +86,7 @@ func GetActivityMembersByUserId(userId int64) ([]models.ActivityMember, error) {
 	return members, nil
 }
 
+// UpdateActivityMember 更新活动成员
 func UpdateActivityMember(activityMember *models.ActivityMember) error {
 	if err := config.DB.Save(activityMember).Error; err != nil {
 		return err
@@ -61,6 +94,7 @@ func UpdateActivityMember(activityMember *models.ActivityMember) error {
 	return nil
 }
 
+// DeleteActivityMember 删除活动成员
 func DeleteActivityMember(activityId, userId int64) error {
 	if err := config.DB.Where("activity_id = ? AND user_id = ?", activityId, userId).Delete(&models.ActivityMember{}).Error; err != nil {
 		return err
@@ -68,6 +102,7 @@ func DeleteActivityMember(activityId, userId int64) error {
 	return nil
 }
 
+// AddActivityComment 添加活动评论
 func AddActivityComment(activityComment *models.ActivityComment) error {
 	if err := config.DB.Create(activityComment).Error; err != nil {
 		return err
@@ -75,6 +110,7 @@ func AddActivityComment(activityComment *models.ActivityComment) error {
 	return nil
 }
 
+// GetActivityCommentsByActivityId 获取活动的所有评论
 func GetActivityCommentsByActivityId(activityId int64) ([]models.ActivityComment, error) {
 	var comments []models.ActivityComment
 	if err := config.DB.Where("event_id = ?", activityId).Find(&comments).Error; err != nil {
@@ -83,6 +119,7 @@ func GetActivityCommentsByActivityId(activityId int64) ([]models.ActivityComment
 	return comments, nil
 }
 
+// GetActivityCommentsByUserId 获取用户的所有活动评论
 func GetActivityCommentsByUserId(userId int64) ([]models.ActivityComment, error) {
 	var comments []models.ActivityComment
 	if err := config.DB.Where("user_id = ?", userId).Find(&comments).Error; err != nil {
@@ -99,6 +136,7 @@ func GetActivityCommentsByActivityIdAndUserId(activityId, userId int64) ([]model
 	return comments, nil
 }
 
+// UpdateActivityComment 更新活动评论
 func UpdateActivityComment(activityComment *models.ActivityComment) error {
 	if err := config.DB.Save(activityComment).Error; err != nil {
 		return err
@@ -106,6 +144,7 @@ func UpdateActivityComment(activityComment *models.ActivityComment) error {
 	return nil
 }
 
+// DeleteActivityComment 删除活动评论
 func DeleteActivityComment(commentId int64) error {
 	if err := config.DB.Delete(&models.ActivityComment{}, commentId).Error; err != nil {
 		return err

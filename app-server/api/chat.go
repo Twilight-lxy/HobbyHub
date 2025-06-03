@@ -65,14 +65,28 @@ func GetChatHistory(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, &models.ErrorResponse{ErrorMessage: "failed to get chat history"})
 		return
 	}
-
+	// 过滤已删除记录
+	var filteredChatsForward []models.Chat
+	for _, chat := range chatsForward {
+		if chat.StatusFrom != 0 {
+			filteredChatsForward = append(filteredChatsForward, chat)
+		}
+	}
+	chatsForward = filteredChatsForward
 	// 获取从toUserId到fromUserId的聊天记录
 	chatsBackward, err := controllers.GetAllChatByFromUserIdToUserId(toUserId, fromUserId)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, &models.ErrorResponse{ErrorMessage: "failed to get chat history"})
 		return
 	}
-
+	// 过滤已删除记录
+	var filteredChatsBackward []models.Chat
+	for _, chat := range chatsBackward {
+		if chat.StatusTo != 0 {
+			filteredChatsBackward = append(filteredChatsBackward, chat)
+		}
+	}
+	chatsBackward = filteredChatsBackward
 	// 合并两个方向的聊天记录
 	allChats := append(chatsForward, chatsBackward...)
 
@@ -174,8 +188,8 @@ func SendChat(c *gin.Context) {
 		UserIdTo:   req.UserIdTo,
 		Content:    req.Content,
 		CreateTime: time.Now(),
-		StatusFrom: 0,
-		StatusTo:   0,
+		StatusFrom: 1,
+		StatusTo:   1,
 	}
 
 	if err := controllers.AddChat(chat); err != nil {
@@ -184,4 +198,41 @@ func SendChat(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, chat)
+}
+
+// @Summary 删除聊天消息
+// @Description 删除聊天消息
+// @Tags 聊天相关接口
+// @Accept json
+// @Produce json
+// @Param id path integer true "需要删除的Chat 记录ID"
+// @Param Authorization header string true "JWT Token"
+// @Success 200 {object} models.SuccessResponse
+// @Failure 400 {object} models.ErrorResponse
+// @Failure 404 {object} models.ErrorResponse
+// @Router /v1/chat/{id} [delete]
+func DeleteChat(c *gin.Context) {
+	chatIdStr := c.Param("id")
+	jwtToken := c.GetHeader("Authorization")
+
+	if jwtToken == "" {
+		c.JSON(http.StatusUnauthorized, &models.ErrorResponse{ErrorMessage: "jwt token is required"})
+		return
+	}
+	jwtUser, err := utils.ParseJWT(jwtToken)
+	if err != nil {
+		c.JSON(http.StatusUnauthorized, &models.ErrorResponse{ErrorMessage: "unauthorized"})
+		return
+	}
+	chatId, err := strconv.ParseInt(chatIdStr, 10, 64)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, &models.ErrorResponse{ErrorMessage: "invalid chat id"})
+		return
+	}
+	err = controllers.DeleteChatById(chatId, jwtUser.Id)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, &models.ErrorResponse{ErrorMessage: "failed to delete chat message"})
+		return
+	}
+	c.JSON(http.StatusOK, &models.SuccessResponse{SuccessMessage: "chat message deleted successfully"})
 }
