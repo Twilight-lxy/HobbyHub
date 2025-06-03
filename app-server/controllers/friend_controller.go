@@ -5,6 +5,7 @@ import (
 	"hobbyhub-server/models"
 )
 
+// AddFriend 添加好友关系
 func AddFriend(friend *models.Friend) error {
 	if err := config.DB.Create(friend).Error; err != nil {
 		return err
@@ -21,6 +22,7 @@ func AddFriend(friend *models.Friend) error {
 	return nil
 }
 
+// GetFriendById 获取好友关系详情
 func GetFriendById(friendId int64) (*models.Friend, error) {
 	var friend models.Friend
 	if err := config.DB.Where("id = ?", friendId).First(&friend).Error; err != nil {
@@ -29,7 +31,7 @@ func GetFriendById(friendId int64) (*models.Friend, error) {
 	return &friend, nil
 }
 
-// GetAllFriendsByUserId 获取用户的所有好友关系，并预加载好友用户信息
+// GetAllFriendsByUserId 获取用户的所有好友关系
 func GetAllFriendsByUserId(userId int64) ([]models.Friend, error) {
 	var friends []models.Friend
 
@@ -44,12 +46,15 @@ func GetAllFriendsByUserId(userId int64) ([]models.Friend, error) {
 	return friends, nil
 }
 
+// UpdateFriend 更新好友关系
 func UpdateFriend(friend *models.Friend) error {
 	if err := config.DB.Save(friend).Error; err != nil {
 		return err
 	}
 	return nil
 }
+
+// UpdateFriendSynchronize 更新两个好友关系，确保两边的状态一致
 func UpdateFriendSynchronize(friend1 *models.Friend, friend2 *models.Friend) error {
 	// 开启事务
 	tx := config.DB.Begin()
@@ -77,12 +82,15 @@ func UpdateFriendSynchronize(friend1 *models.Friend, friend2 *models.Friend) err
 	return tx.Commit().Error
 }
 
+// DeleteFriendById 删除好友关系
 func DeleteFriendById(friendId int64) error {
 	if err := config.DB.Delete(&models.Friend{}, friendId).Error; err != nil {
 		return err
 	}
 	return nil
 }
+
+// GetFriendByUserIdAndFriendId 获取两个用户之间的好友关系
 func GetFriendByUserIdAndFriendId(userId, friendId int64) (*models.Friend, *models.Friend, error) {
 	var friends1 *models.Friend
 	var friends2 *models.Friend

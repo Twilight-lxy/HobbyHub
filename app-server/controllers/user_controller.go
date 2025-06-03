@@ -8,10 +8,7 @@ import (
 
 // AddUser 添加新用户
 func AddUser(user *models.User) error {
-	if err := config.DB.Create(user).Error; err != nil {
-		return err
-	}
-	return nil
+	return config.DB.Create(user).Error
 }
 
 // GetUserByUserId 通过ID获取用户详情

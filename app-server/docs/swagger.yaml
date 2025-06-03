@@ -72,10 +72,6 @@ definitions:
     properties:
       addr:
         type: string
-      comments:
-        items:
-          $ref: '#/definitions/models.ActivityComment'
-        type: array
       createTime:
         type: string
       headImg:
@@ -90,10 +86,6 @@ definitions:
         type: number
       lon:
         type: number
-      members:
-        items:
-          $ref: '#/definitions/models.ActivityMember'
-        type: array
       name:
         type: string
       startTime:
@@ -102,12 +94,10 @@ definitions:
         type: integer
       updateTime:
         type: string
-      user:
-        $ref: '#/definitions/models.User'
       userId:
         type: integer
     type: object
-  models.ActivityComment:
+  models.Chat:
     properties:
       content:
         type: string

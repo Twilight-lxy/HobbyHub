@@ -119,7 +119,6 @@ func UserLogin(c *gin.Context) {
 		c.JSON(http.StatusNotFound, &models.ErrorResponse{ErrorMessage: "user not found or invalid credentials"})
 		return
 	}
-	// 修改这里：使用CheckPasswordHash验证密码
 	if !utils.CheckPasswordHash(req.Password, dbUser.Password) {
 		c.JSON(http.StatusNotFound, &models.ErrorResponse{ErrorMessage: "username or password is incorrect"})
 		return

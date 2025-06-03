@@ -5,15 +5,12 @@ import (
 	"hobbyhub-server/models"
 )
 
-// AddActivity 添加活动
+// AddActivity 添加新活动
 func AddActivity(activity *models.Activity) error {
-	if err := config.DB.Create(activity).Error; err != nil {
-		return err
-	}
-	return nil
+	return config.DB.Create(activity).Error
 }
 
-// GetActivityById 通过ID获取活动，并预加载关联数据
+// GetAllActivitById 获取指定活动
 func GetActivityById(activityId int64) (*models.Activity, error) {
 	var activity models.Activity
 	if err := config.DB.Where("id = ? AND if_delete = 0", activityId).
@@ -27,6 +24,8 @@ func GetActivityById(activityId int64) (*models.Activity, error) {
 	}
 	return &activity, nil
 }
+
+// GetAllActivities 获取所有活动
 func GetAllActivities() ([]models.Activity, error) {
 	var activities []models.Activity
 	if err := config.DB.Where("if_delete = 0").
@@ -37,7 +36,7 @@ func GetAllActivities() ([]models.Activity, error) {
 	return activities, nil
 }
 
-// UpdateActivity 更新活动
+// UpdateActivity 更新活动信息
 func UpdateActivity(activity *models.Activity) error {
 	if err := config.DB.Save(activity).Error; err != nil {
 		return err
@@ -73,9 +72,6 @@ func DeleteActivityById(activityId int64) error {
 func GetActivitiesByUserId(userId int64) ([]models.Activity, error) {
 	var activities []models.Activity
 	if err := config.DB.Where("user_id = ? AND if_delete = 0", userId).
-		Preload("User").
-		Preload("Members").
-		Preload("Members.User").
 		Find(&activities).Error; err != nil {
 		return nil, err
 	}
@@ -158,6 +154,14 @@ func GetActivityCommentsByUserId(userId int64) ([]models.ActivityComment, error)
 		Preload("Activity.User").
 		Order("create_time DESC").
 		Find(&comments).Error; err != nil {
+		return nil, err
+	}
+	return comments, nil
+}
+
+func GetActivityCommentsByActivityIdAndUserId(activityId, userId int64) ([]models.ActivityComment, error) {
+	var comments []models.ActivityComment
+	if err := config.DB.Where("event_id = ? AND user_id = ?", activityId, userId).Find(&comments).Error; err != nil {
 		return nil, err
 	}
 	return comments, nil

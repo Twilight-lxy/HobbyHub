@@ -7,10 +7,8 @@ import (
 
 type Friend struct {
 	Id         int64     `json:"id" gorm:"primaryKey;autoIncrement;comment:'记录Id'"`
-	UserId     int64     `json:"user_id" gorm:"index;not null;foreignKey:Id;references:id;uniqueIndex:idx_user_friend;comment:'用户Id'"`
-	User       User      `json:"user" gorm:"foreignKey:UserId;references:Id;comment:'用户'"`
-	FriendId   int64     `json:"friend_id" gorm:"index;not null;foreignKey:Id;references:id;uniqueIndex:idx_user_friend;comment:'好友Id'"`
-	FriendUser User      `json:"friend_user" gorm:"foreignKey:FriendId;references:Id;comment:'好友用户'"`
+	UserId     int64     `json:"user_id" gorm:"index;not null;comment:'用户Id'"`
+	FriendId   int64     `json:"friend_id" gorm:"index;not null;comment:'好友Id'"`
 	Status     int       `json:"status" gorm:"not null default:0;comment:'状态（0: 拒绝, 1: 接受, 2: 等待接受, 3：已发出申请）"`
 	CreateTime time.Time `json:"create_time" gorm:"not null;comment:'创建时间'"`
 }

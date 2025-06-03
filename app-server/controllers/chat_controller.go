@@ -1,16 +1,17 @@
 package controllers
 
 import (
+	"errors"
 	"hobbyhub-server/config"
 	"hobbyhub-server/models"
 )
 
-// AddChat 添加聊天记录
+// AddFriend 添加聊天记录
 func AddChat(chat *models.Chat) error {
 	return config.DB.Create(chat).Error
 }
 
-// GetChatById 通过ID获取聊天记录，并预加载用户信息
+// GetChatHistory 获取聊天记录
 func GetChatById(chatId int64) (*models.Chat, error) {
 	var chat models.Chat
 	if err := config.DB.Where("id = ?", chatId).
@@ -21,7 +22,9 @@ func GetChatById(chatId int64) (*models.Chat, error) {
 	}
 	return &chat, nil
 }
-func GetAllChatByFromUserIdToUserId(fromUserId int64, toUserId int64) ([]models.Chat, error) {
+
+// GetAllChatByFromUserIdToUserId 获取指定用户之间的所有聊天记录
+func GetAllChatByFromUserIdToUserId(fromUserId, toUserId int64) ([]models.Chat, error) {
 	var chats []models.Chat
 	if err := config.DB.Where("user_id_from = ? AND user_id_to = ?", fromUserId, toUserId).
 		Preload("UserFrom").
@@ -38,7 +41,6 @@ func UpdateChat(chat *models.Chat) error {
 	return config.DB.Save(chat).Error
 }
 
-// DeleteChatById 删除聊天记录（实际上是标记为删除状态）
 func DeleteChatById(chatId int64, userId int64) error {
 	var chat models.Chat
 	if err := config.DB.First(&chat, chatId).Error; err != nil {
@@ -51,7 +53,7 @@ func DeleteChatById(chatId int64, userId int64) error {
 	} else if chat.UserIdTo == userId {
 		chat.StatusTo = 0 // 删除
 	} else {
-		return config.DB.Error // 用户不是发送方或接收方，无法删除
+		return errors.New("用户与聊天Id无法匹配") // 用户不是发送方或接收方，无法删除
 	}
 
 	return config.DB.Save(&chat).Error

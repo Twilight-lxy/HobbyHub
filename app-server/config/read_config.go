@@ -30,6 +30,7 @@ type FileConfig struct {
 	MaxSize      int64    `yaml:"max_size"`      // 最大文件大小，单位为字节
 	AllowedTypes []string `yaml:"allowed_types"` // 允许的文件类型
 }
+
 type Config struct {
 	Server         ServerConfig         `yaml:"server"`
 	Database       DatabaseConfig       `yaml:"database"`

@@ -917,12 +917,6 @@ const docTemplate = `{
                 "addr": {
                     "type": "string"
                 },
-                "comments": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/models.ActivityComment"
-                    }
-                },
                 "createTime": {
                     "type": "string"
                 },
@@ -944,12 +938,6 @@ const docTemplate = `{
                 "lon": {
                     "type": "number"
                 },
-                "members": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/models.ActivityMember"
-                    }
-                },
                 "name": {
                     "type": "string"
                 },
@@ -962,15 +950,12 @@ const docTemplate = `{
                 "updateTime": {
                     "type": "string"
                 },
-                "user": {
-                    "$ref": "#/definitions/models.User"
-                },
                 "userId": {
                     "type": "integer"
                 }
             }
         },
-        "models.ActivityComment": {
+        "models.Chat": {
             "type": "object",
             "properties": {
                 "content": {
@@ -1067,9 +1052,6 @@ const docTemplate = `{
                 },
                 "status": {
                     "type": "integer"
-                },
-                "user": {
-                    "$ref": "#/definitions/models.User"
                 },
                 "user_id": {
                     "type": "integer"
