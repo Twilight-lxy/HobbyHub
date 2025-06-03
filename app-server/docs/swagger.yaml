@@ -68,6 +68,73 @@ definitions:
     - content
     - user_id_to
     type: object
+  models.Activity:
+    properties:
+      addr:
+        type: string
+      comments:
+        items:
+          $ref: '#/definitions/models.ActivityComment'
+        type: array
+      createTime:
+        type: string
+      headImg:
+        type: string
+      id:
+        type: integer
+      ifDelete:
+        type: integer
+      intro:
+        type: string
+      lat:
+        type: number
+      lon:
+        type: number
+      members:
+        items:
+          $ref: '#/definitions/models.ActivityMember'
+        type: array
+      name:
+        type: string
+      startTime:
+        type: string
+      state:
+        type: integer
+      updateTime:
+        type: string
+      user:
+        $ref: '#/definitions/models.User'
+      userId:
+        type: integer
+    type: object
+  models.ActivityComment:
+    properties:
+      content:
+        type: string
+      createTime:
+        type: string
+      eventId:
+        type: integer
+      id:
+        type: integer
+      user:
+        $ref: '#/definitions/models.User'
+      userId:
+        type: integer
+    type: object
+  models.ActivityMember:
+    properties:
+      createTime:
+        type: string
+      eventId:
+        type: integer
+      id:
+        type: integer
+      user:
+        $ref: '#/definitions/models.User'
+      userId:
+        type: integer
+    type: object
   models.ErrorResponse:
     properties:
       errorMessage:
@@ -86,6 +153,10 @@ definitions:
       file_type:
         type: string
       id:
+        type: integer
+      link_file_id:
+        type: integer
+      upload_user_id:
         type: integer
     type: object
   models.Friend:
@@ -140,6 +211,62 @@ info:
   title: HobbyHub API
   version: "1.0"
 paths:
+  /v1/activity:
+    get:
+      consumes:
+      - application/json
+      description: 获取聊天消息
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              type: number
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: 获取所有活动Id
+      tags:
+      - 活动相关接口
+  /v1/activity/{id}:
+    get:
+      consumes:
+      - application/json
+      description: 获取聊天消息
+      parameters:
+      - description: 活动ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Activity'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: 获取活动信息
+      tags:
+      - 活动相关接口
   /v1/chat:
     get:
       consumes:
@@ -296,6 +423,70 @@ paths:
           schema:
             $ref: '#/definitions/models.ErrorResponse'
       summary: 上传文件
+      tags:
+      - 文件相关接口
+  /v1/file/{id}:
+    delete:
+      description: 删除文件
+      parameters:
+      - description: JWT token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 文件ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: 删除文件
+      tags:
+      - 文件相关接口
+    get:
+      description: 下载文件
+      parameters:
+      - description: JWT token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 文件ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/octet-stream
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: file
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: 下载文件
       tags:
       - 文件相关接口
   /v1/friend:

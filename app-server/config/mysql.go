@@ -3,7 +3,6 @@ package config
 import (
 	"database/sql"
 	"fmt"
-	"log"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -38,15 +37,15 @@ func CreateDatabase(conf *Config) error {
 		return fmt.Errorf("创建数据库失败: %v", err)
 	}
 
-	log.Printf("数据库 %s 已创建或已存在", conf.Database.Database)
+	fmt.Printf("数据库 %s 已创建或已存在", conf.Database.Database)
 	return nil
 }
 
-func InitDatabase(conf *Config) {
+func InitDatabase(conf *Config) error {
 	// 首先尝试创建数据库
 	if err := CreateDatabase(conf); err != nil {
-		log.Fatalf("创建数据库失败: %v", err)
-		return
+
+		return fmt.Errorf("创建数据库失败: %v", err)
 	}
 
 	username := conf.Database.Username
@@ -61,9 +60,10 @@ func InitDatabase(conf *Config) {
 		dsn := username + ":" + password + "@tcp(" + host + ":" + fmt.Sprint(port) + ")/" + database + "?charset=" + conf.Database.Charset + "&parseTime=True&loc=Local"
 		DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
 		if err != nil {
-			log.Fatalf("连接数据库失败: %v", err)
+
+			return fmt.Errorf("连接数据库失败: %v\n", err)
 		}
-		log.Printf("成功连接到MySQL数据库 %s (地址: %s:%d, 用户: %s)", database, host, port, username)
+		fmt.Printf("成功连接到MySQL数据库 %s (地址: %s:%d, 用户: %s)", database, host, port, username)
 
 		// 自动迁移所有模型
 		err = DB.AutoMigrate(
@@ -77,13 +77,13 @@ func InitDatabase(conf *Config) {
 		)
 
 		if err != nil {
-			log.Fatalf("自动迁移模型失败: %v", err)
-		}
-		log.Println("所有模型已成功迁移到数据库")
 
-		return
+			return fmt.Errorf("自动迁移模型失败: %v", err)
+		}
+		fmt.Println("所有模型已成功迁移到数据库")
+
+		return nil
 	} else {
-		log.Fatalf("不支持的数据库类型: %s", conf.Database.Type)
-		return
+		return fmt.Errorf("不支持的数据库类型: %s", conf.Database.Type)
 	}
 }

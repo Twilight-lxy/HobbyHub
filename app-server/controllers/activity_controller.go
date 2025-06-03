@@ -27,6 +27,15 @@ func GetActivityById(activityId int64) (*models.Activity, error) {
 	}
 	return &activity, nil
 }
+func GetAllActivities() ([]models.Activity, error) {
+	var activities []models.Activity
+	if err := config.DB.Where("if_delete = 0").
+		Order("create_time DESC").
+		Find(&activities).Error; err != nil {
+		return nil, err
+	}
+	return activities, nil
+}
 
 // UpdateActivity 更新活动
 func UpdateActivity(activity *models.Activity) error {
