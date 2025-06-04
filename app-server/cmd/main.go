@@ -76,8 +76,11 @@ func main() {
 		// Activity routes
 		activity := apiV1.Group("/activity")
 		{
-			activity.GET("/:id", api.GetActivitie) // 获取活动列表
-			activity.GET("/", api.GetAllActivitie) // 获取活动详情
+			activity.GET("/:id", api.GetActivitie)      // 获取活动列表
+			activity.GET("/", api.GetAllActivitie)      // 获取活动详情
+			activity.PUT("/", api.CreateActivity)       // 新建活动
+			activity.POST("/:id", api.UpdateActivity)   // 更新活动信息
+			activity.DELETE("/:id", api.DeleteActivity) // 软删除活动
 		}
 	}
 

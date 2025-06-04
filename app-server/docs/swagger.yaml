@@ -45,6 +45,13 @@ definitions:
     - content
     - user_id_to
     type: object
+  api.simpleActivity:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
   models.Activity:
     properties:
       addr:
@@ -167,7 +174,7 @@ paths:
     get:
       consumes:
       - application/json
-      description: 获取聊天消息
+      description: 获取所有活动的id与名称
       produces:
       - application/json
       responses:
@@ -175,7 +182,7 @@ paths:
           description: OK
           schema:
             items:
-              type: number
+              $ref: '#/definitions/api.simpleActivity'
             type: array
         "400":
           description: Bad Request
@@ -188,11 +195,80 @@ paths:
       summary: 获取所有活动Id
       tags:
       - 活动相关接口
+    put:
+      consumes:
+      - application/json
+      description: 创建新的活动
+      parameters:
+      - description: 活动内容
+        in: body
+        name: activity
+        required: true
+        schema:
+          $ref: '#/definitions/models.Activity'
+      - description: JWT Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Activity'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: 创建活动
+      tags:
+      - 活动相关接口
   /v1/activity/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: 软删除指定活动
+      parameters:
+      - description: 活动id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: JWT Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: 删除活动
+      tags:
+      - 活动相关接口
     get:
       consumes:
       - application/json
-      description: 获取聊天消息
+      description: 获取指定活动的完整信息
       parameters:
       - description: 活动ID
         in: path
@@ -217,6 +293,47 @@ paths:
           schema:
             $ref: '#/definitions/models.ErrorResponse'
       summary: 获取活动信息
+      tags:
+      - 活动相关接口
+    post:
+      consumes:
+      - application/json
+      description: 修改指定活动
+      parameters:
+      - description: 活动id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: 活动内容
+        in: body
+        name: activity
+        required: true
+        schema:
+          $ref: '#/definitions/models.Activity'
+      - description: JWT Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/api.simpleActivity'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: 修改活动
       tags:
       - 活动相关接口
   /v1/chat:

@@ -195,7 +195,7 @@ func UpdateUserInfo(c *gin.Context) {
 	}
 	user.Id = 0                   // 不更新用户ID
 	user.CreateTime = time.Time{} // 不更新创建时间
-	user.Name = ""                // 不更新用户名
+	user.Username = ""            // 不更新用户名
 	jwtToken := c.GetHeader("Authorization")
 	if jwtToken == "" {
 		c.JSON(http.StatusBadRequest, &models.ErrorResponse{ErrorMessage: "jwt token is required"})

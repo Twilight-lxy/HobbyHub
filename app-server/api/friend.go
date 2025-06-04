@@ -102,6 +102,11 @@ func SendFriendRequest(c *gin.Context) {
 		return
 	}
 
+	if jwtUser.Id == request.UserId {
+		c.JSON(http.StatusBadRequest, &models.ErrorResponse{ErrorMessage: "Unable to send friend request to oneself"})
+		return
+	}
+
 	friend1, friend2, _ := controllers.GetFriendByUserIdAndFriendId(jwtUser.Id, request.UserId)
 	if friend1.Id != 0 && friend2.Id != 0 {
 		if friend1.Status == 1 && friend2.Status == 1 {
