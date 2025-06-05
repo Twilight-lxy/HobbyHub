@@ -18,3 +18,19 @@ export function login(username:string,password:string):Promise<ResultData>{
   }
   return httpRequest(url,param)
 }
+
+//注册用户
+export function register(username:string,password:string):Promise<ResultData>{
+  let url = `${ServerPath.register}`
+  let param : http.HttpRequestOptions = {
+    method:http.RequestMethod.POST,//http请求方法
+    header:{//参数传递使用json数据传递
+      'Content-Type':'application/json'//默认form表单,但这里不是
+    },
+    extraData:{//传递具体参数
+      username:username,
+      password:password
+    }
+  }
+  return httpRequest(url,param)
+}

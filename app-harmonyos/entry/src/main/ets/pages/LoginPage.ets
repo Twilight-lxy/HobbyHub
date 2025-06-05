@@ -18,12 +18,14 @@ struct LoginPage{
     if (result.success) {
       try {
       //解析后台相应数据
-      let data = result.obj as User
-      let user = new User(data.id,data.username,data.name,data.headImg,data.addr,data.gender,data.lat,data.lon)
+      let jwtToken = result.data
+        //调用获取用户信息接口
+      // let user = new User(data.id,data.username,data.name,data.headImg,data.addr,data.gender,data.lat,data.lon)
 
 
       //将当前用户信息写入appStorage
-      AppStorage.setOrCreate("user",user)//创建或更新
+      AppStorage.setOrCreate("jwtToken",jwtToken)
+      // AppStorage.setOrCreate("user",user)//创建或更新
       AppStorage.setOrCreate("isLogin",true)
 
       //跳转到主页面
@@ -33,7 +35,7 @@ struct LoginPage{
       }
     }else{
       //登陆失败
-      showText(result.info)
+      showText(result.data)
     }
   }
 
@@ -97,7 +99,7 @@ struct LoginPage{
           .height('100%')
           .fontColor('#666666')
           .onClick(()=>{
-            //todo
+            router.pushUrl({url:"\"pages/RegisterPage\""})
           })
         Blank()
         Text('忘记密码')

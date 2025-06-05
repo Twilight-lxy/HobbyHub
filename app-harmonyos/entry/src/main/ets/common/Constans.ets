@@ -1,9 +1,9 @@
 // 后端接口的定义
-export const BaseUrl = 'http://101.7.171.247:8081'
+export const BaseUrl = 'http://172.16.5.28:8081'
 
 //后端接口的路径
 export  const ServerPath:Record<string,string> = {
-  'login': '/user/login', // 登录接口
+  'login': '/api/v1/login', // 登录接口
   'eventList': '/event/list', // 活动列表接口
   'register': '/user/reg', // 注册接口
   'isJoin': '/event/isJoin', // 检查是否加入活动接口
@@ -30,6 +30,7 @@ export  const ServerPath:Record<string,string> = {
   'eventInfo': '/event/info', // 获取活动详情接口
   'chatList': '/chat/byUserIdFromAndTo', // 获取聊天记录接口
   'chatAdd': '/chat/insert', // 新增聊天记录接口
+  'idEventList':'/v1/activity/{id}' //根据用户id查找活动
 };
 
 // app存储的数据库名称
