@@ -1,12 +1,18 @@
-$--color-primary: #409EFF;
-$--color-success: #67C23A;
-$--color-warning: #E6A23C;
-$--color-danger: #F56C6C;
-$--color-info: #909399;
+$--color-primary: #6C5CE7;  // 紫色调更现代
+$--color-secondary: #00B894; // 辅助绿色
+$--color-accent: #FD79A8;   // 强调粉色
 
-$--font-size-base: 14px;
-$--font-size-small: 12px;
-$--font-size-large: 16px;
+// 渐变背景
+$--gradient-primary: linear-gradient(135deg, #6C5CE7 0%, #00B894 100%);
+$--gradient-secondary: linear-gradient(135deg, #FD79A8 0%, #FDCB6E 100%);
 
-$--border-radius-base: 4px;
-$--border-radius-small: 2px;
+// 阴影系统
+$--shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+$--shadow-md: 0 4px 12px rgba(0, 0, 0, 0.12);
+$--shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.16);
+
+// 圆角系统
+$--radius-sm: 6px;
+$--radius-md: 12px;
+$--radius-lg: 18px;
+$--radius-full: 999px;
