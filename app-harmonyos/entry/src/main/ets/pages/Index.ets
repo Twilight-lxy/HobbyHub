@@ -1,4 +1,6 @@
-@Entry
+import HomeViewComponent from '../view/HomeViewComponent'
+
+Entry
 @Component
 struct Index {
   //tab Icon 的当前焦点
@@ -29,7 +31,7 @@ struct Index {
         //Tab 组件，首页下面的App工具栏
         Tabs(){
           TabContent(){
-              //todo 点击首页要跳转的页面
+            HomeViewComponent({pageVisible:this.pageVisible)
           }.tabBar(this.EndBar('首页',$r('app.media.ic_home_on'),$r('app.media.ic_home_off'),0))
           TabContent(){
             //todo 点击活动要跳转的页面

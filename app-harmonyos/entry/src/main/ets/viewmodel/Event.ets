@@ -29,7 +29,7 @@ export class Event{
   lon:number
   lat:number
   state:number
-  //updateTime:string
+  updateTime:string
 
   constructor(id:number,userId:number,name:string,intro:string,addr:string,headImg:string,startTime:string,lon:number,lat:number,state:number,updateTime:string) {
     this.id = id
@@ -42,6 +42,6 @@ export class Event{
     this.lon = lon
     this.lat = lat
     this.state = state
-    //this.updateTime = updateTime
+    this.updateTime = updateTime
   }
 }

@@ -6,6 +6,7 @@ import {showText} from '../utils/ShowUtil' //导入通用提示类
 
 //定义返回的封装类型
 export interface ResultData{
+  obj: Event[];
   success:boolean
   data:string
 }
