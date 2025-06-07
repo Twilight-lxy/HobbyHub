@@ -42,6 +42,11 @@ export default struct HomeViewComponent{
     this.getEvents()
   }
 
+  //arkTS 生命周期
+  aboutToAppear() { //当前页面加载时，调用
+    this.getEvents()
+  }
+
   //在组件加载时获取活动列表
   async getEvents(){
     //已登录
@@ -145,7 +150,7 @@ export default struct HomeViewComponent{
         })
       }
       .layoutDirection(FlexDirection.Column)//布局的主轴方向为列方向
-      .columnsTemplate("lfr lfr")
+      .columnsTemplate("1fr 1fr")
       .columnsGap(5)
       .rowsGap(5)
       .width('90%')
