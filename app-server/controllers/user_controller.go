@@ -10,6 +10,13 @@ import (
 func AddUser(user *models.User) error {
 	return config.DB.Create(user).Error
 }
+func GetAllUsers() ([]models.User, error) {
+	var users []models.User
+	if err := config.DB.Find(&users).Error; err != nil {
+		return nil, err
+	}
+	return users, nil
+}
 
 // GetUserByUserId 通过ID获取用户详情
 func GetUserByUserId(userId int64) (*models.User, error) {

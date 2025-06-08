@@ -81,6 +81,14 @@ func AddActivityMember(activityMember *models.ActivityMember) error {
 	return nil
 }
 
+func GetAllActivityMembers() ([]models.ActivityMember, error) {
+	var members []models.ActivityMember
+	if err := config.DB.Find(&members).Error; err != nil {
+		return nil, err
+	}
+	return members, nil
+}
+
 // GetActivityMembersByActivityId 获取活动的所有成员
 func GetActivityMembersByActivityId(activityId int64) ([]models.ActivityMember, error) {
 	var members []models.ActivityMember
@@ -124,6 +132,14 @@ func AddActivityComment(activityComment *models.ActivityComment) error {
 		return err
 	}
 	return nil
+}
+
+func GetAllComments() ([]models.ActivityComment, error) {
+	var comments []models.ActivityComment
+	if err := config.DB.Order("create_time DESC").Find(&comments).Error; err != nil {
+		return nil, err
+	}
+	return comments, nil
 }
 
 // GetActivityCommentsByActivityId 获取活动的所有评论

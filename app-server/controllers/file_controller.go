@@ -5,6 +5,14 @@ import (
 	"hobbyhub-server/models"
 )
 
+func GetAllFiles() ([]models.File, error) {
+	var files []models.File
+	if err := config.DB.Find(&files).Error; err != nil {
+		return nil, err
+	}
+	return files, nil
+}
+
 func AddFile(file *models.File) error {
 	if err := config.DB.Create(file).Error; err != nil {
 		return err

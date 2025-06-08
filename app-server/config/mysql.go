@@ -3,6 +3,7 @@ package config
 import (
 	"database/sql"
 	"fmt"
+	"log"
 	"os"
 	"path/filepath"
 
@@ -38,7 +39,7 @@ func CreateDatabase(conf *Config) error {
 			return fmt.Errorf("创建数据库失败: %v", err)
 		}
 
-		fmt.Printf("数据库 %s 已创建或已存在\n", conf.Database.Database)
+		log.Printf("数据库 %s 已创建或已存在\n", conf.Database.Database)
 	case "sqlite":
 		// 对于SQLite，确保数据库目录存在
 		dbDir := filepath.Dir(conf.Database.Database)
@@ -47,7 +48,7 @@ func CreateDatabase(conf *Config) error {
 				return fmt.Errorf("创建SQLite数据库目录失败: %v", err)
 			}
 		}
-		fmt.Printf("SQLite数据库文件路径已准备: %s\n", conf.Database.Database)
+		log.Printf("SQLite数据库文件路径已准备: %s\n", conf.Database.Database)
 	default:
 		return fmt.Errorf("不支持的数据库类型: %s", conf.Database.Type)
 	}
@@ -78,14 +79,14 @@ func InitDatabase(conf *Config) error {
 		if err != nil {
 			return fmt.Errorf("连接数据库失败: %v", err)
 		}
-		fmt.Printf("成功连接到MySQL数据库 %s (地址: %s:%d, 用户: %s)\n", database, host, port, username)
+		log.Printf("成功连接到MySQL数据库 %s (地址: %s:%d, 用户: %s)\n", database, host, port, username)
 	case "sqlite":
 		// 如果是 SQLite 数据库，使用 sqlite 驱动
 		DB, err = gorm.Open(sqlite.Open(conf.Database.Database), &gorm.Config{})
 		if err != nil {
 			return fmt.Errorf("连接SQLite数据库失败: %v", err)
 		}
-		fmt.Printf("成功连接到SQLite数据库: %s\n", conf.Database.Database)
+		log.Printf("成功连接到SQLite数据库: %s\n", conf.Database.Database)
 	default:
 		return fmt.Errorf("不支持的数据库类型: %s", conf.Database.Type)
 	}
@@ -104,7 +105,7 @@ func InitDatabase(conf *Config) error {
 	if err != nil {
 		return fmt.Errorf("自动迁移模型失败: %v", err)
 	}
-	fmt.Println("所有模型已成功迁移到数据库")
+	log.Println("所有模型已成功迁移到数据库")
 
 	return nil
 }

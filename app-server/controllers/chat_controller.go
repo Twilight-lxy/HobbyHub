@@ -11,6 +11,14 @@ func AddChat(chat *models.Chat) error {
 	return config.DB.Create(chat).Error
 }
 
+func GetAllChats() ([]models.Chat, error) {
+	var chats []models.Chat
+	if err := config.DB.Find(&chats).Error; err != nil {
+		return nil, err
+	}
+	return chats, nil
+}
+
 // GetChatHistory 获取聊天记录
 func GetChatById(chatId int64) (*models.Chat, error) {
 	var chat models.Chat

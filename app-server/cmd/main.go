@@ -5,6 +5,9 @@ import (
 	"fmt"
 	"hobbyhub-server/api"
 	"hobbyhub-server/config"
+	"io"
+	"log"
+	"os"
 
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
@@ -24,15 +27,28 @@ func main() {
 	configPath := flag.String("config", "config.yaml", "配置文件路径")
 	flag.Parse()
 
+	// 创建或打开日志文件
+	logFile, err := os.OpenFile("app.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+	if err != nil {
+		fmt.Printf("创建日志文件失败: %v\n", err)
+		return
+	}
+	defer logFile.Close()
+
+	// 设置日志同时输出到控制台和文件
+	multiWriter := io.MultiWriter(os.Stdout, logFile)
+	log.SetOutput(multiWriter)
+	gin.DefaultWriter = multiWriter
+
 	if err := config.LoadConfig(*configPath); err != nil {
-		fmt.Printf("加载配置失败: %v", err)
+		log.Printf("加载配置失败: %v", err)
 		fmt.Scanln()
 		return
 	}
 	// 这里可以根据 cfg 初始化数据库等
-	err := config.InitDatabase(config.GetConfig())
+	err = config.InitDatabase(config.GetConfig())
 	if err != nil {
-		fmt.Printf("初始化数据库失败: %v", err)
+		log.Printf("初始化数据库失败: %v", err)
 		fmt.Scanln()
 		return
 	}
@@ -94,5 +110,6 @@ func main() {
 	// Swagger 相关路由
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
+	log.Printf("服务器启动在 %s:%d", config.GetConfig().Server.Host, config.GetConfig().Server.Port)
 	r.Run(fmt.Sprintf("%s:%d", config.GetConfig().Server.Host, config.GetConfig().Server.Port)) // 按配置文件端口启动
 }

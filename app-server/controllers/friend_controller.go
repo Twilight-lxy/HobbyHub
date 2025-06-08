@@ -5,6 +5,14 @@ import (
 	"hobbyhub-server/models"
 )
 
+func GetAllFriends() ([]models.Friend, error) {
+	var friends []models.Friend
+	if err := config.DB.Find(&friends).Error; err != nil {
+		return nil, err
+	}
+	return friends, nil
+}
+
 // AddFriend 添加好友关系
 func AddFriend(friend *models.Friend) error {
 	if err := config.DB.Create(friend).Error; err != nil {
