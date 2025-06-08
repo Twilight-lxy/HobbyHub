@@ -76,11 +76,18 @@ func main() {
 		// Activity routes
 		activity := apiV1.Group("/activity")
 		{
-			activity.GET("/:id", api.GetActivitie)      // 获取活动列表
-			activity.GET("/", api.GetAllActivitie)      // 获取活动详情
-			activity.PUT("/", api.CreateActivity)       // 新建活动
-			activity.POST("/:id", api.UpdateActivity)   // 更新活动信息
-			activity.DELETE("/:id", api.DeleteActivity) // 软删除活动
+			activity.GET("/:id", api.GetActivitie)                            // 获取活动列表
+			activity.GET("/member", api.GetUserActivities)                    // 获取用户参加的活动
+			activity.GET("/", api.GetAllActivitie)                            // 获取活动详情
+			activity.PUT("/", api.CreateActivity)                             // 新建活动
+			activity.POST("/:id", api.UpdateActivity)                         // 更新活动信息
+			activity.DELETE("/:id", api.DeleteActivity)                       // 软删除活动
+			activity.GET("/:id/member", api.GetActivityMembers)               // 获取活动成员列表
+			activity.PUT("/:id/member", api.JoinActivity)                     // 添加活动成员
+			activity.DELETE("/:id/member", api.LeaveActivity)                 // 退出活动
+			activity.GET("/:id/comment", api.GetActivityComments)             // 获取活动评论
+			activity.PUT("/:id/comment", api.AddActivityComment)              // 添加活动评论
+			activity.DELETE("/comment/:commentId", api.DeleteActivityComment) // 删除活动评论
 		}
 	}
 

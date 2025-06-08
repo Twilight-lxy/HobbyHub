@@ -33,6 +33,11 @@ definitions:
     - password
     - username
     type: object
+  api.activityCommentResponse:
+    properties:
+      comment:
+        type: string
+    type: object
   api.newChatRequest:
     properties:
       content:
@@ -78,6 +83,19 @@ definitions:
         type: integer
       updateTime:
         type: string
+      userId:
+        type: integer
+    type: object
+  models.ActivityComment:
+    properties:
+      activityId:
+        type: integer
+      content:
+        type: string
+      createTime:
+        type: string
+      id:
+        type: integer
       userId:
         type: integer
     type: object
@@ -334,6 +352,236 @@ paths:
           schema:
             $ref: '#/definitions/models.ErrorResponse'
       summary: 修改活动
+      tags:
+      - 活动相关接口
+  /v1/activity/{id}/comment:
+    get:
+      consumes:
+      - application/json
+      description: 获取指定活动的所有评论
+      parameters:
+      - description: 活动id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.ActivityComment'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: 获取活动评论
+      tags:
+      - 活动相关接口
+    put:
+      consumes:
+      - application/json
+      description: 添加指定活动的评论
+      parameters:
+      - description: 活动id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: 评论内容
+        in: body
+        name: comment
+        required: true
+        schema:
+          $ref: '#/definitions/api.activityCommentResponse'
+      - description: JWT Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: 添加活动评论
+      tags:
+      - 活动相关接口
+  /v1/activity/{id}/member:
+    delete:
+      consumes:
+      - application/json
+      description: 退出指定活动
+      parameters:
+      - description: 活动id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: JWT Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: 退出活动
+      tags:
+      - 活动相关接口
+    get:
+      consumes:
+      - application/json
+      description: 获取指定活动所有成员
+      parameters:
+      - description: 活动id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: 获取活动成员
+      tags:
+      - 活动相关接口
+    put:
+      consumes:
+      - application/json
+      description: 加入指定活动
+      parameters:
+      - description: 活动id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: JWT Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: 加入活动
+      tags:
+      - 活动相关接口
+  /v1/activity/comment/{commentId}:
+    delete:
+      consumes:
+      - application/json
+      description: 删除指定活动的指定评论
+      parameters:
+      - description: 评论id
+        in: path
+        name: commentId
+        required: true
+        type: integer
+      - description: JWT Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: 删除活动评论
+      tags:
+      - 活动相关接口
+  /v1/activity/member:
+    get:
+      consumes:
+      - application/json
+      description: 获取用户参加的所有活动
+      parameters:
+      - description: JWT Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/api.simpleActivity'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: 获取用户参加的所有活动
       tags:
       - 活动相关接口
   /v1/chat:
