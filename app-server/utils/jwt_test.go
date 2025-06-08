@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"github.com/DATA-DOG/go-sqlmock"
-	"github.com/dgrijalva/jwt-go"
+	"github.com/golang-jwt/jwt/v5"
 	"github.com/stretchr/testify/assert"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -91,7 +91,7 @@ func TestParseJWT_ExpiredToken(t *testing.T) {
 
 	claims := jwt.MapClaims{
 		"id":  456,
-		"exp": time.Now().Add(-time.Hour).Unix(), // 已过期
+		"exp": jwt.NewNumericDate(time.Now().Add(-time.Hour)), // 已过期
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	tokenString, err := token.SignedString([]byte("testsecret"))
@@ -108,7 +108,7 @@ func TestParseJWT_InvalidSignature(t *testing.T) {
 
 	claims := jwt.MapClaims{
 		"id":  789,
-		"exp": time.Now().Add(time.Hour).Unix(),
+		"exp": jwt.NewNumericDate(time.Now().Add(time.Hour)),
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	tokenString, err := token.SignedString([]byte("wrongsecret")) // 用错误密钥签名
