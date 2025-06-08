@@ -49,9 +49,3 @@ export function getUserDetail(id) {
     method: 'get'
   })
 }
-export function getUserDetail(id) {
-  return request({
-    url: `/api/v1/admin/users/${id}`,
-    method: 'get'
-  })
-}lo
