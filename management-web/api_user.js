@@ -54,4 +54,4 @@ export function getUserDetail(id) {
     url: `/api/v1/admin/users/${id}`,
     method: 'get'
   })
-}
+}lo
