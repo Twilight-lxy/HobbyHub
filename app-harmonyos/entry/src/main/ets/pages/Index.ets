@@ -1,53 +1,60 @@
+//主页面框架
+
 import HomeViewComponent from '../view/HomeViewComponent'
 import { UserInfoViewComponent } from '../view/UserInfoViewComponent';
 
-Entry
+@Entry
 @Component
 struct Index {
   //tab Icon 的当前焦点
   @State currentIndex: number = 0;
-  //是否可见（用于判断是否登录，如果登录可见）
-  @State pageVisible : boolean = false;
+  //是否可见，用于判断是否登录，登录后可见
+  @State pageVisible: boolean = false;
 
-  //title 显示的内容
-  //selectIcon 获得焦点时显示的图
-  //unSelectIcon 失去焦点时显示的图片
-  //index tab的索引
-  @Builder//动态构造组件
-  EndBar(title:string,selectIcon:Resource,unSelectIcon:Resource,index:number){
-    Column(){
-      Image(this.currentIndex == index ? selectIcon:unSelectIcon) //判断当前索引值与Tab索引值比较
+  //动态构造组件
+  @Builder
+  EndBar(title: string, selectIcon: Resource, unSelectIcon: Resource, index: number) {
+    //title:显示的名称;selectIcon:获得焦点时显示的图片;unselectIcon:失去焦点时显示的图片;index:tab的索引
+    Column() {
+      //将当前索引值与Tab的索引值进行比较，判断是否选中了该组件
+      //图标组件:选中显示为on，未选中显示为off
+      Image(this.currentIndex == index ? selectIcon : unSelectIcon)
         .width(26)
         .height(26)
         .margin(5)
-
+      //文本组件:选中显示为红色，未选中显示为黑色
       Text(title)
-        .fontColor(this.currentIndex == index ? `#ff3551`:`#000000`)
+        .fontColor(this.currentIndex == index ? '#ff3551' : '#000000')
     }
   }
 
   build() {
     Row() {
       Column() {
-        //Tab 组件，首页下面的App工具栏
-        Tabs(){
-          TabContent(){
-            HomeViewComponent({pageVisible:this.pageVisible)
-          }.tabBar(this.EndBar('首页',$r('app.media.ic_home_on'),$r('app.media.ic_home_off'),0))
-          TabContent(){
-            //todo 点击活动要跳转的页面
-          }.tabBar(this.EndBar('活动',$r('app.media.ic_event_on'),$r('app.media.ic_event_off'),1))
-          TabContent(){
-            //todo 点击好友要跳转的页面
-          }.tabBar(this.EndBar('好友',$r('app.media.ic_friends_on'),$r('app.media.ic_friends_off'),2))
-          TabContent(){
+        //定义四个 Tab 组件
+        //即首页下面的App工具栏，实现四个不同的页面索引
+        Tabs() {
+          TabContent() {
+            HomeViewComponent({ pageVisible: this.pageVisible })
+          }.tabBar(this.EndBar("首页", $r('app.media.ic_home_on'), $r('app.media.ic_home_off'), 0))
+
+          TabContent() {
+            //todo 点击活动跳转页面
+          }.tabBar(this.EndBar("活动", $r('app.media.ic_event_on'), $r('app.media.ic_event_off'), 1))
+
+          TabContent() {
+            //todo 点击好友跳转页面
+          }.tabBar(this.EndBar("好友", $r('app.media.ic_friends_on'), $r('app.media.ic_friends_off'), 2))
+
+          TabContent() {
             UserInfoViewComponent()
-          }.tabBar(this.EndBar('我的',$r('app.media.ic_mine_on'),$r('app.media.ic_mine_off'),3))
-        }.barPosition(BarPosition.End) //工具栏放置的位置，页面下方
-        .barHeight('10%')//工具栏的高度
-        .width('100%')
+          }.tabBar(this.EndBar("我的", $r('app.media.ic_mine_on'), $r('app.media.ic_mine_off'), 3))
+        }
+        .barPosition(BarPosition.End) //工具栏放置的位置，页面下方
+        .barHeight('10%') //工具栏高度
+        .barWidth('100%') //工具栏宽度
         .height('100%')
-        .onChange((index:number)=>{
+        .onChange((index: number) => {
           this.currentIndex = index
         })
       }
