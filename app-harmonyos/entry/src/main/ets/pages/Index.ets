@@ -1,4 +1,5 @@
 import HomeViewComponent from '../view/HomeViewComponent'
+import { UserInfoViewComponent } from '../view/UserInfoViewComponent';
 
 Entry
 @Component
@@ -40,7 +41,7 @@ struct Index {
             //todo 点击好友要跳转的页面
           }.tabBar(this.EndBar('好友',$r('app.media.ic_friends_on'),$r('app.media.ic_friends_off'),2))
           TabContent(){
-            //todo 点击我的要跳转的页面
+            UserInfoViewComponent()
           }.tabBar(this.EndBar('我的',$r('app.media.ic_mine_on'),$r('app.media.ic_mine_off'),3))
         }.barPosition(BarPosition.End) //工具栏放置的位置，页面下方
         .barHeight('10%')//工具栏的高度

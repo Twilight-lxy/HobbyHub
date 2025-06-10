@@ -26,7 +26,7 @@ export  const ServerPath:Record<string,string> = {
   'editEvent': '/event/edit', // 编辑活动接口
   'myEventList': '/event/myEventList', // 获取我的活动接口
   'deleteEvent': '/event/delete', // 删除活动接口
-  'uploading': '/upload/uploadFile', // 文件上传接口
+  'uploadImg': '/upload/uploadFile', // 文件上传接口
   'eventInfo': '/event/info', // 获取活动详情接口
   'chatList': '/chat/byUserIdFromAndTo', // 获取聊天记录接口
   'chatAdd': '/chat/insert', // 新增聊天记录接口
