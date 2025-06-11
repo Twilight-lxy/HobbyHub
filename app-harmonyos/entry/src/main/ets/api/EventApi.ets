@@ -3,6 +3,8 @@
 import http from '@ohos.net.http'; //导入申请http请求权限的依赖库
 import { ServerPath } from "../common/Constans"; //导入服务Api常量
 import { httpRequest, ResultData } from '../utils/HttpRequest' //导入通用http入口
+//import { Event } from '@kit.ArkTS';
+import {Event} from '../viewmodel/Event'
 
 
 //获取活动列表的方法
@@ -13,4 +15,18 @@ export function getEventList(userId:number,kw:string = ''):Promise<ResultData>{
   }
   return httpRequest(url, param)
 
+}
+
+//添加活动
+export function addEvent(ent:Event):Promise<ResultData>{
+  let url = `${ServerPath.addEvent}`
+  let option:http.HttpRequestOptions={
+    method:http.RequestMethod.POST,
+    header: {
+      //参数传递使用json数据传递
+      'Content-Type': 'application/json'
+    },
+    extraData: ent
+  }
+  return httpRequest(url, option)
 }

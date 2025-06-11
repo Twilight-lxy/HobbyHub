@@ -4,7 +4,9 @@ export const BaseUrl = 'http://192.168.1.9:8081' //Zhuanyong5G
 //后端接口的路径
 export const ServerPath: Record<string, string> = {
   'login': '/usr/login', //登录接口
-  'register': '/usr/reg'//注册接口
+  'register': '/usr/reg',//注册接口
+  'join':'/eventMember/join',//加入活动接口
+  'addEvent':'/event/insert',//新增活动
 }
 
 //app存储的数据库

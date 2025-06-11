@@ -102,7 +102,7 @@ export struct UserInfoViewComponent {
         .onClick(() => {
           loginUserAction(
             () => {
-              //跳转到活动编辑页面 router.pushUrl()
+              router.pushUrl({url:"pages/EventEditPage",params:{message:'add'}})
             },
             () => {
               showText("请先登录")

@@ -3,6 +3,7 @@
     "pages/Index",
     "pages/LoginPage",
     "pages/RegisterPage",
-    "pages/UserEditPage"
+    "pages/UserEditPage",
+    "pages/EventEditPage"
   ]
 }
