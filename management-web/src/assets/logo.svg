@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="100" cy="100" r="90" fill="#409EFF" />
+  <circle cx="100" cy="100" r="70" fill="#FFFFFF" />
+  <circle cx="100" cy="100" r="50" fill="#409EFF" />
+  
+  <!-- 小人图标 - 左边 -->
+  <circle cx="70" cy="70" r="15" fill="#FFFFFF" />
+  <rect x="65" y="85" width="10" height="30" rx="5" fill="#FFFFFF" />
+  <rect x="55" y="95" width="15" height="8" rx="4" fill="#FFFFFF" transform="rotate(-30 55 95)" />
+  <rect x="70" y="95" width="15" height="8" rx="4" fill="#FFFFFF" transform="rotate(30 70 95)" />
+  
+  <!-- 小人图标 - 右边 -->
+  <circle cx="130" cy="70" r="15" fill="#FFFFFF" />
+  <rect x="125" y="85" width="10" height="30" rx="5" fill="#FFFFFF" />
+  <rect x="115" y="95" width="15" height="8" rx="4" fill="#FFFFFF" transform="rotate(-30 115 95)" />
+  <rect x="130" y="95" width="15" height="8" rx="4" fill="#FFFFFF" transform="rotate(30 130 95)" />
+  
+  <!-- 小人图标 - 中间 -->
+  <circle cx="100" cy="130" r="15" fill="#FFFFFF" />
+  <rect x="95" y="145" width="10" height="30" rx="5" fill="#FFFFFF" />
+  <rect x="85" y="155" width="15" height="8" rx="4" fill="#FFFFFF" transform="rotate(-30 85 155)" />
+  <rect x="100" y="155" width="15" height="8" rx="4" fill="#FFFFFF" transform="rotate(30 100 155)" />
+</svg>
