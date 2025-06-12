@@ -1157,7 +1157,7 @@ const docTemplate = `{
                     "200": {
                         "description": "JWT Token",
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/api.JWTResponse"
                         }
                     },
                     "400": {
@@ -1253,7 +1253,7 @@ const docTemplate = `{
                     "200": {
                         "description": "JWT Token",
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/api.JWTResponse"
                         }
                     },
                     "400": {
@@ -1333,6 +1333,14 @@ const docTemplate = `{
                 "user_id": {
                     "description": "好友用户ID",
                     "type": "integer"
+                }
+            }
+        },
+        "api.JWTResponse": {
+            "type": "object",
+            "properties": {
+                "token": {
+                    "type": "string"
                 }
             }
         },

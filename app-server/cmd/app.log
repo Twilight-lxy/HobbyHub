@@ -128,3 +128,1268 @@ Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-
 [GIN] 2025/06/08 - 14:13:52 | 200 |      1.6914ms |       127.0.0.1 | GET      "/swagger/doc.json"
 [GIN] 2025/06/08 - 14:13:54 | 200 |            0s |       127.0.0.1 | GET      "/swagger/index.html"
 [GIN] 2025/06/08 - 14:13:55 | 200 |       764.2µs |       127.0.0.1 | GET      "/swagger/doc.json"
+2025/06/09 21:14:04 SQLite数据库文件路径已准备: ./database.db
+2025/06/09 21:14:04 成功连接到SQLite数据库: ./database.db
+2025/06/09 21:14:04 所有模型已成功迁移到数据库
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] POST   /api/v1/login             --> hobbyhub-server/api.UserLogin (3 handlers)
+[GIN-debug] GET    /api/v1/user/             --> hobbyhub-server/api.GetUserInfo (3 handlers)
+[GIN-debug] PUT    /api/v1/user/             --> hobbyhub-server/api.UserRegister (3 handlers)
+[GIN-debug] POST   /api/v1/user/             --> hobbyhub-server/api.UpdateUserInfo (3 handlers)
+[GIN-debug] GET    /api/v1/chat/             --> hobbyhub-server/api.GetChatHistory (3 handlers)
+[GIN-debug] POST   /api/v1/chat/             --> hobbyhub-server/api.SendChat (3 handlers)
+[GIN-debug] DELETE /api/v1/chat/:id          --> hobbyhub-server/api.DeleteChat (3 handlers)
+[GIN-debug] GET    /api/v1/friend/           --> hobbyhub-server/api.GetFriendList (3 handlers)
+[GIN-debug] POST   /api/v1/friend/           --> hobbyhub-server/api.SendFriendRequest (3 handlers)
+[GIN-debug] PUT    /api/v1/friend/           --> hobbyhub-server/api.UpdateFriendStatus (3 handlers)
+[GIN-debug] DELETE /api/v1/friend/:id        --> hobbyhub-server/api.DeleteFriend (3 handlers)
+[GIN-debug] POST   /api/v1/file/             --> hobbyhub-server/api.UploadFile (3 handlers)
+[GIN-debug] GET    /api/v1/file/:id          --> hobbyhub-server/api.DownloadFile (3 handlers)
+[GIN-debug] DELETE /api/v1/file/:id          --> hobbyhub-server/api.DeleteFile (3 handlers)
+[GIN-debug] GET    /api/v1/activity/:id      --> hobbyhub-server/api.GetActivitie (3 handlers)
+[GIN-debug] GET    /api/v1/activity/member   --> hobbyhub-server/api.GetUserActivities (3 handlers)
+[GIN-debug] GET    /api/v1/activity/         --> hobbyhub-server/api.GetAllActivitie (3 handlers)
+[GIN-debug] PUT    /api/v1/activity/         --> hobbyhub-server/api.CreateActivity (3 handlers)
+[GIN-debug] POST   /api/v1/activity/:id      --> hobbyhub-server/api.UpdateActivity (3 handlers)
+[GIN-debug] DELETE /api/v1/activity/:id      --> hobbyhub-server/api.DeleteActivity (3 handlers)
+[GIN-debug] GET    /api/v1/activity/:id/member --> hobbyhub-server/api.GetActivityMembers (3 handlers)
+[GIN-debug] PUT    /api/v1/activity/:id/member --> hobbyhub-server/api.JoinActivity (3 handlers)
+[GIN-debug] DELETE /api/v1/activity/:id/member --> hobbyhub-server/api.LeaveActivity (3 handlers)
+[GIN-debug] GET    /api/v1/activity/:id/comment --> hobbyhub-server/api.GetActivityComments (3 handlers)
+[GIN-debug] PUT    /api/v1/activity/:id/comment --> hobbyhub-server/api.AddActivityComment (3 handlers)
+[GIN-debug] DELETE /api/v1/activity/comment/:commentId --> hobbyhub-server/api.DeleteActivityComment (3 handlers)
+[GIN-debug] GET    /swagger/*any             --> github.com/swaggo/gin-swagger.CustomWrapHandler.func1 (3 handlers)
+2025/06/09 21:14:04 服务器启动在 localhost:8081
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on localhost:8081
+2025/06/12 12:10:05 SQLite数据库文件路径已准备: ./database.db
+2025/06/12 12:10:05 成功连接到SQLite数据库: ./database.db
+2025/06/12 12:10:05 所有模型已成功迁移到数据库
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] POST   /api/v1/login             --> hobbyhub-server/api.UserLogin (3 handlers)
+[GIN-debug] GET    /api/v1/user/             --> hobbyhub-server/api.GetUserInfo (3 handlers)
+[GIN-debug] PUT    /api/v1/user/             --> hobbyhub-server/api.UserRegister (3 handlers)
+[GIN-debug] POST   /api/v1/user/             --> hobbyhub-server/api.UpdateUserInfo (3 handlers)
+[GIN-debug] GET    /api/v1/chat/             --> hobbyhub-server/api.GetChatHistory (3 handlers)
+[GIN-debug] POST   /api/v1/chat/             --> hobbyhub-server/api.SendChat (3 handlers)
+[GIN-debug] DELETE /api/v1/chat/:id          --> hobbyhub-server/api.DeleteChat (3 handlers)
+[GIN-debug] GET    /api/v1/friend/           --> hobbyhub-server/api.GetFriendList (3 handlers)
+[GIN-debug] POST   /api/v1/friend/           --> hobbyhub-server/api.SendFriendRequest (3 handlers)
+[GIN-debug] PUT    /api/v1/friend/           --> hobbyhub-server/api.UpdateFriendStatus (3 handlers)
+[GIN-debug] DELETE /api/v1/friend/:id        --> hobbyhub-server/api.DeleteFriend (3 handlers)
+[GIN-debug] POST   /api/v1/file/             --> hobbyhub-server/api.UploadFile (3 handlers)
+[GIN-debug] GET    /api/v1/file/:id          --> hobbyhub-server/api.DownloadFile (3 handlers)
+[GIN-debug] DELETE /api/v1/file/:id          --> hobbyhub-server/api.DeleteFile (3 handlers)
+[GIN-debug] GET    /api/v1/activity/:id      --> hobbyhub-server/api.GetActivitie (3 handlers)
+[GIN-debug] GET    /api/v1/activity/member   --> hobbyhub-server/api.GetUserActivities (3 handlers)
+[GIN-debug] GET    /api/v1/activity/         --> hobbyhub-server/api.GetAllActivitie (3 handlers)
+[GIN-debug] PUT    /api/v1/activity/         --> hobbyhub-server/api.CreateActivity (3 handlers)
+[GIN-debug] POST   /api/v1/activity/:id      --> hobbyhub-server/api.UpdateActivity (3 handlers)
+[GIN-debug] DELETE /api/v1/activity/:id      --> hobbyhub-server/api.DeleteActivity (3 handlers)
+[GIN-debug] GET    /api/v1/activity/:id/member --> hobbyhub-server/api.GetActivityMembers (3 handlers)
+[GIN-debug] PUT    /api/v1/activity/:id/member --> hobbyhub-server/api.JoinActivity (3 handlers)
+[GIN-debug] DELETE /api/v1/activity/:id/member --> hobbyhub-server/api.LeaveActivity (3 handlers)
+[GIN-debug] GET    /api/v1/activity/:id/comment --> hobbyhub-server/api.GetActivityComments (3 handlers)
+[GIN-debug] PUT    /api/v1/activity/:id/comment --> hobbyhub-server/api.AddActivityComment (3 handlers)
+[GIN-debug] DELETE /api/v1/activity/comment/:commentId --> hobbyhub-server/api.DeleteActivityComment (3 handlers)
+[GIN-debug] GET    /swagger/*any             --> github.com/swaggo/gin-swagger.CustomWrapHandler.func1 (3 handlers)
+2025/06/12 12:10:05 服务器启动在 localhost:8081
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on localhost:8081
+2025/06/12 12:10:20 SQLite数据库文件路径已准备: ./database.db
+2025/06/12 12:10:20 成功连接到SQLite数据库: ./database.db
+2025/06/12 12:10:20 所有模型已成功迁移到数据库
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] POST   /api/v1/login             --> hobbyhub-server/api.UserLogin (3 handlers)
+[GIN-debug] GET    /api/v1/user/             --> hobbyhub-server/api.GetUserInfo (3 handlers)
+[GIN-debug] PUT    /api/v1/user/             --> hobbyhub-server/api.UserRegister (3 handlers)
+[GIN-debug] POST   /api/v1/user/             --> hobbyhub-server/api.UpdateUserInfo (3 handlers)
+[GIN-debug] GET    /api/v1/chat/             --> hobbyhub-server/api.GetChatHistory (3 handlers)
+[GIN-debug] POST   /api/v1/chat/             --> hobbyhub-server/api.SendChat (3 handlers)
+[GIN-debug] DELETE /api/v1/chat/:id          --> hobbyhub-server/api.DeleteChat (3 handlers)
+[GIN-debug] GET    /api/v1/friend/           --> hobbyhub-server/api.GetFriendList (3 handlers)
+[GIN-debug] POST   /api/v1/friend/           --> hobbyhub-server/api.SendFriendRequest (3 handlers)
+[GIN-debug] PUT    /api/v1/friend/           --> hobbyhub-server/api.UpdateFriendStatus (3 handlers)
+[GIN-debug] DELETE /api/v1/friend/:id        --> hobbyhub-server/api.DeleteFriend (3 handlers)
+[GIN-debug] POST   /api/v1/file/             --> hobbyhub-server/api.UploadFile (3 handlers)
+[GIN-debug] GET    /api/v1/file/:id          --> hobbyhub-server/api.DownloadFile (3 handlers)
+[GIN-debug] DELETE /api/v1/file/:id          --> hobbyhub-server/api.DeleteFile (3 handlers)
+[GIN-debug] GET    /api/v1/activity/:id      --> hobbyhub-server/api.GetActivitie (3 handlers)
+[GIN-debug] GET    /api/v1/activity/member   --> hobbyhub-server/api.GetUserActivities (3 handlers)
+[GIN-debug] GET    /api/v1/activity/         --> hobbyhub-server/api.GetAllActivitie (3 handlers)
+[GIN-debug] PUT    /api/v1/activity/         --> hobbyhub-server/api.CreateActivity (3 handlers)
+[GIN-debug] POST   /api/v1/activity/:id      --> hobbyhub-server/api.UpdateActivity (3 handlers)
+[GIN-debug] DELETE /api/v1/activity/:id      --> hobbyhub-server/api.DeleteActivity (3 handlers)
+[GIN-debug] GET    /api/v1/activity/:id/member --> hobbyhub-server/api.GetActivityMembers (3 handlers)
+[GIN-debug] PUT    /api/v1/activity/:id/member --> hobbyhub-server/api.JoinActivity (3 handlers)
+[GIN-debug] DELETE /api/v1/activity/:id/member --> hobbyhub-server/api.LeaveActivity (3 handlers)
+[GIN-debug] GET    /api/v1/activity/:id/comment --> hobbyhub-server/api.GetActivityComments (3 handlers)
+[GIN-debug] PUT    /api/v1/activity/:id/comment --> hobbyhub-server/api.AddActivityComment (3 handlers)
+[GIN-debug] DELETE /api/v1/activity/comment/:commentId --> hobbyhub-server/api.DeleteActivityComment (3 handlers)
+[GIN-debug] GET    /swagger/*any             --> github.com/swaggo/gin-swagger.CustomWrapHandler.func1 (3 handlers)
+2025/06/12 12:10:20 服务器启动在 0.0.0.0:8081
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on 0.0.0.0:8081
+[GIN] 2025/06/12 - 12:15:33 | 200 |       251.9µs |       127.0.0.1 | GET      "/swagger/index.html"
+[GIN] 2025/06/12 - 12:15:33 | 200 |       914.6µs |       127.0.0.1 | GET      "/swagger/swagger-ui.css"
+[GIN] 2025/06/12 - 12:15:33 | 200 |      4.5001ms |       127.0.0.1 | GET      "/swagger/swagger-ui-standalone-preset.js"
+[GIN] 2025/06/12 - 12:15:33 | 200 |     10.8007ms |       127.0.0.1 | GET      "/swagger/swagger-ui-bundle.js"
+[GIN] 2025/06/12 - 12:15:33 | 200 |       156.2µs |       127.0.0.1 | GET      "/swagger/doc.json"
+[GIN] 2025/06/12 - 12:15:33 | 200 |            0s |       127.0.0.1 | GET      "/swagger/favicon-32x32.png"
+[GIN] 2025/06/12 - 12:22:15 | 400 |      4.5756ms |       127.0.0.1 | POST     "/api/v1/login"
+[GIN] 2025/06/12 - 12:31:54 | 404 |            0s |       127.0.0.1 | OPTIONS  "/api/v1/user"
+[GIN] 2025/06/12 - 12:32:19 | 200 |      2.0003ms |       127.0.0.1 | GET      "/swagger/index.html"
+[GIN] 2025/06/12 - 12:32:19 | 200 |      2.1968ms |       127.0.0.1 | GET      "/swagger/swagger-ui.css"
+[GIN] 2025/06/12 - 12:32:20 | 200 |      5.0001ms |       127.0.0.1 | GET      "/swagger/swagger-ui-standalone-preset.js"
+[GIN] 2025/06/12 - 12:32:20 | 200 |     16.2687ms |       127.0.0.1 | GET      "/swagger/swagger-ui-bundle.js"
+[GIN] 2025/06/12 - 12:32:20 | 200 |      1.0432ms |       127.0.0.1 | GET      "/swagger/doc.json"
+[GIN-debug] redirecting request 307: /api/v1/user/ --> /api/v1/user/
+[GIN] 2025/06/12 - 12:32:32 | 200 |     21.5336ms |       127.0.0.1 | PUT      "/api/v1/user/"
+[GIN] 2025/06/12 - 12:32:48 | 404 |       1.711ms |       127.0.0.1 | POST     "/api/v1/login"
+[GIN] 2025/06/12 - 12:33:03 | 404 |       323.2µs |       127.0.0.1 | POST     "/api/v1/login"
+[GIN] 2025/06/12 - 12:33:37 | 404 |      2.1324ms |       127.0.0.1 | POST     "/api/v1/login"
+[GIN] 2025/06/12 - 12:35:25 | 404 |       499.2µs |       127.0.0.1 | POST     "/api/v1/login"
+[GIN] 2025/06/12 - 12:37:38 | 404 |       431.9µs |       127.0.0.1 | POST     "/api/v1/login"
+[GIN] 2025/06/12 - 12:41:06 | 404 |      1.0678ms |       127.0.0.1 | POST     "/api/v1/login"
+[GIN] 2025/06/12 - 12:41:19 | 404 |       919.8µs |       127.0.0.1 | POST     "/api/v1/login"
+[GIN] 2025/06/12 - 12:47:37 | 404 |      1.0209ms |       127.0.0.1 | POST     "/api/v1/login"
+[GIN-debug] redirecting request 307: /api/v1/user/ --> /api/v1/user/
+[GIN] 2025/06/12 - 12:48:13 | 200 |     10.7663ms |       127.0.0.1 | PUT      "/api/v1/user/"
+[GIN] 2025/06/12 - 12:48:21 | 200 |       532.8µs |       127.0.0.1 | POST     "/api/v1/login"
+2025/06/12 12:53:46 SQLite数据库文件路径已准备: ./database.db
+2025/06/12 12:53:46 成功连接到SQLite数据库: ./database.db
+2025/06/12 12:53:46 所有模型已成功迁移到数据库
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] POST   /api/v1/login             --> hobbyhub-server/api.UserLogin (3 handlers)
+[GIN-debug] GET    /api/v1/user/             --> hobbyhub-server/api.GetUserInfo (3 handlers)
+[GIN-debug] PUT    /api/v1/user/             --> hobbyhub-server/api.UserRegister (3 handlers)
+[GIN-debug] POST   /api/v1/user/             --> hobbyhub-server/api.UpdateUserInfo (3 handlers)
+[GIN-debug] GET    /api/v1/chat/             --> hobbyhub-server/api.GetChatHistory (3 handlers)
+[GIN-debug] POST   /api/v1/chat/             --> hobbyhub-server/api.SendChat (3 handlers)
+[GIN-debug] DELETE /api/v1/chat/:id          --> hobbyhub-server/api.DeleteChat (3 handlers)
+[GIN-debug] GET    /api/v1/friend/           --> hobbyhub-server/api.GetFriendList (3 handlers)
+[GIN-debug] POST   /api/v1/friend/           --> hobbyhub-server/api.SendFriendRequest (3 handlers)
+[GIN-debug] PUT    /api/v1/friend/           --> hobbyhub-server/api.UpdateFriendStatus (3 handlers)
+[GIN-debug] DELETE /api/v1/friend/:id        --> hobbyhub-server/api.DeleteFriend (3 handlers)
+[GIN-debug] POST   /api/v1/file/             --> hobbyhub-server/api.UploadFile (3 handlers)
+[GIN-debug] GET    /api/v1/file/:id          --> hobbyhub-server/api.DownloadFile (3 handlers)
+[GIN-debug] DELETE /api/v1/file/:id          --> hobbyhub-server/api.DeleteFile (3 handlers)
+[GIN-debug] GET    /api/v1/activity/:id      --> hobbyhub-server/api.GetActivitie (3 handlers)
+[GIN-debug] GET    /api/v1/activity/member   --> hobbyhub-server/api.GetUserActivities (3 handlers)
+[GIN-debug] GET    /api/v1/activity/         --> hobbyhub-server/api.GetAllActivitie (3 handlers)
+[GIN-debug] PUT    /api/v1/activity/         --> hobbyhub-server/api.CreateActivity (3 handlers)
+[GIN-debug] POST   /api/v1/activity/:id      --> hobbyhub-server/api.UpdateActivity (3 handlers)
+[GIN-debug] DELETE /api/v1/activity/:id      --> hobbyhub-server/api.DeleteActivity (3 handlers)
+[GIN-debug] GET    /api/v1/activity/:id/member --> hobbyhub-server/api.GetActivityMembers (3 handlers)
+[GIN-debug] PUT    /api/v1/activity/:id/member --> hobbyhub-server/api.JoinActivity (3 handlers)
+[GIN-debug] DELETE /api/v1/activity/:id/member --> hobbyhub-server/api.LeaveActivity (3 handlers)
+[GIN-debug] GET    /api/v1/activity/:id/comment --> hobbyhub-server/api.GetActivityComments (3 handlers)
+[GIN-debug] PUT    /api/v1/activity/:id/comment --> hobbyhub-server/api.AddActivityComment (3 handlers)
+[GIN-debug] DELETE /api/v1/activity/comment/:commentId --> hobbyhub-server/api.DeleteActivityComment (3 handlers)
+[GIN-debug] GET    /swagger/*any             --> github.com/swaggo/gin-swagger.CustomWrapHandler.func1 (3 handlers)
+2025/06/12 12:53:46 服务器启动在 0.0.0.0:8081
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on 0.0.0.0:8081
+2025/06/12 12:54:12 SQLite数据库文件路径已准备: ./database.db
+2025/06/12 12:54:12 成功连接到SQLite数据库: ./database.db
+2025/06/12 12:54:12 所有模型已成功迁移到数据库
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] POST   /api/v1/login             --> hobbyhub-server/api.UserLogin (3 handlers)
+[GIN-debug] GET    /api/v1/user/             --> hobbyhub-server/api.GetUserInfo (3 handlers)
+[GIN-debug] PUT    /api/v1/user/             --> hobbyhub-server/api.UserRegister (3 handlers)
+[GIN-debug] POST   /api/v1/user/             --> hobbyhub-server/api.UpdateUserInfo (3 handlers)
+[GIN-debug] GET    /api/v1/chat/             --> hobbyhub-server/api.GetChatHistory (3 handlers)
+[GIN-debug] POST   /api/v1/chat/             --> hobbyhub-server/api.SendChat (3 handlers)
+[GIN-debug] DELETE /api/v1/chat/:id          --> hobbyhub-server/api.DeleteChat (3 handlers)
+[GIN-debug] GET    /api/v1/friend/           --> hobbyhub-server/api.GetFriendList (3 handlers)
+[GIN-debug] POST   /api/v1/friend/           --> hobbyhub-server/api.SendFriendRequest (3 handlers)
+[GIN-debug] PUT    /api/v1/friend/           --> hobbyhub-server/api.UpdateFriendStatus (3 handlers)
+[GIN-debug] DELETE /api/v1/friend/:id        --> hobbyhub-server/api.DeleteFriend (3 handlers)
+[GIN-debug] POST   /api/v1/file/             --> hobbyhub-server/api.UploadFile (3 handlers)
+[GIN-debug] GET    /api/v1/file/:id          --> hobbyhub-server/api.DownloadFile (3 handlers)
+[GIN-debug] DELETE /api/v1/file/:id          --> hobbyhub-server/api.DeleteFile (3 handlers)
+[GIN-debug] GET    /api/v1/activity/:id      --> hobbyhub-server/api.GetActivitie (3 handlers)
+[GIN-debug] GET    /api/v1/activity/member   --> hobbyhub-server/api.GetUserActivities (3 handlers)
+[GIN-debug] GET    /api/v1/activity/         --> hobbyhub-server/api.GetAllActivitie (3 handlers)
+[GIN-debug] PUT    /api/v1/activity/         --> hobbyhub-server/api.CreateActivity (3 handlers)
+[GIN-debug] POST   /api/v1/activity/:id      --> hobbyhub-server/api.UpdateActivity (3 handlers)
+[GIN-debug] DELETE /api/v1/activity/:id      --> hobbyhub-server/api.DeleteActivity (3 handlers)
+[GIN-debug] GET    /api/v1/activity/:id/member --> hobbyhub-server/api.GetActivityMembers (3 handlers)
+[GIN-debug] PUT    /api/v1/activity/:id/member --> hobbyhub-server/api.JoinActivity (3 handlers)
+[GIN-debug] DELETE /api/v1/activity/:id/member --> hobbyhub-server/api.LeaveActivity (3 handlers)
+[GIN-debug] GET    /api/v1/activity/:id/comment --> hobbyhub-server/api.GetActivityComments (3 handlers)
+[GIN-debug] PUT    /api/v1/activity/:id/comment --> hobbyhub-server/api.AddActivityComment (3 handlers)
+[GIN-debug] DELETE /api/v1/activity/comment/:commentId --> hobbyhub-server/api.DeleteActivityComment (3 handlers)
+[GIN-debug] GET    /swagger/*any             --> github.com/swaggo/gin-swagger.CustomWrapHandler.func1 (3 handlers)
+2025/06/12 12:54:12 服务器启动在 localhost:8081
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on localhost:8081
+[GIN] 2025/06/12 - 12:54:20 | 200 |       440.7µs |       127.0.0.1 | GET      "/swagger/index.html"
+[GIN] 2025/06/12 - 12:54:20 | 200 |        1.48ms |       127.0.0.1 | GET      "/swagger/swagger-ui.css"
+[GIN] 2025/06/12 - 12:54:20 | 200 |      3.0468ms |       127.0.0.1 | GET      "/swagger/swagger-ui-standalone-preset.js"
+[GIN] 2025/06/12 - 12:54:20 | 200 |      6.0721ms |       127.0.0.1 | GET      "/swagger/swagger-ui-bundle.js"
+[GIN] 2025/06/12 - 12:54:20 | 200 |       598.4µs |       127.0.0.1 | GET      "/swagger/doc.json"
+[GIN] 2025/06/12 - 13:26:40 | 200 |      1.0009ms |       127.0.0.1 | POST     "/api/v1/login"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 13:27:16 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 13:27:16 | 200 |         449µs |       127.0.0.1 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 13:28:36 | 200 |       505.4µs |       127.0.0.1 | POST     "/api/v1/login"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 13:28:38 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 13:28:38 | 200 |      1.5664ms |       127.0.0.1 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 13:28:44 | 200 |       480.5µs |       127.0.0.1 | POST     "/api/v1/login"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 13:28:44 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 13:28:44 | 200 |       427.2µs |       127.0.0.1 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 13:29:06 | 200 |       437.8µs |       127.0.0.1 | POST     "/api/v1/login"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 13:29:06 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 13:29:06 | 200 |       493.2µs |       127.0.0.1 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 13:29:20 | 200 |            0s |       127.0.0.1 | POST     "/api/v1/login"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 13:29:21 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 13:29:21 | 200 |      1.0229ms |       127.0.0.1 | GET      "/api/v1/user/"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 13:30:34 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 13:30:34 | 200 |       504.9µs |       127.0.0.1 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 13:30:37 | 404 |            0s |       127.0.0.1 | GET      "/api/post_card/list/follow"
+[GIN] 2025/06/12 - 13:31:20 | 200 |            0s |       127.0.0.1 | POST     "/api/v1/login"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 13:31:20 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 13:31:20 | 200 |       425.6µs |       127.0.0.1 | GET      "/api/v1/user/"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 13:31:44 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 13:31:44 | 200 |       1.014ms |       127.0.0.1 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 13:31:47 | 404 |            0s |       127.0.0.1 | GET      "/api/post_card/list/follow"
+[GIN] 2025/06/12 - 13:34:38 | 200 |       505.5µs |       127.0.0.1 | POST     "/api/v1/login"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 13:34:38 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 13:34:38 | 200 |       500.1µs |       127.0.0.1 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 13:34:50 | 200 |       499.9µs |       127.0.0.1 | POST     "/api/v1/login"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 13:34:50 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 13:34:50 | 200 |       500.4µs |       127.0.0.1 | GET      "/api/v1/user/"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 13:35:33 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 13:35:33 | 200 |      1.0705ms |       127.0.0.1 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 13:35:37 | 404 |            0s |       127.0.0.1 | GET      "/api/post_card/list/follow"
+[GIN] 2025/06/12 - 13:40:46 | 200 |       514.7µs |       127.0.0.1 | POST     "/api/v1/login"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 13:40:46 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 13:40:46 | 200 |       434.5µs |       127.0.0.1 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 13:45:52 | 200 |       502.2µs |       127.0.0.1 | POST     "/api/v1/login"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 13:45:52 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 13:45:52 | 200 |       497.6µs |       127.0.0.1 | GET      "/api/v1/user/"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 13:46:20 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 13:46:20 | 200 |       499.9µs |       127.0.0.1 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 13:46:23 | 404 |            0s |       127.0.0.1 | GET      "/api/post_card/list/follow"
+[GIN] 2025/06/12 - 13:46:37 | 200 |            0s |       127.0.0.1 | POST     "/api/v1/login"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 13:46:37 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 13:46:37 | 200 |      1.0083ms |       127.0.0.1 | GET      "/api/v1/user/"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 13:47:20 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 13:47:20 | 200 |       500.3µs |       127.0.0.1 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 13:47:23 | 404 |            0s |       127.0.0.1 | GET      "/api/post_card/list/follow"
+[GIN] 2025/06/12 - 13:47:36 | 200 |            0s |       127.0.0.1 | POST     "/api/v1/login"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 13:47:36 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 13:47:36 | 200 |         497µs |       127.0.0.1 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 13:47:56 | 200 |       499.1µs |       127.0.0.1 | POST     "/api/v1/login"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 13:47:59 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 13:47:59 | 200 |       504.8µs |       127.0.0.1 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 13:48:17 | 200 |            0s |       127.0.0.1 | POST     "/api/v1/login"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 13:48:25 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 13:48:25 | 200 |      1.0004ms |       127.0.0.1 | GET      "/api/v1/user/"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 13:49:00 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 13:49:00 | 200 |       501.2µs |       127.0.0.1 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 13:49:04 | 404 |            0s |       127.0.0.1 | GET      "/api/post_card/list/follow"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 13:50:00 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 13:50:00 | 200 |         500µs |       127.0.0.1 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 13:50:03 | 404 |            0s |       127.0.0.1 | GET      "/api/post_card/list/follow"
+[GIN] 2025/06/12 - 13:50:09 | 200 |            0s |       127.0.0.1 | POST     "/api/v1/login"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 13:50:09 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 13:50:09 | 200 |       499.3µs |       127.0.0.1 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 13:50:21 | 200 |         109µs |       127.0.0.1 | POST     "/api/v1/login"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 13:50:21 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 13:50:21 | 200 |       499.2µs |       127.0.0.1 | GET      "/api/v1/user/"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 13:50:44 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 13:50:44 | 200 |         493µs |       127.0.0.1 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 13:50:47 | 404 |            0s |       127.0.0.1 | GET      "/api/post_card/list/follow"
+[GIN] 2025/06/12 - 13:50:49 | 200 |       447.3µs |       127.0.0.1 | POST     "/api/v1/login"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 13:50:49 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 13:50:49 | 200 |       512.9µs |       127.0.0.1 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 13:51:19 | 404 |       725.6µs |       127.0.0.1 | POST     "/api/v1/login"
+[GIN] 2025/06/12 - 13:51:32 | 404 |            0s |       127.0.0.1 | POST     "/api/v1/login"
+[GIN] 2025/06/12 - 13:51:39 | 404 |      1.0071ms |       127.0.0.1 | POST     "/api/v1/login"
+[GIN] 2025/06/12 - 13:51:51 | 200 |            0s |       127.0.0.1 | POST     "/api/v1/login"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 13:52:04 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 13:52:04 | 200 |       281.5µs |       127.0.0.1 | GET      "/api/v1/user/"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 13:52:08 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 13:52:08 | 200 |       329.2µs |       127.0.0.1 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 13:52:24 | 200 |       147.6µs |       127.0.0.1 | POST     "/api/v1/login"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 13:52:24 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 13:52:24 | 200 |       1.003ms |       127.0.0.1 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 13:52:29 | 200 |       277.8µs |       127.0.0.1 | POST     "/api/v1/login"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 13:52:29 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 13:52:29 | 200 |       501.1µs |       127.0.0.1 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 13:52:32 | 200 |       215.3µs |       127.0.0.1 | POST     "/api/v1/login"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 13:52:32 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 13:52:32 | 200 |       363.6µs |       127.0.0.1 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 13:52:39 | 200 |       318.9µs |       127.0.0.1 | POST     "/api/v1/login"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 13:52:39 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 13:52:39 | 200 |      1.0044ms |       127.0.0.1 | GET      "/api/v1/user/"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 13:53:07 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 13:53:07 | 200 |       1.007ms |       127.0.0.1 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 13:53:11 | 404 |            0s |       127.0.0.1 | GET      "/api/post_card/list/follow"
+[GIN] 2025/06/12 - 13:53:22 | 200 |       156.7µs |       127.0.0.1 | POST     "/api/v1/login"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 13:53:22 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 13:53:22 | 200 |       499.9µs |       127.0.0.1 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 13:53:36 | 200 |       296.5µs |       127.0.0.1 | POST     "/api/v1/login"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 13:53:37 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 13:53:37 | 200 |       502.3µs |       127.0.0.1 | GET      "/api/v1/user/"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 13:54:09 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 13:54:09 | 200 |         515µs |       127.0.0.1 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 13:54:12 | 404 |            0s |       127.0.0.1 | GET      "/api/post_card/list/follow"
+[GIN] 2025/06/12 - 13:55:03 | 200 |         189µs |       127.0.0.1 | POST     "/api/v1/login"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 13:55:03 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 13:55:03 | 200 |       831.5µs |       127.0.0.1 | GET      "/api/v1/user/"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 13:56:50 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 13:56:50 | 200 |       509.5µs |       127.0.0.1 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 13:56:53 | 404 |            0s |       127.0.0.1 | GET      "/api/post_card/list/follow"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 13:57:38 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 13:57:38 | 200 |      1.0134ms |       127.0.0.1 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 13:57:41 | 404 |            0s |       127.0.0.1 | GET      "/api/post_card/list/follow"
+[GIN] 2025/06/12 - 13:57:48 | 200 |       242.3µs |       127.0.0.1 | POST     "/api/v1/login"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 13:57:48 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 13:57:48 | 200 |      1.0013ms |       127.0.0.1 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 13:58:04 | 200 |         548µs |       127.0.0.1 | POST     "/api/v1/login"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 13:58:04 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 13:58:04 | 200 |       500.1µs |       127.0.0.1 | GET      "/api/v1/user/"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 13:58:28 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 13:58:28 | 200 |       506.2µs |       127.0.0.1 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 13:58:32 | 404 |            0s |       127.0.0.1 | GET      "/api/post_card/list/follow"
+[GIN] 2025/06/12 - 13:58:42 | 200 |       242.9µs |       127.0.0.1 | POST     "/api/v1/login"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 13:58:42 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 13:58:42 | 200 |       499.4µs |       127.0.0.1 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 13:59:12 | 200 |       999.6µs |       127.0.0.1 | POST     "/api/v1/login"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 13:59:12 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 13:59:12 | 200 |       391.4µs |       127.0.0.1 | GET      "/api/v1/user/"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 13:59:51 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 13:59:51 | 200 |       501.3µs |       127.0.0.1 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 13:59:54 | 404 |            0s |       127.0.0.1 | GET      "/api/post_card/list/follow"
+[GIN] 2025/06/12 - 14:00:33 | 200 |       248.9µs |       127.0.0.1 | POST     "/api/v1/login"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 14:00:35 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 14:00:35 | 200 |       506.3µs |       127.0.0.1 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 14:01:57 | 200 |       221.3µs |       127.0.0.1 | POST     "/api/v1/login"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 14:01:59 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 14:01:59 | 200 |      1.0049ms |       127.0.0.1 | GET      "/api/v1/user/"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 14:02:19 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 14:02:19 | 200 |       498.7µs |       127.0.0.1 | GET      "/api/v1/user/"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 14:02:33 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 14:02:33 | 200 |         501µs |       127.0.0.1 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 14:02:36 | 404 |            0s |       127.0.0.1 | GET      "/api/post_card/list/follow"
+[GIN] 2025/06/12 - 14:02:48 | 200 |            0s |       127.0.0.1 | POST     "/api/v1/login"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 14:02:49 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 14:02:49 | 200 |       370.2µs |       127.0.0.1 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 14:03:41 | 200 |      1.4444ms |       127.0.0.1 | POST     "/api/v1/login"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 14:03:41 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 14:03:41 | 200 |       500.3µs |       127.0.0.1 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 14:03:58 | 200 |       357.2µs |       127.0.0.1 | POST     "/api/v1/login"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 14:04:31 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 14:04:31 | 200 |       507.5µs |       127.0.0.1 | GET      "/api/v1/user/"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 14:05:08 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 14:05:08 | 200 |      1.0005ms |       127.0.0.1 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 14:05:23 | 404 |            0s |       127.0.0.1 | GET      "/api/post_card/list/follow"
+[GIN] 2025/06/12 - 14:05:56 | 200 |       664.1µs |       127.0.0.1 | POST     "/api/v1/login"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 14:07:24 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 14:07:24 | 200 |       554.7µs |       127.0.0.1 | GET      "/api/v1/user/"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 14:10:14 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 14:10:14 | 200 |       851.9µs |       127.0.0.1 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 14:10:20 | 404 |            0s |       127.0.0.1 | GET      "/api/post_card/list/follow"
+[GIN] 2025/06/12 - 14:10:29 | 200 |         765µs |       127.0.0.1 | POST     "/api/v1/login"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 14:10:30 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 14:10:30 | 200 |       453.1µs |       127.0.0.1 | GET      "/api/v1/user/"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 14:11:37 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 14:11:37 | 200 |      1.0068ms |       127.0.0.1 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 14:11:43 | 404 |            0s |       127.0.0.1 | GET      "/api/post_card/list/follow"
+[GIN] 2025/06/12 - 14:11:49 | 404 |            0s |       127.0.0.1 | GET      "/api/user/code?username=19860579421"
+[GIN] 2025/06/12 - 14:11:55 | 200 |        67.9µs |       127.0.0.1 | POST     "/api/v1/login"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 14:11:57 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 14:11:57 | 200 |       999.6µs |       127.0.0.1 | GET      "/api/v1/user/"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 14:12:37 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 14:12:37 | 200 |       501.8µs |       127.0.0.1 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 14:12:40 | 404 |            0s |       127.0.0.1 | GET      "/api/post_card/list/follow"
+[GIN] 2025/06/12 - 14:12:43 | 200 |            0s |       127.0.0.1 | POST     "/api/v1/login"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 14:12:43 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 14:12:43 | 200 |       505.8µs |       127.0.0.1 | GET      "/api/v1/user/"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 14:13:05 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 14:13:05 | 200 |       499.3µs |       127.0.0.1 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 14:13:08 | 404 |            0s |       127.0.0.1 | GET      "/api/post_card/list/follow"
+[GIN] 2025/06/12 - 14:13:11 | 200 |      1.1254ms |       127.0.0.1 | POST     "/api/v1/login"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 14:13:11 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 14:13:11 | 200 |       500.9µs |       127.0.0.1 | GET      "/api/v1/user/"
+2025/06/12 14:16:43 SQLite数据库文件路径已准备: ./database.db
+2025/06/12 14:16:43 成功连接到SQLite数据库: ./database.db
+2025/06/12 14:16:43 所有模型已成功迁移到数据库
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] POST   /api/v1/login             --> hobbyhub-server/api.UserLogin (3 handlers)
+[GIN-debug] GET    /api/v1/user/             --> hobbyhub-server/api.GetUserInfo (3 handlers)
+[GIN-debug] PUT    /api/v1/user/             --> hobbyhub-server/api.UserRegister (3 handlers)
+[GIN-debug] POST   /api/v1/user/             --> hobbyhub-server/api.UpdateUserInfo (3 handlers)
+[GIN-debug] GET    /api/v1/chat/             --> hobbyhub-server/api.GetChatHistory (3 handlers)
+[GIN-debug] POST   /api/v1/chat/             --> hobbyhub-server/api.SendChat (3 handlers)
+[GIN-debug] DELETE /api/v1/chat/:id          --> hobbyhub-server/api.DeleteChat (3 handlers)
+[GIN-debug] GET    /api/v1/friend/           --> hobbyhub-server/api.GetFriendList (3 handlers)
+[GIN-debug] POST   /api/v1/friend/           --> hobbyhub-server/api.SendFriendRequest (3 handlers)
+[GIN-debug] PUT    /api/v1/friend/           --> hobbyhub-server/api.UpdateFriendStatus (3 handlers)
+[GIN-debug] DELETE /api/v1/friend/:id        --> hobbyhub-server/api.DeleteFriend (3 handlers)
+[GIN-debug] POST   /api/v1/file/             --> hobbyhub-server/api.UploadFile (3 handlers)
+[GIN-debug] GET    /api/v1/file/:id          --> hobbyhub-server/api.DownloadFile (3 handlers)
+[GIN-debug] DELETE /api/v1/file/:id          --> hobbyhub-server/api.DeleteFile (3 handlers)
+[GIN-debug] GET    /api/v1/activity/:id      --> hobbyhub-server/api.GetActivitie (3 handlers)
+[GIN-debug] GET    /api/v1/activity/member   --> hobbyhub-server/api.GetUserActivities (3 handlers)
+[GIN-debug] GET    /api/v1/activity/         --> hobbyhub-server/api.GetAllActivitie (3 handlers)
+[GIN-debug] PUT    /api/v1/activity/         --> hobbyhub-server/api.CreateActivity (3 handlers)
+[GIN-debug] POST   /api/v1/activity/:id      --> hobbyhub-server/api.UpdateActivity (3 handlers)
+[GIN-debug] DELETE /api/v1/activity/:id      --> hobbyhub-server/api.DeleteActivity (3 handlers)
+[GIN-debug] GET    /api/v1/activity/:id/member --> hobbyhub-server/api.GetActivityMembers (3 handlers)
+[GIN-debug] PUT    /api/v1/activity/:id/member --> hobbyhub-server/api.JoinActivity (3 handlers)
+[GIN-debug] DELETE /api/v1/activity/:id/member --> hobbyhub-server/api.LeaveActivity (3 handlers)
+[GIN-debug] GET    /api/v1/activity/:id/comment --> hobbyhub-server/api.GetActivityComments (3 handlers)
+[GIN-debug] PUT    /api/v1/activity/:id/comment --> hobbyhub-server/api.AddActivityComment (3 handlers)
+[GIN-debug] DELETE /api/v1/activity/comment/:commentId --> hobbyhub-server/api.DeleteActivityComment (3 handlers)
+[GIN-debug] GET    /swagger/*any             --> github.com/swaggo/gin-swagger.CustomWrapHandler.func1 (3 handlers)
+2025/06/12 14:16:43 服务器启动在 0.0.0.0:8081
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on 0.0.0.0:8081
+[GIN] 2025/06/12 - 14:17:22 | 200 |      1.4991ms |    192.168.1.10 | POST     "/api/v1/login"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 14:17:22 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 14:17:22 | 200 |       224.4µs |    192.168.1.10 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 14:17:24 | 404 |            0s |    192.168.1.10 | GET      "/api/post_card/list/follow"
+[GIN] 2025/06/12 - 14:17:30 | 404 |            0s |    192.168.1.10 | GET      "/api/user_follow/list/from?fromUserId=4"
+[GIN] 2025/06/12 - 14:17:30 | 404 |            0s |    192.168.1.10 | GET      "/api/user_follow/list/to?toUserId=4"
+[GIN] 2025/06/12 - 14:17:30 | 404 |            0s |    192.168.1.10 | GET      "/api/product_cart/list"
+[GIN] 2025/06/12 - 14:17:30 | 404 |            0s |    192.168.1.10 | GET      "/api/product_order/list"
+[GIN] 2025/06/12 - 14:17:30 | 404 |            0s |    192.168.1.10 | GET      "/"
+[GIN] 2025/06/12 - 14:17:30 | 404 |            0s |    192.168.1.10 | GET      "/"
+[GIN] 2025/06/12 - 14:17:30 | 404 |            0s |    192.168.1.10 | GET      "/api/post_card/list/author_id/4"
+[GIN] 2025/06/12 - 14:17:46 | 404 |            0s |    192.168.1.10 | GET      "/api/product/list"
+[GIN] 2025/06/12 - 14:17:49 | 404 |            0s |    192.168.1.10 | GET      "/api/product_cart/list"
+[GIN] 2025/06/12 - 14:18:09 | 200 |       371.2µs |    192.168.1.10 | POST     "/api/v1/login"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 14:18:09 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 14:18:09 | 200 |      1.0067ms |    192.168.1.10 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 14:18:11 | 404 |            0s |    192.168.1.10 | GET      "/api/post_card/list/follow"
+[GIN] 2025/06/12 - 14:18:34 | 404 |            0s |    192.168.1.10 | GET      "/api/user_follow/list/from?fromUserId=4"
+[GIN] 2025/06/12 - 14:18:34 | 404 |            0s |    192.168.1.10 | GET      "/api/user_follow/list/to?toUserId=4"
+[GIN] 2025/06/12 - 14:18:34 | 404 |            0s |    192.168.1.10 | GET      "/api/product_cart/list"
+[GIN] 2025/06/12 - 14:18:34 | 404 |            0s |    192.168.1.10 | GET      "/api/product_order/list"
+[GIN] 2025/06/12 - 14:18:34 | 404 |            0s |    192.168.1.10 | GET      "/"
+[GIN] 2025/06/12 - 14:18:34 | 404 |            0s |    192.168.1.10 | GET      "/"
+[GIN] 2025/06/12 - 14:18:34 | 404 |            0s |    192.168.1.10 | GET      "/api/post_card/list/author_id/4"
+[GIN] 2025/06/12 - 14:20:41 | 404 |            0s |    192.168.1.10 | GET      "/api/post_card/list/like/author_id/4"
+[GIN] 2025/06/12 - 14:20:51 | 404 |            0s |    192.168.1.10 | GET      "/api/product/list"
+[GIN] 2025/06/12 - 14:20:55 | 404 |            0s |    192.168.1.10 | GET      "/api/product_cart/list"
+[GIN] 2025/06/12 - 14:21:06 | 404 |            0s |    192.168.1.10 | GET      "/"
+[GIN] 2025/06/12 - 14:21:09 | 404 |            0s |    192.168.1.10 | GET      "/"
+[GIN] 2025/06/12 - 14:21:13 | 404 |            0s |    192.168.1.10 | GET      "/"
+[GIN] 2025/06/12 - 14:21:15 | 404 |            0s |    192.168.1.10 | GET      "/"
+[GIN] 2025/06/12 - 14:21:20 | 404 |            0s |    192.168.1.10 | GET      "/"
+[GIN] 2025/06/12 - 14:21:27 | 404 |            0s |    192.168.1.10 | GET      "/"
+[GIN] 2025/06/12 - 14:21:32 | 404 |            0s |    192.168.1.10 | GET      "/"
+[GIN] 2025/06/12 - 14:21:43 | 404 |            0s |    192.168.1.10 | GET      "/"
+[GIN] 2025/06/12 - 14:23:40 | 404 |            0s |    192.168.1.10 | GET      "/api/post_card/list/follow"
+[GIN] 2025/06/12 - 14:24:15 | 404 |            0s |    192.168.1.10 | GET      "/api/tabs/list"
+[GIN] 2025/06/12 - 14:24:20 | 404 |            0s |    192.168.1.10 | GET      "/api/tabs/list"
+[GIN] 2025/06/12 - 14:24:28 | 404 |            0s |    192.168.1.10 | GET      "/api/product/list"
+[GIN] 2025/06/12 - 14:24:32 | 404 |            0s |    192.168.1.10 | GET      "/api/product/list"
+[GIN] 2025/06/12 - 14:24:34 | 404 |            0s |    192.168.1.10 | GET      "/api/product/list"
+[GIN] 2025/06/12 - 15:11:01 | 200 |      3.0046ms |    192.168.1.10 | POST     "/api/v1/login"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 15:11:14 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 15:11:14 | 200 |       282.5µs |    192.168.1.10 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 15:11:43 | 200 |       113.3µs |    192.168.1.10 | POST     "/api/v1/login"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 15:11:44 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 15:11:44 | 200 |         617µs |    192.168.1.10 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 15:17:32 | 200 |      1.0037ms |    192.168.1.10 | POST     "/api/v1/login"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 15:17:34 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 15:17:34 | 200 |       1.001ms |    192.168.1.10 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 15:17:59 | 404 |            0s |    192.168.1.10 | GET      "/api/post_card/list/follow"
+[GIN] 2025/06/12 - 15:18:00 | 404 |            0s |    192.168.1.10 | GET      "/api/user_follow/list/from?fromUserId=4"
+[GIN] 2025/06/12 - 15:18:00 | 404 |            0s |    192.168.1.10 | GET      "/api/user_follow/list/to?toUserId=4"
+[GIN] 2025/06/12 - 15:18:00 | 404 |            0s |    192.168.1.10 | GET      "/api/product_cart/list"
+[GIN] 2025/06/12 - 15:18:00 | 404 |            0s |    192.168.1.10 | GET      "/api/product_order/list"
+[GIN] 2025/06/12 - 15:18:00 | 404 |            0s |    192.168.1.10 | GET      "/"
+[GIN] 2025/06/12 - 15:18:00 | 404 |            0s |    192.168.1.10 | GET      "/"
+[GIN] 2025/06/12 - 15:18:00 | 404 |            0s |    192.168.1.10 | GET      "/api/post_card/list/author_id/4"
+[GIN] 2025/06/12 - 15:18:04 | 404 |            0s |    192.168.1.10 | GET      "/"
+[GIN] 2025/06/12 - 15:18:16 | 404 |            0s |    192.168.1.10 | GET      "/"
+[GIN] 2025/06/12 - 15:18:19 | 404 |            0s |    192.168.1.10 | GET      "/api/product_cart/list"
+[GIN] 2025/06/12 - 15:18:21 | 404 |            0s |    192.168.1.10 | GET      "/"
+[GIN] 2025/06/12 - 15:18:25 | 404 |            0s |    192.168.1.10 | GET      "/"
+[GIN] 2025/06/12 - 15:18:27 | 404 |            0s |    192.168.1.10 | GET      "/"
+[GIN] 2025/06/12 - 15:20:38 | 404 |            0s |    192.168.1.10 | GET      "/"
+[GIN] 2025/06/12 - 15:21:53 | 404 |            0s |    192.168.1.10 | GET      "/"
+[GIN] 2025/06/12 - 15:22:35 | 404 |            0s |    192.168.1.10 | GET      "/"
+[GIN] 2025/06/12 - 15:23:22 | 200 |      1.5093ms |    192.168.1.10 | POST     "/api/v1/login"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 15:23:25 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 15:23:25 | 200 |       925.4µs |    192.168.1.10 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 15:23:27 | 404 |            0s |    192.168.1.10 | GET      "/api/post_card/list/follow"
+[GIN] 2025/06/12 - 15:23:28 | 404 |            0s |    192.168.1.10 | GET      "/api/user_follow/list/from?fromUserId=4"
+[GIN] 2025/06/12 - 15:23:28 | 404 |            0s |    192.168.1.10 | GET      "/api/user_follow/list/to?toUserId=4"
+[GIN] 2025/06/12 - 15:23:28 | 404 |            0s |    192.168.1.10 | GET      "/api/product_cart/list"
+[GIN] 2025/06/12 - 15:23:28 | 404 |            0s |    192.168.1.10 | GET      "/api/product_order/list"
+[GIN] 2025/06/12 - 15:23:28 | 404 |            0s |    192.168.1.10 | GET      "/"
+[GIN] 2025/06/12 - 15:23:28 | 404 |            0s |    192.168.1.10 | GET      "/"
+[GIN] 2025/06/12 - 15:23:28 | 404 |            0s |    192.168.1.10 | GET      "/api/post_card/list/author_id/4"
+[GIN] 2025/06/12 - 15:23:33 | 404 |            0s |    192.168.1.10 | GET      "/"
+[GIN] 2025/06/12 - 15:24:54 | 404 |            0s |    192.168.1.10 | GET      "/"
+[GIN] 2025/06/12 - 15:27:14 | 200 |       500.9µs |    192.168.1.10 | POST     "/api/v1/login"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 15:27:19 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 15:27:19 | 200 |       708.4µs |    192.168.1.10 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 15:27:22 | 404 |            0s |    192.168.1.10 | GET      "/api/post_card/list/follow"
+[GIN] 2025/06/12 - 15:27:23 | 404 |            0s |    192.168.1.10 | GET      "/api/user_follow/list/from?fromUserId=4"
+[GIN] 2025/06/12 - 15:27:23 | 404 |            0s |    192.168.1.10 | GET      "/api/user_follow/list/to?toUserId=4"
+[GIN] 2025/06/12 - 15:27:23 | 404 |            0s |    192.168.1.10 | GET      "/api/product_cart/list"
+[GIN] 2025/06/12 - 15:27:23 | 404 |            0s |    192.168.1.10 | GET      "/api/product_order/list"
+[GIN] 2025/06/12 - 15:27:23 | 404 |            0s |    192.168.1.10 | GET      "/"
+[GIN] 2025/06/12 - 15:27:23 | 404 |            0s |    192.168.1.10 | GET      "/"
+[GIN] 2025/06/12 - 15:27:23 | 404 |            0s |    192.168.1.10 | GET      "/api/post_card/list/author_id/4"
+[GIN] 2025/06/12 - 15:27:25 | 404 |            0s |    192.168.1.10 | GET      "/"
+[GIN] 2025/06/12 - 15:27:50 | 404 |            0s |    192.168.1.10 | GET      "/"
+[GIN] 2025/06/12 - 15:27:53 | 404 |            0s |    192.168.1.10 | GET      "/"
+[GIN-debug] redirecting request 307: /api/v1/user/ --> /api/v1/user/
+[GIN] 2025/06/12 - 15:27:57 | 400 |      1.3367ms |    192.168.1.10 | PUT      "/api/v1/user/"
+[GIN-debug] redirecting request 307: /api/v1/user/ --> /api/v1/user/
+[GIN] 2025/06/12 - 15:27:58 | 400 |            0s |    192.168.1.10 | PUT      "/api/v1/user/"
+[GIN-debug] redirecting request 307: /api/v1/user/ --> /api/v1/user/
+[GIN] 2025/06/12 - 15:27:58 | 400 |            0s |    192.168.1.10 | PUT      "/api/v1/user/"
+[GIN-debug] redirecting request 307: /api/v1/user/ --> /api/v1/user/
+[GIN] 2025/06/12 - 15:27:58 | 400 |            0s |    192.168.1.10 | PUT      "/api/v1/user/"
+[GIN] 2025/06/12 - 15:37:43 | 200 |      5.0276ms |    192.168.1.10 | POST     "/api/v1/login"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 15:37:45 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 15:37:45 | 200 |       999.8µs |    192.168.1.10 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 15:37:48 | 404 |            0s |    192.168.1.10 | GET      "/api/post_card/list/follow"
+[GIN] 2025/06/12 - 15:37:49 | 404 |            0s |    192.168.1.10 | GET      "/api/user_follow/list/from?fromUserId=4"
+[GIN] 2025/06/12 - 15:37:49 | 404 |            0s |    192.168.1.10 | GET      "/api/user_follow/list/to?toUserId=4"
+[GIN] 2025/06/12 - 15:37:49 | 404 |            0s |    192.168.1.10 | GET      "/api/product_cart/list"
+[GIN] 2025/06/12 - 15:37:49 | 404 |            0s |    192.168.1.10 | GET      "/api/product_order/list"
+[GIN] 2025/06/12 - 15:37:49 | 404 |            0s |    192.168.1.10 | GET      "/"
+[GIN] 2025/06/12 - 15:37:49 | 404 |            0s |    192.168.1.10 | GET      "/"
+[GIN] 2025/06/12 - 15:37:49 | 404 |            0s |    192.168.1.10 | GET      "/api/post_card/list/author_id/4"
+[GIN] 2025/06/12 - 15:37:50 | 404 |            0s |    192.168.1.10 | GET      "/"
+[GIN-debug] redirecting request 307: /api/v1/user/ --> /api/v1/user/
+[GIN] 2025/06/12 - 15:37:55 | 200 |     15.5004ms |    192.168.1.10 | POST     "/api/v1/user/"
+[GIN] 2025/06/12 - 15:37:59 | 404 |            0s |    192.168.1.10 | GET      "/"
+[GIN-debug] redirecting request 307: /api/v1/user/ --> /api/v1/user/
+[GIN] 2025/06/12 - 15:38:25 | 200 |     11.4386ms |    192.168.1.10 | POST     "/api/v1/user/"
+[GIN] 2025/06/12 - 15:38:30 | 404 |            0s |    192.168.1.10 | GET      "/"
+[GIN] 2025/06/12 - 15:38:37 | 200 |       491.9µs |    192.168.1.10 | POST     "/api/v1/login"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 15:38:40 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 15:38:40 | 200 |      1.5025ms |    192.168.1.10 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 15:38:42 | 404 |            0s |    192.168.1.10 | GET      "/api/post_card/list/follow"
+[GIN] 2025/06/12 - 15:38:43 | 404 |            0s |    192.168.1.10 | GET      "/api/user_follow/list/from?fromUserId=4"
+[GIN] 2025/06/12 - 15:38:43 | 404 |            0s |    192.168.1.10 | GET      "/api/user_follow/list/to?toUserId=4"
+[GIN] 2025/06/12 - 15:38:43 | 404 |            0s |    192.168.1.10 | GET      "/api/product_cart/list"
+[GIN] 2025/06/12 - 15:38:43 | 404 |            0s |    192.168.1.10 | GET      "/"
+[GIN] 2025/06/12 - 15:38:43 | 404 |            0s |    192.168.1.10 | GET      "/api/product_order/list"
+[GIN] 2025/06/12 - 15:38:43 | 404 |            0s |    192.168.1.10 | GET      "/"
+[GIN] 2025/06/12 - 15:38:43 | 404 |            0s |    192.168.1.10 | GET      "/api/post_card/list/author_id/4"
+[GIN] 2025/06/12 - 15:38:50 | 404 |            0s |    192.168.1.10 | GET      "/"
+[GIN] 2025/06/12 - 15:38:53 | 404 |            0s |    192.168.1.10 | GET      "/"
+[GIN] 2025/06/12 - 15:39:00 | 404 |            0s |    192.168.1.10 | GET      "/api/post_card/list/like/author_id/4"
+[GIN] 2025/06/12 - 15:39:18 | 404 |            0s |    192.168.1.10 | GET      "/"
+[GIN-debug] redirecting request 307: /api/v1/user/ --> /api/v1/user/
+[GIN] 2025/06/12 - 15:39:24 | 200 |      9.2527ms |    192.168.1.10 | POST     "/api/v1/user/"
+[GIN] 2025/06/12 - 15:39:29 | 404 |            0s |    192.168.1.10 | GET      "/api/product_cart/list"
+[GIN] 2025/06/12 - 15:39:29 | 404 |            0s |    192.168.1.10 | GET      "/api/product_cart/list"
+[GIN] 2025/06/12 - 15:39:39 | 200 |       539.8µs |    192.168.1.10 | POST     "/api/v1/login"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 15:39:41 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 15:39:41 | 200 |      1.4993ms |    192.168.1.10 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 15:39:43 | 404 |            0s |    192.168.1.10 | GET      "/api/post_card/list/follow"
+[GIN] 2025/06/12 - 15:39:44 | 404 |            0s |    192.168.1.10 | GET      "/api/user_follow/list/from?fromUserId=4"
+[GIN] 2025/06/12 - 15:39:44 | 404 |            0s |    192.168.1.10 | GET      "/api/user_follow/list/to?toUserId=4"
+[GIN] 2025/06/12 - 15:39:44 | 404 |            0s |    192.168.1.10 | GET      "/api/product_cart/list"
+[GIN] 2025/06/12 - 15:39:44 | 404 |            0s |    192.168.1.10 | GET      "/api/product_order/list"
+[GIN] 2025/06/12 - 15:39:44 | 404 |            0s |    192.168.1.10 | GET      "/"
+[GIN] 2025/06/12 - 15:39:44 | 404 |            0s |    192.168.1.10 | GET      "/"
+[GIN] 2025/06/12 - 15:39:44 | 404 |            0s |    192.168.1.10 | GET      "/api/post_card/list/author_id/4"
+[GIN] 2025/06/12 - 15:39:53 | 404 |            0s |    192.168.1.10 | GET      "/api/product_cart/list"
+[GIN] 2025/06/12 - 15:39:56 | 404 |            0s |    192.168.1.10 | GET      "/api/product/list"
+[GIN] 2025/06/12 - 15:39:56 | 404 |            0s |    192.168.1.10 | GET      "/api/product/list"
+[GIN] 2025/06/12 - 15:39:56 | 404 |            0s |    192.168.1.10 | GET      "/api/product/list"
+[GIN] 2025/06/12 - 15:40:00 | 404 |            0s |    192.168.1.10 | GET      "/api/post_card/list/follow"
+[GIN] 2025/06/12 - 15:40:12 | 404 |            0s |    192.168.1.10 | GET      "/api/tabs/list"
+[GIN] 2025/06/12 - 15:40:14 | 404 |            0s |    192.168.1.10 | GET      "/api/post_card/list/location"
+[GIN] 2025/06/12 - 15:40:27 | 404 |            0s |    192.168.1.10 | GET      "/api/product/list"
+[GIN] 2025/06/12 - 15:46:17 | 200 |       520.3µs |    192.168.1.10 | POST     "/api/v1/login"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 15:46:18 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 15:46:18 | 200 |      1.0004ms |    192.168.1.10 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 15:46:21 | 404 |            0s |    192.168.1.10 | GET      "/api/post_card/list/follow"
+[GIN] 2025/06/12 - 15:46:23 | 404 |            0s |    192.168.1.10 | GET      "/api/user_follow/list/from?fromUserId=4"
+[GIN] 2025/06/12 - 15:46:23 | 404 |            0s |    192.168.1.10 | GET      "/api/user_follow/list/to?toUserId=4"
+[GIN] 2025/06/12 - 15:46:23 | 404 |            0s |    192.168.1.10 | GET      "/api/product_cart/list"
+[GIN] 2025/06/12 - 15:46:23 | 404 |            0s |    192.168.1.10 | GET      "/api/product_order/list"
+[GIN] 2025/06/12 - 15:46:23 | 404 |            0s |    192.168.1.10 | GET      "/"
+[GIN] 2025/06/12 - 15:46:23 | 404 |            0s |    192.168.1.10 | GET      "/"
+[GIN] 2025/06/12 - 15:46:23 | 404 |            0s |    192.168.1.10 | GET      "/api/post_card/list/author_id/4"
+[GIN] 2025/06/12 - 15:46:53 | 404 |            0s |    192.168.1.10 | GET      "/api/activity"
+[GIN] 2025/06/12 - 15:46:57 | 404 |            0s |    192.168.1.10 | GET      "/api/activity"
+2025/06/12 15:50:13 SQLite数据库文件路径已准备: ./database.db
+2025/06/12 15:50:13 成功连接到SQLite数据库: ./database.db
+2025/06/12 15:50:13 所有模型已成功迁移到数据库
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] POST   /api/v1/login             --> hobbyhub-server/api.UserLogin (3 handlers)
+[GIN-debug] GET    /api/v1/user/             --> hobbyhub-server/api.GetUserInfo (3 handlers)
+[GIN-debug] PUT    /api/v1/user/             --> hobbyhub-server/api.UserRegister (3 handlers)
+[GIN-debug] POST   /api/v1/user/             --> hobbyhub-server/api.UpdateUserInfo (3 handlers)
+[GIN-debug] GET    /api/v1/chat/             --> hobbyhub-server/api.GetChatHistory (3 handlers)
+[GIN-debug] POST   /api/v1/chat/             --> hobbyhub-server/api.SendChat (3 handlers)
+[GIN-debug] DELETE /api/v1/chat/:id          --> hobbyhub-server/api.DeleteChat (3 handlers)
+[GIN-debug] GET    /api/v1/friend/           --> hobbyhub-server/api.GetFriendList (3 handlers)
+[GIN-debug] POST   /api/v1/friend/           --> hobbyhub-server/api.SendFriendRequest (3 handlers)
+[GIN-debug] PUT    /api/v1/friend/           --> hobbyhub-server/api.UpdateFriendStatus (3 handlers)
+[GIN-debug] DELETE /api/v1/friend/:id        --> hobbyhub-server/api.DeleteFriend (3 handlers)
+[GIN-debug] POST   /api/v1/file/             --> hobbyhub-server/api.UploadFile (3 handlers)
+[GIN-debug] GET    /api/v1/file/:id          --> hobbyhub-server/api.DownloadFile (3 handlers)
+[GIN-debug] DELETE /api/v1/file/:id          --> hobbyhub-server/api.DeleteFile (3 handlers)
+[GIN-debug] GET    /api/v1/activity/:id      --> hobbyhub-server/api.GetActivitie (3 handlers)
+[GIN-debug] GET    /api/v1/activity/member   --> hobbyhub-server/api.GetUserActivities (3 handlers)
+[GIN-debug] GET    /api/v1/activity/         --> hobbyhub-server/api.GetAllActivitie (3 handlers)
+[GIN-debug] PUT    /api/v1/activity/         --> hobbyhub-server/api.CreateActivity (3 handlers)
+[GIN-debug] POST   /api/v1/activity/:id      --> hobbyhub-server/api.UpdateActivity (3 handlers)
+[GIN-debug] DELETE /api/v1/activity/:id      --> hobbyhub-server/api.DeleteActivity (3 handlers)
+[GIN-debug] GET    /api/v1/activity/:id/member --> hobbyhub-server/api.GetActivityMembers (3 handlers)
+[GIN-debug] PUT    /api/v1/activity/:id/member --> hobbyhub-server/api.JoinActivity (3 handlers)
+[GIN-debug] DELETE /api/v1/activity/:id/member --> hobbyhub-server/api.LeaveActivity (3 handlers)
+[GIN-debug] GET    /api/v1/activity/:id/comment --> hobbyhub-server/api.GetActivityComments (3 handlers)
+[GIN-debug] PUT    /api/v1/activity/:id/comment --> hobbyhub-server/api.AddActivityComment (3 handlers)
+[GIN-debug] DELETE /api/v1/activity/comment/:commentId --> hobbyhub-server/api.DeleteActivityComment (3 handlers)
+[GIN-debug] GET    /swagger/*any             --> github.com/swaggo/gin-swagger.CustomWrapHandler.func1 (3 handlers)
+2025/06/12 15:50:13 服务器启动在 0.0.0.0:8081
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on 0.0.0.0:8081
+2025/06/12 15:52:47 SQLite数据库文件路径已准备: ./database.db
+2025/06/12 15:52:47 成功连接到SQLite数据库: ./database.db
+2025/06/12 15:52:47 所有模型已成功迁移到数据库
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] POST   /api/v1/login             --> hobbyhub-server/api.UserLogin (3 handlers)
+[GIN-debug] GET    /api/v1/user/             --> hobbyhub-server/api.GetUserInfo (3 handlers)
+[GIN-debug] PUT    /api/v1/user/             --> hobbyhub-server/api.UserRegister (3 handlers)
+[GIN-debug] POST   /api/v1/user/             --> hobbyhub-server/api.UpdateUserInfo (3 handlers)
+[GIN-debug] GET    /api/v1/chat/             --> hobbyhub-server/api.GetChatHistory (3 handlers)
+[GIN-debug] POST   /api/v1/chat/             --> hobbyhub-server/api.SendChat (3 handlers)
+[GIN-debug] DELETE /api/v1/chat/:id          --> hobbyhub-server/api.DeleteChat (3 handlers)
+[GIN-debug] GET    /api/v1/friend/           --> hobbyhub-server/api.GetFriendList (3 handlers)
+[GIN-debug] POST   /api/v1/friend/           --> hobbyhub-server/api.SendFriendRequest (3 handlers)
+[GIN-debug] PUT    /api/v1/friend/           --> hobbyhub-server/api.UpdateFriendStatus (3 handlers)
+[GIN-debug] DELETE /api/v1/friend/:id        --> hobbyhub-server/api.DeleteFriend (3 handlers)
+[GIN-debug] POST   /api/v1/file/             --> hobbyhub-server/api.UploadFile (3 handlers)
+[GIN-debug] GET    /api/v1/file/:id          --> hobbyhub-server/api.DownloadFile (3 handlers)
+[GIN-debug] DELETE /api/v1/file/:id          --> hobbyhub-server/api.DeleteFile (3 handlers)
+[GIN-debug] GET    /api/v1/activity/:id      --> hobbyhub-server/api.GetActivitie (3 handlers)
+[GIN-debug] GET    /api/v1/activity/member   --> hobbyhub-server/api.GetUserActivities (3 handlers)
+[GIN-debug] GET    /api/v1/activity/         --> hobbyhub-server/api.GetAllActivitie (3 handlers)
+[GIN-debug] PUT    /api/v1/activity/         --> hobbyhub-server/api.CreateActivity (3 handlers)
+[GIN-debug] POST   /api/v1/activity/:id      --> hobbyhub-server/api.UpdateActivity (3 handlers)
+[GIN-debug] DELETE /api/v1/activity/:id      --> hobbyhub-server/api.DeleteActivity (3 handlers)
+[GIN-debug] GET    /api/v1/activity/:id/member --> hobbyhub-server/api.GetActivityMembers (3 handlers)
+[GIN-debug] PUT    /api/v1/activity/:id/member --> hobbyhub-server/api.JoinActivity (3 handlers)
+[GIN-debug] DELETE /api/v1/activity/:id/member --> hobbyhub-server/api.LeaveActivity (3 handlers)
+[GIN-debug] GET    /api/v1/activity/:id/comment --> hobbyhub-server/api.GetActivityComments (3 handlers)
+[GIN-debug] PUT    /api/v1/activity/:id/comment --> hobbyhub-server/api.AddActivityComment (3 handlers)
+[GIN-debug] DELETE /api/v1/activity/comment/:commentId --> hobbyhub-server/api.DeleteActivityComment (3 handlers)
+[GIN-debug] GET    /swagger/*any             --> github.com/swaggo/gin-swagger.CustomWrapHandler.func1 (3 handlers)
+2025/06/12 15:52:47 服务器启动在 0.0.0.0:8081
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on 0.0.0.0:8081
+[GIN] 2025/06/12 - 16:04:55 | 404 |            0s |    192.168.1.10 | GET      "/api/activity"
+[GIN] 2025/06/12 - 16:05:40 | 200 |     11.3966ms |    192.168.1.10 | POST     "/api/v1/login"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 16:05:48 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 16:05:48 | 200 |      1.4342ms |    192.168.1.10 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 16:05:50 | 404 |            0s |    192.168.1.10 | GET      "/api/post_card/list/follow"
+[GIN] 2025/06/12 - 16:05:57 | 404 |            0s |    192.168.1.10 | GET      "/api/activity"
+[GIN] 2025/06/12 - 16:06:01 | 404 |            0s |    192.168.1.10 | GET      "/api/activity"
+[GIN] 2025/06/12 - 16:06:37 | 200 |       239.1µs |    192.168.1.10 | POST     "/api/v1/login"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 16:07:06 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 16:07:06 | 200 |       999.5µs |    192.168.1.10 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 16:07:08 | 404 |            0s |    192.168.1.10 | GET      "/api/post_card/list/follow"
+[GIN-debug] redirecting request 301: /api/v1/activity/ --> /api/v1/activity/
+[GIN] 2025/06/12 - 16:07:11 | 200 |      1.5111ms |    192.168.1.10 | GET      "/api/v1/activity/"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 16:07:45 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 16:07:45 | 200 |       543.3µs |    192.168.1.10 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 16:07:48 | 404 |            0s |    192.168.1.10 | GET      "/api/post_card/list/follow"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 16:08:06 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 16:08:06 | 200 |       506.3µs |    192.168.1.10 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 16:08:09 | 404 |            0s |    192.168.1.10 | GET      "/api/post_card/list/follow"
+[GIN] 2025/06/12 - 16:08:13 | 200 |      1.0008ms |    192.168.1.10 | POST     "/api/v1/login"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 16:08:13 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 16:08:13 | 200 |       334.8µs |    192.168.1.10 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 16:08:15 | 404 |            0s |    192.168.1.10 | GET      "/api/post_card/list/follow"
+[GIN-debug] redirecting request 301: /api/v1/activity/ --> /api/v1/activity/
+[GIN] 2025/06/12 - 16:08:17 | 200 |       501.9µs |    192.168.1.10 | GET      "/api/v1/activity/"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 16:09:36 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 16:09:36 | 200 |      1.5053ms |    192.168.1.10 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 16:09:39 | 404 |            0s |    192.168.1.10 | GET      "/api/post_card/list/follow"
+[GIN] 2025/06/12 - 16:09:42 | 200 |            0s |    192.168.1.10 | POST     "/api/v1/login"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 16:09:42 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 16:09:42 | 200 |      1.0983ms |    192.168.1.10 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 16:09:44 | 404 |            0s |    192.168.1.10 | GET      "/api/post_card/list/follow"
+[GIN-debug] redirecting request 301: /api/v1/activity/ --> /api/v1/activity/
+[GIN] 2025/06/12 - 16:09:46 | 200 |       506.3µs |    192.168.1.10 | GET      "/api/v1/activity/"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 16:10:08 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 16:10:08 | 200 |       996.9µs |    192.168.1.10 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 16:10:11 | 404 |            0s |    192.168.1.10 | GET      "/api/post_card/list/follow"
+[GIN] 2025/06/12 - 16:10:14 | 200 |       499.5µs |    192.168.1.10 | POST     "/api/v1/login"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 16:10:14 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 16:10:14 | 200 |       998.1µs |    192.168.1.10 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 16:10:16 | 404 |            0s |    192.168.1.10 | GET      "/api/post_card/list/follow"
+[GIN-debug] redirecting request 301: /api/v1/activity/ --> /api/v1/activity/
+[GIN] 2025/06/12 - 16:10:17 | 200 |       499.3µs |    192.168.1.10 | GET      "/api/v1/activity/"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 16:12:37 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 16:12:37 | 200 |       498.8µs |    192.168.1.10 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 16:12:40 | 404 |            0s |    192.168.1.10 | GET      "/api/post_card/list/follow"
+[GIN] 2025/06/12 - 16:12:55 | 200 |       303.9µs |    192.168.1.10 | POST     "/api/v1/login"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 16:12:55 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 16:12:55 | 200 |         496µs |    192.168.1.10 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 16:12:57 | 404 |            0s |    192.168.1.10 | GET      "/api/post_card/list/follow"
+[GIN-debug] redirecting request 301: /api/v1/activity/ --> /api/v1/activity/
+[GIN] 2025/06/12 - 16:13:11 | 200 |       505.8µs |    192.168.1.10 | GET      "/api/v1/activity/"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 16:13:28 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 16:13:28 | 200 |       507.1µs |    192.168.1.10 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 16:13:31 | 404 |            0s |    192.168.1.10 | GET      "/api/post_card/list/follow"
+[GIN] 2025/06/12 - 16:13:36 | 200 |       499.1µs |    192.168.1.10 | POST     "/api/v1/login"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 16:13:36 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 16:13:36 | 200 |       500.1µs |    192.168.1.10 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 16:13:38 | 404 |            0s |    192.168.1.10 | GET      "/api/post_card/list/follow"
+[GIN-debug] redirecting request 301: /api/v1/activity/ --> /api/v1/activity/
+[GIN] 2025/06/12 - 16:13:44 | 200 |            0s |    192.168.1.10 | GET      "/api/v1/activity/"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 16:15:20 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 16:15:20 | 200 |      1.0022ms |    192.168.1.10 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 16:15:23 | 404 |            0s |    192.168.1.10 | GET      "/api/post_card/list/follow"
+[GIN] 2025/06/12 - 16:15:26 | 200 |            0s |    192.168.1.10 | POST     "/api/v1/login"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 16:15:26 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 16:15:26 | 200 |       301.4µs |    192.168.1.10 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 16:15:28 | 404 |            0s |    192.168.1.10 | GET      "/api/post_card/list/follow"
+[GIN] 2025/06/12 - 16:15:29 | 404 |            0s |    192.168.1.10 | GET      "/api/user_follow/list/from?fromUserId=4"
+[GIN] 2025/06/12 - 16:15:29 | 404 |            0s |    192.168.1.10 | GET      "/api/user_follow/list/to?toUserId=4"
+[GIN] 2025/06/12 - 16:15:29 | 404 |            0s |    192.168.1.10 | GET      "/api/product_order/list"
+[GIN] 2025/06/12 - 16:15:29 | 404 |            0s |    192.168.1.10 | GET      "/api/product_cart/list"
+[GIN] 2025/06/12 - 16:15:29 | 404 |            0s |    192.168.1.10 | GET      "/"
+[GIN] 2025/06/12 - 16:15:29 | 404 |            0s |    192.168.1.10 | GET      "/"
+[GIN] 2025/06/12 - 16:15:29 | 404 |            0s |    192.168.1.10 | GET      "/api/post_card/list/author_id/4"
+[GIN] 2025/06/12 - 16:15:31 | 404 |            0s |    192.168.1.10 | GET      "/"
+[GIN] 2025/06/12 - 16:52:35 | 200 |         995µs |    192.168.1.10 | POST     "/api/v1/login"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 16:52:35 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 16:52:35 | 200 |      1.0056ms |    192.168.1.10 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 16:52:37 | 404 |            0s |    192.168.1.10 | GET      "/api/post_card/list/follow"
+[GIN-debug] redirecting request 301: /api/v1/activity/ --> /api/v1/activity/
+[GIN] 2025/06/12 - 16:52:38 | 200 |       514.4µs |    192.168.1.10 | GET      "/api/v1/activity/"
+[GIN] 2025/06/12 - 16:53:10 | 404 |            0s |    192.168.1.10 | GET      "/"
+[GIN] 2025/06/12 - 16:53:23 | 200 |      2.5032ms |    192.168.1.10 | GET      "/api/v1/activity/1"
+[GIN] 2025/06/12 - 16:54:29 | 200 |      2.5003ms |    192.168.1.10 | GET      "/api/v1/activity/1"
+[GIN] 2025/06/12 - 16:54:55 | 200 |       502.4µs |    192.168.1.10 | GET      "/api/v1/activity/1"
+[GIN] 2025/06/12 - 16:55:12 | 200 |       392.4µs |    192.168.1.10 | GET      "/api/v1/activity/1"
+[GIN] 2025/06/12 - 16:55:37 | 200 |       501.1µs |    192.168.1.10 | GET      "/api/v1/activity/1"
+[GIN] 2025/06/12 - 16:55:59 | 404 |            0s |    192.168.1.10 | GET      "/"
+[GIN] 2025/06/12 - 16:56:08 | 404 |            0s |    192.168.1.10 | POST     "/api/product_cart"
+[GIN] 2025/06/12 - 16:56:13 | 404 |            0s |    192.168.1.10 | GET      "/"
+[GIN] 2025/06/12 - 16:56:27 | 404 |            0s |    192.168.1.10 | GET      "/"
+[GIN] 2025/06/12 - 16:56:29 | 404 |            0s |    192.168.1.10 | POST     "/api/product_cart"
+[GIN] 2025/06/12 - 16:56:30 | 404 |            0s |    192.168.1.10 | POST     "/api/product_cart"
+[GIN] 2025/06/12 - 16:56:45 | 404 |            0s |    192.168.1.10 | GET      "/api/product_cart/list"
+[GIN] 2025/06/12 - 16:56:51 | 200 |       605.8µs |    192.168.1.10 | GET      "/api/v1/activity/1"
+[GIN] 2025/06/12 - 16:56:58 | 404 |            0s |    192.168.1.10 | GET      "/"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 16:56:59 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 16:56:59 | 200 |      1.6553ms |    192.168.1.10 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 16:57:02 | 404 |            0s |    192.168.1.10 | GET      "/api/post_card/list/follow"
+[GIN] 2025/06/12 - 16:57:29 | 200 |       511.8µs |    192.168.1.10 | POST     "/api/v1/login"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 16:57:29 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 16:57:29 | 200 |      1.0045ms |    192.168.1.10 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 16:57:31 | 404 |            0s |    192.168.1.10 | GET      "/api/post_card/list/follow"
+[GIN] 2025/06/12 - 16:57:32 | 404 |            0s |    192.168.1.10 | GET      "/api/user_follow/list/from?fromUserId=4"
+[GIN] 2025/06/12 - 16:57:32 | 404 |            0s |    192.168.1.10 | GET      "/api/user_follow/list/to?toUserId=4"
+[GIN] 2025/06/12 - 16:57:32 | 404 |            0s |    192.168.1.10 | GET      "/api/product_cart/list"
+[GIN] 2025/06/12 - 16:57:32 | 404 |            0s |    192.168.1.10 | GET      "/api/product_order/list"
+[GIN] 2025/06/12 - 16:57:32 | 404 |            0s |    192.168.1.10 | GET      "/"
+[GIN] 2025/06/12 - 16:57:32 | 404 |            0s |    192.168.1.10 | GET      "/"
+[GIN] 2025/06/12 - 16:57:32 | 404 |            0s |    192.168.1.10 | GET      "/api/post_card/list/author_id/4"
+[GIN-debug] redirecting request 301: /api/v1/activity/ --> /api/v1/activity/
+[GIN] 2025/06/12 - 16:58:38 | 200 |       107.1µs |    192.168.1.10 | GET      "/api/v1/activity/"
+[GIN] 2025/06/12 - 16:58:38 | 404 |            0s |    192.168.1.10 | GET      "/"
+[GIN] 2025/06/12 - 16:58:52 | 200 |       509.6µs |    192.168.1.10 | GET      "/api/v1/activity/1"
+[GIN] 2025/06/12 - 16:59:03 | 404 |            0s |    192.168.1.10 | GET      "/"
+[GIN] 2025/06/12 - 16:59:09 | 404 |            0s |    192.168.1.10 | GET      "/"
+[GIN] 2025/06/12 - 16:59:12 | 404 |            0s |    192.168.1.10 | GET      "/"
+[GIN] 2025/06/12 - 16:59:18 | 404 |            0s |    192.168.1.10 | GET      "/api/product_cart/list"
+[GIN] 2025/06/12 - 16:59:29 | 200 |       503.4µs |    192.168.1.10 | GET      "/api/v1/activity/1"
+[GIN] 2025/06/12 - 17:12:57 | 200 |       500.3µs |    192.168.1.10 | GET      "/api/v1/activity/1"
+[GIN] 2025/06/12 - 17:13:01 | 404 |            0s |    192.168.1.10 | GET      "/api/tabs/list"
+[GIN] 2025/06/12 - 17:14:20 | 404 |            0s |    192.168.1.10 | GET      "/api/tabs/list"
+2025/06/12 17:29:10 SQLite数据库文件路径已准备: ./database.db
+2025/06/12 17:29:10 成功连接到SQLite数据库: ./database.db
+2025/06/12 17:29:10 所有模型已成功迁移到数据库
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] POST   /api/v1/login             --> hobbyhub-server/api.UserLogin (3 handlers)
+[GIN-debug] GET    /api/v1/user/             --> hobbyhub-server/api.GetUserInfo (3 handlers)
+[GIN-debug] PUT    /api/v1/user/             --> hobbyhub-server/api.UserRegister (3 handlers)
+[GIN-debug] POST   /api/v1/user/             --> hobbyhub-server/api.UpdateUserInfo (3 handlers)
+[GIN-debug] GET    /api/v1/chat/             --> hobbyhub-server/api.GetChatHistory (3 handlers)
+[GIN-debug] POST   /api/v1/chat/             --> hobbyhub-server/api.SendChat (3 handlers)
+[GIN-debug] DELETE /api/v1/chat/:id          --> hobbyhub-server/api.DeleteChat (3 handlers)
+[GIN-debug] GET    /api/v1/friend/           --> hobbyhub-server/api.GetFriendList (3 handlers)
+[GIN-debug] POST   /api/v1/friend/           --> hobbyhub-server/api.SendFriendRequest (3 handlers)
+[GIN-debug] PUT    /api/v1/friend/           --> hobbyhub-server/api.UpdateFriendStatus (3 handlers)
+[GIN-debug] DELETE /api/v1/friend/:id        --> hobbyhub-server/api.DeleteFriend (3 handlers)
+[GIN-debug] POST   /api/v1/file/             --> hobbyhub-server/api.UploadFile (3 handlers)
+[GIN-debug] GET    /api/v1/file/:id          --> hobbyhub-server/api.DownloadFile (3 handlers)
+[GIN-debug] DELETE /api/v1/file/:id          --> hobbyhub-server/api.DeleteFile (3 handlers)
+[GIN-debug] GET    /api/v1/activity/:id      --> hobbyhub-server/api.GetActivitie (3 handlers)
+[GIN-debug] GET    /api/v1/activity/member   --> hobbyhub-server/api.GetUserActivities (3 handlers)
+[GIN-debug] GET    /api/v1/activity/         --> hobbyhub-server/api.GetAllActivitie (3 handlers)
+[GIN-debug] PUT    /api/v1/activity/         --> hobbyhub-server/api.CreateActivity (3 handlers)
+[GIN-debug] POST   /api/v1/activity/:id      --> hobbyhub-server/api.UpdateActivity (3 handlers)
+[GIN-debug] DELETE /api/v1/activity/:id      --> hobbyhub-server/api.DeleteActivity (3 handlers)
+[GIN-debug] GET    /api/v1/activity/:id/member --> hobbyhub-server/api.GetActivityMembers (3 handlers)
+[GIN-debug] PUT    /api/v1/activity/:id/member --> hobbyhub-server/api.JoinActivity (3 handlers)
+[GIN-debug] DELETE /api/v1/activity/:id/member --> hobbyhub-server/api.LeaveActivity (3 handlers)
+[GIN-debug] GET    /api/v1/activity/:id/comment --> hobbyhub-server/api.GetActivityComments (3 handlers)
+[GIN-debug] PUT    /api/v1/activity/:id/comment --> hobbyhub-server/api.AddActivityComment (3 handlers)
+[GIN-debug] DELETE /api/v1/activity/comment/:commentId --> hobbyhub-server/api.DeleteActivityComment (3 handlers)
+[GIN-debug] GET    /api/v1/basic/:filename   --> hobbyhub-server/api.ServeBasicFile (3 handlers)
+[GIN-debug] GET    /swagger/*any             --> github.com/swaggo/gin-swagger.CustomWrapHandler.func1 (3 handlers)
+2025/06/12 17:29:10 服务器启动在 0.0.0.0:8081
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on 0.0.0.0:8081
+2025/06/12 17:29:23 SQLite数据库文件路径已准备: ./database.db
+2025/06/12 17:29:23 成功连接到SQLite数据库: ./database.db
+2025/06/12 17:29:23 所有模型已成功迁移到数据库
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] POST   /api/v1/login             --> hobbyhub-server/api.UserLogin (3 handlers)
+[GIN-debug] GET    /api/v1/user/             --> hobbyhub-server/api.GetUserInfo (3 handlers)
+[GIN-debug] PUT    /api/v1/user/             --> hobbyhub-server/api.UserRegister (3 handlers)
+[GIN-debug] POST   /api/v1/user/             --> hobbyhub-server/api.UpdateUserInfo (3 handlers)
+[GIN-debug] GET    /api/v1/chat/             --> hobbyhub-server/api.GetChatHistory (3 handlers)
+[GIN-debug] POST   /api/v1/chat/             --> hobbyhub-server/api.SendChat (3 handlers)
+[GIN-debug] DELETE /api/v1/chat/:id          --> hobbyhub-server/api.DeleteChat (3 handlers)
+[GIN-debug] GET    /api/v1/friend/           --> hobbyhub-server/api.GetFriendList (3 handlers)
+[GIN-debug] POST   /api/v1/friend/           --> hobbyhub-server/api.SendFriendRequest (3 handlers)
+[GIN-debug] PUT    /api/v1/friend/           --> hobbyhub-server/api.UpdateFriendStatus (3 handlers)
+[GIN-debug] DELETE /api/v1/friend/:id        --> hobbyhub-server/api.DeleteFriend (3 handlers)
+[GIN-debug] POST   /api/v1/file/             --> hobbyhub-server/api.UploadFile (3 handlers)
+[GIN-debug] GET    /api/v1/file/:id          --> hobbyhub-server/api.DownloadFile (3 handlers)
+[GIN-debug] DELETE /api/v1/file/:id          --> hobbyhub-server/api.DeleteFile (3 handlers)
+[GIN-debug] GET    /api/v1/activity/:id      --> hobbyhub-server/api.GetActivitie (3 handlers)
+[GIN-debug] GET    /api/v1/activity/member   --> hobbyhub-server/api.GetUserActivities (3 handlers)
+[GIN-debug] GET    /api/v1/activity/         --> hobbyhub-server/api.GetAllActivitie (3 handlers)
+[GIN-debug] PUT    /api/v1/activity/         --> hobbyhub-server/api.CreateActivity (3 handlers)
+[GIN-debug] POST   /api/v1/activity/:id      --> hobbyhub-server/api.UpdateActivity (3 handlers)
+[GIN-debug] DELETE /api/v1/activity/:id      --> hobbyhub-server/api.DeleteActivity (3 handlers)
+[GIN-debug] GET    /api/v1/activity/:id/member --> hobbyhub-server/api.GetActivityMembers (3 handlers)
+[GIN-debug] PUT    /api/v1/activity/:id/member --> hobbyhub-server/api.JoinActivity (3 handlers)
+[GIN-debug] DELETE /api/v1/activity/:id/member --> hobbyhub-server/api.LeaveActivity (3 handlers)
+[GIN-debug] GET    /api/v1/activity/:id/comment --> hobbyhub-server/api.GetActivityComments (3 handlers)
+[GIN-debug] PUT    /api/v1/activity/:id/comment --> hobbyhub-server/api.AddActivityComment (3 handlers)
+[GIN-debug] DELETE /api/v1/activity/comment/:commentId --> hobbyhub-server/api.DeleteActivityComment (3 handlers)
+[GIN-debug] GET    /api/v1/basic/:filename   --> hobbyhub-server/api.ServeBasicFile (3 handlers)
+[GIN-debug] GET    /swagger/*any             --> github.com/swaggo/gin-swagger.CustomWrapHandler.func1 (3 handlers)
+2025/06/12 17:29:23 服务器启动在 0.0.0.0:8081
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on 0.0.0.0:8081
+[GIN] 2025/06/12 - 17:29:38 | 404 |            0s |       127.0.0.1 | GET      "/basic/14.png"
+[GIN] 2025/06/12 - 17:29:38 | 404 |            0s |       127.0.0.1 | GET      "/favicon.ico"
+[GIN] 2025/06/12 - 17:30:02 | 404 |            0s |       127.0.0.1 | GET      "/basic/14.png"
+2025/06/12 17:30:34 SQLite数据库文件路径已准备: ./database.db
+2025/06/12 17:30:34 成功连接到SQLite数据库: ./database.db
+2025/06/12 17:30:34 所有模型已成功迁移到数据库
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] POST   /api/v1/login             --> hobbyhub-server/api.UserLogin (3 handlers)
+[GIN-debug] GET    /api/v1/user/             --> hobbyhub-server/api.GetUserInfo (3 handlers)
+[GIN-debug] PUT    /api/v1/user/             --> hobbyhub-server/api.UserRegister (3 handlers)
+[GIN-debug] POST   /api/v1/user/             --> hobbyhub-server/api.UpdateUserInfo (3 handlers)
+[GIN-debug] GET    /api/v1/chat/             --> hobbyhub-server/api.GetChatHistory (3 handlers)
+[GIN-debug] POST   /api/v1/chat/             --> hobbyhub-server/api.SendChat (3 handlers)
+[GIN-debug] DELETE /api/v1/chat/:id          --> hobbyhub-server/api.DeleteChat (3 handlers)
+[GIN-debug] GET    /api/v1/friend/           --> hobbyhub-server/api.GetFriendList (3 handlers)
+[GIN-debug] POST   /api/v1/friend/           --> hobbyhub-server/api.SendFriendRequest (3 handlers)
+[GIN-debug] PUT    /api/v1/friend/           --> hobbyhub-server/api.UpdateFriendStatus (3 handlers)
+[GIN-debug] DELETE /api/v1/friend/:id        --> hobbyhub-server/api.DeleteFriend (3 handlers)
+[GIN-debug] POST   /api/v1/file/             --> hobbyhub-server/api.UploadFile (3 handlers)
+[GIN-debug] GET    /api/v1/file/:id          --> hobbyhub-server/api.DownloadFile (3 handlers)
+[GIN-debug] DELETE /api/v1/file/:id          --> hobbyhub-server/api.DeleteFile (3 handlers)
+[GIN-debug] GET    /api/v1/activity/:id      --> hobbyhub-server/api.GetActivitie (3 handlers)
+[GIN-debug] GET    /api/v1/activity/member   --> hobbyhub-server/api.GetUserActivities (3 handlers)
+[GIN-debug] GET    /api/v1/activity/         --> hobbyhub-server/api.GetAllActivitie (3 handlers)
+[GIN-debug] PUT    /api/v1/activity/         --> hobbyhub-server/api.CreateActivity (3 handlers)
+[GIN-debug] POST   /api/v1/activity/:id      --> hobbyhub-server/api.UpdateActivity (3 handlers)
+[GIN-debug] DELETE /api/v1/activity/:id      --> hobbyhub-server/api.DeleteActivity (3 handlers)
+[GIN-debug] GET    /api/v1/activity/:id/member --> hobbyhub-server/api.GetActivityMembers (3 handlers)
+[GIN-debug] PUT    /api/v1/activity/:id/member --> hobbyhub-server/api.JoinActivity (3 handlers)
+[GIN-debug] DELETE /api/v1/activity/:id/member --> hobbyhub-server/api.LeaveActivity (3 handlers)
+[GIN-debug] GET    /api/v1/activity/:id/comment --> hobbyhub-server/api.GetActivityComments (3 handlers)
+[GIN-debug] PUT    /api/v1/activity/:id/comment --> hobbyhub-server/api.AddActivityComment (3 handlers)
+[GIN-debug] DELETE /api/v1/activity/comment/:commentId --> hobbyhub-server/api.DeleteActivityComment (3 handlers)
+[GIN-debug] GET    /api/v1/basic/:filename   --> hobbyhub-server/api.ServeBasicFile (3 handlers)
+[GIN-debug] GET    /swagger/*any             --> github.com/swaggo/gin-swagger.CustomWrapHandler.func1 (3 handlers)
+2025/06/12 17:30:34 服务器启动在 0.0.0.0:8081
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on 0.0.0.0:8081
+[GIN] 2025/06/12 - 17:30:38 | 404 |            0s |       127.0.0.1 | GET      "/basic/14.png"
+[GIN] 2025/06/12 - 17:30:42 | 404 |            0s |       127.0.0.1 | GET      "/basic/14"
+[GIN] 2025/06/12 - 17:30:52 | 404 |            0s |       127.0.0.1 | GET      "/basic/14.png"
+2025/06/12 17:31:35 SQLite数据库文件路径已准备: ./database.db
+2025/06/12 17:31:35 成功连接到SQLite数据库: ./database.db
+2025/06/12 17:31:35 所有模型已成功迁移到数据库
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] POST   /api/v1/login             --> hobbyhub-server/api.UserLogin (3 handlers)
+[GIN-debug] GET    /api/v1/user/             --> hobbyhub-server/api.GetUserInfo (3 handlers)
+[GIN-debug] PUT    /api/v1/user/             --> hobbyhub-server/api.UserRegister (3 handlers)
+[GIN-debug] POST   /api/v1/user/             --> hobbyhub-server/api.UpdateUserInfo (3 handlers)
+[GIN-debug] GET    /api/v1/chat/             --> hobbyhub-server/api.GetChatHistory (3 handlers)
+[GIN-debug] POST   /api/v1/chat/             --> hobbyhub-server/api.SendChat (3 handlers)
+[GIN-debug] DELETE /api/v1/chat/:id          --> hobbyhub-server/api.DeleteChat (3 handlers)
+[GIN-debug] GET    /api/v1/friend/           --> hobbyhub-server/api.GetFriendList (3 handlers)
+[GIN-debug] POST   /api/v1/friend/           --> hobbyhub-server/api.SendFriendRequest (3 handlers)
+[GIN-debug] PUT    /api/v1/friend/           --> hobbyhub-server/api.UpdateFriendStatus (3 handlers)
+[GIN-debug] DELETE /api/v1/friend/:id        --> hobbyhub-server/api.DeleteFriend (3 handlers)
+[GIN-debug] POST   /api/v1/file/             --> hobbyhub-server/api.UploadFile (3 handlers)
+[GIN-debug] GET    /api/v1/file/:id          --> hobbyhub-server/api.DownloadFile (3 handlers)
+[GIN-debug] DELETE /api/v1/file/:id          --> hobbyhub-server/api.DeleteFile (3 handlers)
+[GIN-debug] GET    /api/v1/activity/:id      --> hobbyhub-server/api.GetActivitie (3 handlers)
+[GIN-debug] GET    /api/v1/activity/member   --> hobbyhub-server/api.GetUserActivities (3 handlers)
+[GIN-debug] GET    /api/v1/activity/         --> hobbyhub-server/api.GetAllActivitie (3 handlers)
+[GIN-debug] PUT    /api/v1/activity/         --> hobbyhub-server/api.CreateActivity (3 handlers)
+[GIN-debug] POST   /api/v1/activity/:id      --> hobbyhub-server/api.UpdateActivity (3 handlers)
+[GIN-debug] DELETE /api/v1/activity/:id      --> hobbyhub-server/api.DeleteActivity (3 handlers)
+[GIN-debug] GET    /api/v1/activity/:id/member --> hobbyhub-server/api.GetActivityMembers (3 handlers)
+[GIN-debug] PUT    /api/v1/activity/:id/member --> hobbyhub-server/api.JoinActivity (3 handlers)
+[GIN-debug] DELETE /api/v1/activity/:id/member --> hobbyhub-server/api.LeaveActivity (3 handlers)
+[GIN-debug] GET    /api/v1/activity/:id/comment --> hobbyhub-server/api.GetActivityComments (3 handlers)
+[GIN-debug] PUT    /api/v1/activity/:id/comment --> hobbyhub-server/api.AddActivityComment (3 handlers)
+[GIN-debug] DELETE /api/v1/activity/comment/:commentId --> hobbyhub-server/api.DeleteActivityComment (3 handlers)
+[GIN-debug] GET    /api/v1/basic/:filename   --> hobbyhub-server/api.ServeBasicFile (3 handlers)
+[GIN-debug] GET    /swagger/*any             --> github.com/swaggo/gin-swagger.CustomWrapHandler.func1 (3 handlers)
+2025/06/12 17:31:35 服务器启动在 0.0.0.0:8081
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on 0.0.0.0:8081
+[GIN] 2025/06/12 - 17:31:37 | 404 |            0s |       127.0.0.1 | GET      "/basic/14.png"
+[GIN] 2025/06/12 - 17:31:39 | 404 |            0s |       127.0.0.1 | GET      "/basic/14.png"
+2025/06/12 17:32:08 Serving file: 14.png
+[GIN] 2025/06/12 - 17:32:09 | 200 |    385.8138ms |       127.0.0.1 | GET      "/api/v1/basic/14.png"
+2025/06/12 17:32:46 SQLite数据库文件路径已准备: ./database.db
+2025/06/12 17:32:46 成功连接到SQLite数据库: ./database.db
+2025/06/12 17:32:46 所有模型已成功迁移到数据库
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] POST   /api/v1/login             --> hobbyhub-server/api.UserLogin (3 handlers)
+[GIN-debug] GET    /api/v1/user/             --> hobbyhub-server/api.GetUserInfo (3 handlers)
+[GIN-debug] PUT    /api/v1/user/             --> hobbyhub-server/api.UserRegister (3 handlers)
+[GIN-debug] POST   /api/v1/user/             --> hobbyhub-server/api.UpdateUserInfo (3 handlers)
+[GIN-debug] GET    /api/v1/chat/             --> hobbyhub-server/api.GetChatHistory (3 handlers)
+[GIN-debug] POST   /api/v1/chat/             --> hobbyhub-server/api.SendChat (3 handlers)
+[GIN-debug] DELETE /api/v1/chat/:id          --> hobbyhub-server/api.DeleteChat (3 handlers)
+[GIN-debug] GET    /api/v1/friend/           --> hobbyhub-server/api.GetFriendList (3 handlers)
+[GIN-debug] POST   /api/v1/friend/           --> hobbyhub-server/api.SendFriendRequest (3 handlers)
+[GIN-debug] PUT    /api/v1/friend/           --> hobbyhub-server/api.UpdateFriendStatus (3 handlers)
+[GIN-debug] DELETE /api/v1/friend/:id        --> hobbyhub-server/api.DeleteFriend (3 handlers)
+[GIN-debug] POST   /api/v1/file/             --> hobbyhub-server/api.UploadFile (3 handlers)
+[GIN-debug] GET    /api/v1/file/:id          --> hobbyhub-server/api.DownloadFile (3 handlers)
+[GIN-debug] DELETE /api/v1/file/:id          --> hobbyhub-server/api.DeleteFile (3 handlers)
+[GIN-debug] GET    /api/v1/activity/:id      --> hobbyhub-server/api.GetActivitie (3 handlers)
+[GIN-debug] GET    /api/v1/activity/member   --> hobbyhub-server/api.GetUserActivities (3 handlers)
+[GIN-debug] GET    /api/v1/activity/         --> hobbyhub-server/api.GetAllActivitie (3 handlers)
+[GIN-debug] PUT    /api/v1/activity/         --> hobbyhub-server/api.CreateActivity (3 handlers)
+[GIN-debug] POST   /api/v1/activity/:id      --> hobbyhub-server/api.UpdateActivity (3 handlers)
+[GIN-debug] DELETE /api/v1/activity/:id      --> hobbyhub-server/api.DeleteActivity (3 handlers)
+[GIN-debug] GET    /api/v1/activity/:id/member --> hobbyhub-server/api.GetActivityMembers (3 handlers)
+[GIN-debug] PUT    /api/v1/activity/:id/member --> hobbyhub-server/api.JoinActivity (3 handlers)
+[GIN-debug] DELETE /api/v1/activity/:id/member --> hobbyhub-server/api.LeaveActivity (3 handlers)
+[GIN-debug] GET    /api/v1/activity/:id/comment --> hobbyhub-server/api.GetActivityComments (3 handlers)
+[GIN-debug] PUT    /api/v1/activity/:id/comment --> hobbyhub-server/api.AddActivityComment (3 handlers)
+[GIN-debug] DELETE /api/v1/activity/comment/:commentId --> hobbyhub-server/api.DeleteActivityComment (3 handlers)
+[GIN-debug] GET    /api/v1/basic/:filename   --> hobbyhub-server/api.ServeBasicFile (3 handlers)
+[GIN-debug] GET    /swagger/*any             --> github.com/swaggo/gin-swagger.CustomWrapHandler.func1 (3 handlers)
+2025/06/12 17:32:46 服务器启动在 0.0.0.0:8081
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on 0.0.0.0:8081
+[GIN] 2025/06/12 - 17:32:53 | 200 |       1.025ms |    192.168.1.10 | POST     "/api/v1/login"
+[GIN-debug] redirecting request 301: /api/v1/user/ --> /api/v1/user/
+2025/06/12 17:32:53 GetUserInfo called with JWT token
+[GIN] 2025/06/12 - 17:32:53 | 200 |         249µs |    192.168.1.10 | GET      "/api/v1/user/"
+[GIN] 2025/06/12 - 17:32:55 | 404 |            0s |    192.168.1.10 | GET      "/api/post_card/list/follow"
+[GIN-debug] redirecting request 301: /api/v1/activity/ --> /api/v1/activity/
+[GIN] 2025/06/12 - 17:32:57 | 200 |       499.4µs |    192.168.1.10 | GET      "/api/v1/activity/"
+2025/06/12 17:32:57 Serving file: 14.png
+[GIN] 2025/06/12 - 17:32:57 | 200 |    347.6926ms |    192.168.1.10 | GET      "/api/v1/basic/14.png"
+[GIN] 2025/06/12 - 17:32:59 | 200 |       914.7µs |    192.168.1.10 | GET      "/api/v1/activity/1"
+[GIN] 2025/06/12 - 17:33:05 | 200 |            0s |    192.168.1.10 | GET      "/api/v1/activity/1"
+[GIN] 2025/06/12 - 17:33:08 | 404 |            0s |    192.168.1.10 | GET      "/api/v1/basic/"
+[GIN] 2025/06/12 - 17:33:16 | 200 |            0s |    192.168.1.10 | GET      "/api/v1/activity/1"
+[GIN] 2025/06/12 - 17:33:21 | 404 |            0s |    192.168.1.10 | GET      "/api/product_cart/list"
+[GIN] 2025/06/12 - 17:33:22 | 404 |            0s |    192.168.1.10 | GET      "/api/user_follow/list/from?fromUserId=4"
+[GIN] 2025/06/12 - 17:33:22 | 404 |            0s |    192.168.1.10 | GET      "/api/user_follow/list/to?toUserId=4"
+[GIN] 2025/06/12 - 17:33:22 | 404 |            0s |    192.168.1.10 | GET      "/api/product_cart/list"
+[GIN] 2025/06/12 - 17:33:22 | 404 |            0s |    192.168.1.10 | GET      "/api/product_order/list"
+[GIN] 2025/06/12 - 17:33:22 | 404 |            0s |    192.168.1.10 | GET      "/api/v1/basic/"
+[GIN] 2025/06/12 - 17:33:22 | 404 |            0s |    192.168.1.10 | GET      "/api/v1/basic/"
+[GIN] 2025/06/12 - 17:33:22 | 404 |            0s |    192.168.1.10 | GET      "/api/post_card/list/author_id/4"
+[GIN] 2025/06/12 - 17:33:44 | 404 |            0s |    192.168.1.10 | POST     "/api/post_card"
+[GIN] 2025/06/12 - 17:33:46 | 404 |            0s |    192.168.1.10 | POST     "/api/post_card"
+[GIN-debug] redirecting request 301: /api/v1/activity/ --> /api/v1/activity/
+[GIN] 2025/06/12 - 17:36:36 | 200 |            0s |    192.168.1.10 | GET      "/api/v1/activity/"
+[GIN] 2025/06/12 - 17:36:55 | 404 |            0s |    192.168.1.10 | GET      "/api/post_card/list/tabs/1"
+[GIN] 2025/06/12 - 17:36:56 | 404 |            0s |    192.168.1.10 | GET      "/api/post_card/list/location"
+[GIN] 2025/06/12 - 17:36:57 | 404 |            0s |    192.168.1.10 | GET      "/api/post_card/list/tabs/2"
+[GIN] 2025/06/12 - 17:36:57 | 404 |            0s |    192.168.1.10 | GET      "/api/post_card/list/tabs/3"
+[GIN] 2025/06/12 - 17:36:58 | 404 |            0s |    192.168.1.10 | GET      "/api/post_card/list/tabs/4"
+[GIN] 2025/06/12 - 17:36:58 | 404 |            0s |    192.168.1.10 | GET      "/api/post_card/list/tabs/5"
+[GIN] 2025/06/12 - 17:37:01 | 404 |            0s |    192.168.1.10 | GET      "/api/post_card/list/tabs/1"
+[GIN-debug] redirecting request 301: /api/v1/activity/ --> /api/v1/activity/
+[GIN] 2025/06/12 - 17:37:06 | 200 |            0s |    192.168.1.10 | GET      "/api/v1/activity/"
+[GIN-debug] redirecting request 301: /api/v1/activity/ --> /api/v1/activity/
+[GIN] 2025/06/12 - 17:37:13 | 200 |       377.8µs |    192.168.1.10 | GET      "/api/v1/activity/"
+[GIN] 2025/06/12 - 17:37:28 | 404 |            0s |    192.168.1.10 | GET      "/api/post_card/list/like/author_id/4"
+[GIN] 2025/06/12 - 17:37:34 | 404 |            0s |    192.168.1.10 | GET      "/api/product_order/list"
+[GIN] 2025/06/12 - 17:39:22 | 200 |       493.9µs |    192.168.1.10 | GET      "/api/v1/activity/1"
+[GIN] 2025/06/12 - 17:39:24 | 200 |            0s |    192.168.1.10 | GET      "/api/v1/activity/1"
+[GIN] 2025/06/12 - 17:40:09 | 404 |            0s |    192.168.1.10 | GET      "/api/v1/basic/"
+[GIN] 2025/06/12 - 17:40:32 | 200 |       550.3µs |    192.168.1.10 | GET      "/api/v1/activity/1"
+[GIN] 2025/06/12 - 17:40:34 | 200 |       566.2µs |    192.168.1.10 | GET      "/api/v1/activity/1"
+[GIN] 2025/06/12 - 17:40:37 | 404 |            0s |    192.168.1.10 | GET      "/api/v1/basic/"
+[GIN] 2025/06/12 - 17:40:38 | 404 |            0s |    192.168.1.10 | POST     "/api/product_cart"
+[GIN] 2025/06/12 - 17:40:38 | 404 |            0s |    192.168.1.10 | POST     "/api/product_cart"
+[GIN] 2025/06/12 - 17:40:38 | 404 |            0s |    192.168.1.10 | POST     "/api/product_cart"
+[GIN] 2025/06/12 - 17:40:39 | 404 |            0s |    192.168.1.10 | POST     "/api/product_cart"
+[GIN] 2025/06/12 - 17:40:39 | 404 |            0s |    192.168.1.10 | POST     "/api/product_cart"
+[GIN] 2025/06/12 - 17:40:39 | 404 |            0s |    192.168.1.10 | POST     "/api/product_cart"
+[GIN] 2025/06/12 - 17:44:57 | 404 |            0s |             ::1 | GET      "/api/admin/init"
+[GIN] 2025/06/12 - 17:45:24 | 404 |            0s |             ::1 | POST     "/api/admin/login"
+[GIN] 2025/06/12 - 17:45:28 | 404 |            0s |             ::1 | POST     "/api/admin/login"
+[GIN] 2025/06/12 - 17:46:31 | 404 |            0s |             ::1 | GET      "/api/admin/init"
+[GIN] 2025/06/12 - 17:46:52 | 404 |      2.9818ms |             ::1 | POST     "/api/v1/login"
+[GIN] 2025/06/12 - 17:47:55 | 200 |       507.6µs |       127.0.0.1 | POST     "/api/v1/login"
+[GIN] 2025/06/12 - 17:48:22 | 404 |       500.4µs |             ::1 | POST     "/api/v1/login"
+[GIN] 2025/06/12 - 17:48:44 | 404 |      4.0211ms |             ::1 | POST     "/api/v1/login"
+[GIN] 2025/06/12 - 17:48:46 | 404 |            0s |             ::1 | POST     "/api/v1/login"
+[GIN] 2025/06/12 - 17:48:47 | 404 |       592.6µs |             ::1 | POST     "/api/v1/login"
+[GIN] 2025/06/12 - 17:48:54 | 404 |         510µs |             ::1 | POST     "/api/v1/login"
+[GIN] 2025/06/12 - 17:49:09 | 404 |       436.8µs |             ::1 | POST     "/api/v1/login"
+[GIN] 2025/06/12 - 17:49:44 | 404 |            0s |             ::1 | GET      "/api/admin/init"
+[GIN] 2025/06/12 - 17:49:49 | 200 |       787.1µs |             ::1 | POST     "/api/v1/login"
+[GIN] 2025/06/12 - 17:49:52 | 200 |       416.8µs |             ::1 | POST     "/api/v1/login"
+[GIN] 2025/06/12 - 17:50:09 | 200 |       394.7µs |             ::1 | POST     "/api/v1/login"
+[GIN] 2025/06/12 - 17:50:30 | 200 |       504.2µs |             ::1 | POST     "/api/v1/login"
+[GIN] 2025/06/12 - 17:50:31 | 404 |            0s |             ::1 | GET      "/api/admin/init"
+[GIN] 2025/06/12 - 17:51:07 | 404 |            0s |             ::1 | GET      "/api/admin/init"
+[GIN] 2025/06/12 - 17:51:18 | 200 |       463.8µs |             ::1 | POST     "/api/v1/login"
+[GIN] 2025/06/12 - 17:51:39 | 200 |         358µs |             ::1 | POST     "/api/v1/login"
+[GIN] 2025/06/12 - 17:52:06 | 200 |         217µs |             ::1 | POST     "/api/v1/login"
+[GIN] 2025/06/12 - 17:52:14 | 200 |       287.6µs |             ::1 | POST     "/api/v1/login"
+[GIN] 2025/06/12 - 17:52:14 | 200 |       505.2µs |             ::1 | POST     "/api/v1/login"
+[GIN] 2025/06/12 - 17:52:16 | 404 |            0s |             ::1 | GET      "/api/admin/init"
+[GIN] 2025/06/12 - 17:52:21 | 200 |         411µs |             ::1 | POST     "/api/v1/login"
+[GIN] 2025/06/12 - 17:52:26 | 200 |         500µs |             ::1 | POST     "/api/v1/login"
+[GIN] 2025/06/12 - 17:52:41 | 404 |            0s |             ::1 | GET      "/api/admin/init"
+[GIN] 2025/06/12 - 17:52:51 | 200 |       303.4µs |             ::1 | POST     "/api/v1/login"
+[GIN] 2025/06/12 - 17:52:55 | 200 |       1.108ms |             ::1 | POST     "/api/v1/login"
+[GIN] 2025/06/12 - 17:53:04 | 404 |            0s |             ::1 | GET      "/api/admin/init"
+[GIN] 2025/06/12 - 17:53:14 | 200 |       498.6µs |             ::1 | POST     "/api/v1/login"
+[GIN] 2025/06/12 - 17:53:39 | 404 |            0s |             ::1 | GET      "/api/admin/init"
+[GIN] 2025/06/12 - 17:53:50 | 200 |      1.5173ms |             ::1 | POST     "/api/v1/login"
+[GIN] 2025/06/12 - 17:53:53 | 404 |            0s |             ::1 | GET      "/api/admin/init"
+[GIN] 2025/06/12 - 17:54:23 | 404 |            0s |             ::1 | GET      "/api/admin/init"
+[GIN] 2025/06/12 - 17:54:28 | 200 |       608.9µs |             ::1 | POST     "/api/v1/login"
+[GIN] 2025/06/12 - 17:55:17 | 404 |            0s |             ::1 | GET      "/api/admin/init"
+[GIN] 2025/06/12 - 17:55:17 | 404 |            0s |             ::1 | GET      "/api/admin/init"
+[GIN] 2025/06/12 - 17:55:51 | 200 |       634.7µs |             ::1 | POST     "/api/v1/login"
+[GIN] 2025/06/12 - 17:56:00 | 404 |            0s |             ::1 | GET      "/api/admin/init"
+[GIN] 2025/06/12 - 17:56:07 | 200 |       274.1µs |             ::1 | POST     "/api/v1/login"
+[GIN] 2025/06/12 - 17:56:25 | 404 |            0s |             ::1 | GET      "/api/admin/init"
+[GIN] 2025/06/12 - 17:56:32 | 200 |       484.1µs |             ::1 | POST     "/api/v1/login"
+[GIN] 2025/06/12 - 17:56:33 | 404 |            0s |             ::1 | GET      "/api/product/list"
+[GIN] 2025/06/12 - 17:56:39 | 404 |            0s |             ::1 | GET      "/api/product/list"
+[GIN] 2025/06/12 - 17:56:40 | 404 |            0s |             ::1 | GET      "/api/tabs/list"
+[GIN] 2025/06/12 - 17:56:45 | 404 |            0s |             ::1 | GET      "/api/product/list"
+[GIN] 2025/06/12 - 17:56:47 | 404 |            0s |             ::1 | GET      "/api/product/list"
+[GIN] 2025/06/12 - 17:56:59 | 404 |            0s |             ::1 | GET      "/api/tabs/list"
+[GIN] 2025/06/12 - 17:57:00 | 404 |            0s |             ::1 | GET      "/api/user/list?pageNum=1&pageSize=10&username=&phone="
+[GIN] 2025/06/12 - 17:57:02 | 404 |            0s |             ::1 | GET      "/api/product/list"
+[GIN] 2025/06/12 - 17:57:06 | 404 |            0s |             ::1 | GET      "/api/product/list"
+[GIN] 2025/06/12 - 17:57:08 | 404 |            0s |             ::1 | GET      "/api/product/list"
+[GIN-debug] redirecting request 301: /api/v1/activity/ --> /api/v1/activity/
+[GIN] 2025/06/12 - 17:58:13 | 200 |       416.7µs |       127.0.0.1 | GET      "/api/v1/activity/"
+[GIN] 2025/06/12 - 17:58:34 | 404 |            0s |             ::1 | GET      "/api/tabs/list"
+[GIN] 2025/06/12 - 17:58:36 | 404 |            0s |             ::1 | GET      "/api/product/list"
+[GIN] 2025/06/12 - 17:58:48 | 404 |            0s |             ::1 | GET      "/api/product/list"
+[GIN] 2025/06/12 - 17:58:53 | 404 |            0s |             ::1 | GET      "/api/tabs/list"
+[GIN] 2025/06/12 - 17:58:56 | 404 |            0s |             ::1 | GET      "/api/product/list"
+[GIN] 2025/06/12 - 17:59:02 | 404 |            0s |             ::1 | GET      "/api/product/list"
+[GIN] 2025/06/12 - 17:59:40 | 404 |            0s |             ::1 | GET      "/api/product/list"
+[GIN] 2025/06/12 - 17:59:45 | 404 |            0s |             ::1 | GET      "/api/tabs/list"
+[GIN] 2025/06/12 - 17:59:49 | 404 |            0s |             ::1 | GET      "/api/product/list"
+[GIN] 2025/06/12 - 17:59:57 | 404 |            0s |             ::1 | GET      "/api/tabs/list"
+[GIN] 2025/06/12 - 18:00:01 | 404 |            0s |             ::1 | GET      "/api/product/list"
+[GIN-debug] redirecting request 301: /api/v1/activity/ --> /api/v1/activity/
+[GIN] 2025/06/12 - 18:00:34 | 200 |       900.5µs |             ::1 | GET      "/api/v1/activity/"
+[GIN] 2025/06/12 - 18:00:34 | 404 |            0s |             ::1 | GET      "/api/tabs/list"
+[GIN-debug] redirecting request 301: /api/v1/activity/ --> /api/v1/activity/
+[GIN] 2025/06/12 - 18:00:35 | 200 |       547.3µs |             ::1 | GET      "/api/v1/activity/"
+[GIN] 2025/06/12 - 18:00:43 | 404 |            0s |             ::1 | GET      "/api/tabs/list"
+[GIN-debug] redirecting request 301: /api/v1/activity/ --> /api/v1/activity/
+[GIN] 2025/06/12 - 18:00:44 | 200 |       507.4µs |             ::1 | GET      "/api/v1/activity/"
+[GIN] 2025/06/12 - 18:01:19 | 404 |            0s |             ::1 | GET      "/api/tabs/list"
+[GIN-debug] redirecting request 301: /api/v1/activity/ --> /api/v1/activity/
+[GIN] 2025/06/12 - 18:01:21 | 200 |            0s |             ::1 | GET      "/api/v1/activity/"
+[GIN-debug] redirecting request 301: /api/v1/activity/ --> /api/v1/activity/
+[GIN] 2025/06/12 - 18:01:23 | 200 |       377.1µs |             ::1 | GET      "/api/v1/activity/"

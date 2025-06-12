@@ -60,7 +60,7 @@ func (s *simpleActivity) LoadFromModelActivity(activity models.Activity) {
 // @Tags 活动相关接口
 // @Accept json
 // @Produce json
-// @Success 200 {array} simpleActivity
+// @Success 200 {array} models.Activity
 // @Failure 400 {object} models.ErrorResponse
 // @Failure 404 {object} models.ErrorResponse
 // @Router /v1/activity [get]
@@ -77,7 +77,7 @@ func GetAllActivitie(c *gin.Context) {
 		temp.LoadFromModelActivity(activity)
 		activityResponse = append(activityResponse, temp)
 	}
-	c.JSON(http.StatusOK, activityResponse)
+	c.JSON(http.StatusOK, activitys)
 }
 
 // @Summary 修改活动

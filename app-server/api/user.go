@@ -97,6 +97,9 @@ type UsernameAndPassword struct {
 	Username string `json:"username" binding:"required"`
 	Password string `json:"password" binding:"required"`
 }
+type JWTResponse struct {
+	Token string `json:"token"`
+}
 
 // @Summary 用户登录
 // @Description 用户名密码登录
@@ -104,7 +107,7 @@ type UsernameAndPassword struct {
 // @Accept json
 // @Produce json
 // @Param loginRequest body UsernameAndPassword true "登录请求体，包含用户名和密码"
-// @Success 200 {string} string "JWT Token"
+// @Success 200 {object} JWTResponse "JWT Token"
 // @Failure 400 {object} models.ErrorResponse
 // @Failure 404 {object} models.ErrorResponse
 // @Router /v1/login [post]
@@ -129,7 +132,7 @@ func UserLogin(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, &models.ErrorResponse{ErrorMessage: "failed to generate JWT token"})
 		return
 	}
-	c.JSON(http.StatusOK, jwtToken)
+	c.JSON(http.StatusOK, JWTResponse{Token: jwtToken})
 }
 
 // @Summary 用户注册
@@ -138,7 +141,7 @@ func UserLogin(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param loginRequest body UsernameAndPassword true "注册请求体，包含用户名和密码"
-// @Success 200 {string} string "JWT Token"
+// @Success 200 {object} JWTResponse "JWT Token"
 // @Failure 400 {object} models.ErrorResponse
 // @Failure 404 {object} models.ErrorResponse
 // @Router /v1/user [put]
@@ -170,7 +173,7 @@ func UserRegister(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, &models.ErrorResponse{ErrorMessage: "failed to generate JWT token"})
 		return
 	}
-	c.JSON(http.StatusOK, jwtToken)
+	c.JSON(http.StatusOK, JWTResponse{Token: jwtToken})
 }
 
 // @Summary 更新用户信息

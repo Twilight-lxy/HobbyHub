@@ -8,6 +8,11 @@ definitions:
     required:
     - user_id
     type: object
+  api.JWTResponse:
+    properties:
+      token:
+        type: string
+    type: object
   api.UpdateFriendRequest:
     properties:
       friend_id:
@@ -949,7 +954,7 @@ paths:
         "200":
           description: JWT Token
           schema:
-            type: string
+            $ref: '#/definitions/api.JWTResponse'
         "400":
           description: Bad Request
           schema:
@@ -1046,7 +1051,7 @@ paths:
         "200":
           description: JWT Token
           schema:
-            type: string
+            $ref: '#/definitions/api.JWTResponse'
         "400":
           description: Bad Request
           schema:

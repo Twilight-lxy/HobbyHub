@@ -4,6 +4,7 @@ import (
 	"crypto/sha256"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -285,4 +286,12 @@ func DeleteFile(c *gin.Context) {
 		}
 	}
 	c.JSON(http.StatusOK, &models.SuccessResponse{SuccessMessage: "File deleted successfully"})
+}
+
+func ServeBasicFile(c *gin.Context) {
+	filename := c.Param("filename")
+	log.Printf("Serving file: %s", filename)
+	fileConfig := config.GetConfig().File
+	filePath := filepath.Join(fileConfig.UploadPath, filename)
+	c.File(filePath)
 }

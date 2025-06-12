@@ -105,6 +105,11 @@ func main() {
 			activity.PUT("/:id/comment", api.AddActivityComment)              // 添加活动评论
 			activity.DELETE("/comment/:commentId", api.DeleteActivityComment) // 删除活动评论
 		}
+		// Basic file service routes
+		basic := apiV1.Group("/basic")
+		{
+			basic.GET("/:filename", api.ServeBasicFile) // Serve files from uploads directory
+		}
 	}
 
 	// Swagger 相关路由
