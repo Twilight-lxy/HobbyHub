@@ -28,7 +28,7 @@ struct UserEditPage {
   updateUserInfo() {
     updateUserInfo(this.user).then(
       res => {
-        if (res.success) {
+        if (res.success == true) {
           showText("更新成功")
           AppStorage.setOrCreate('user', this.user)
         } else {

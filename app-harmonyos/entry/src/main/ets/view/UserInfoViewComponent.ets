@@ -138,9 +138,21 @@ export struct UserInfoViewComponent {
         .margin({ top: 20 })
         .fontColor('#999999')
         .onClick(() => {
-          //todo 删除当前登录用户记录
-          //todo 设置当前是否登录为否
-          //todo 延迟一秒跳转到首页
+          if (this.isLogin) {
+            // 删除当前登录用户记录
+            AppStorage.delete("user")
+            // 设置当前是否登录为否
+            AppStorage.set("isLogin", false)
+            // 显示退出成功提示
+            showText("退出登录成功", () => {
+              // 延迟一秒跳转到首页
+              setTimeout(() => {
+                router.replaceUrl({ url: 'pages/Index' })
+              }, 1000)
+            })
+          } else {
+            showText("您尚未登录")
+          }
         })
     }.width('100%')
     .height('100%')

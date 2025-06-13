@@ -21,7 +21,7 @@ export function getEventList():Promise<ResponseData>{
 export function addEvent(ent:Event):Promise<ResponseData>{
   let url = `${ServerPath.addEvent}`
   let option:http.HttpRequestOptions={
-    method:http.RequestMethod.POST,
+    method:http.RequestMethod.PUT,
     header: {
       //参数传递使用json数据传递
       'Content-Type': 'application/json'

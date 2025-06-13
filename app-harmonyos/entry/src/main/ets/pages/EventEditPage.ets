@@ -18,7 +18,7 @@ import { data } from '@kit.TelephonyKit'
 @Component
 struct EventEditPage{
   @State type:string='add'
-  @State event : Event = new Event(0,0,"","","","","",120.39,36.30,0)
+  @State event : Event = new Event(0,0,"","","","","",120.39,36.30,0,"",0,"")
   @State showImage : boolean = false
 
   autoLocation:boolean = false
@@ -91,7 +91,7 @@ struct EventEditPage{
     if (event.name != ''&&event.intro!='' && event.addr!="") {
       //发起后端创建活动请求
       addEvent(event).then(res => {
-        if (res.success) {
+        if (res.success == true) {
           showText("添加成功",()=>{
             router.back()
           })
@@ -114,7 +114,7 @@ struct EventEditPage{
     if (event.name != ''&&event.intro!='' && event.addr!="") {
       //发起后端创建活动请求
       editEvent(event).then(res => {
-        if (res.success) {
+        if (res.success == true) {
           showText("修改成功",()=>{
             router.back()
           })

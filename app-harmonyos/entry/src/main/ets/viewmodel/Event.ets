@@ -11,6 +11,9 @@ export class Event {
   lat: number
   lon: number
   state: number
+  createTime: string
+  ifDelete: number
+  updateTime: string
 
   constructor(
     id: number,
@@ -22,7 +25,10 @@ export class Event {
     starTime: string,
     lat: number,
     lon: number,
-    state: number) {
+    state: number,
+    createTime:string,
+    ifDelete:number,
+    updateTime:string) {
     this.id = id
     this.userId = userId
     this.name = name
@@ -33,5 +39,8 @@ export class Event {
     this.lat = lat
     this.lon = lon
     this.state = state
+    this.createTime = createTime
+    this.ifDelete = ifDelete
+    this.updateTime = updateTime
   }
 }

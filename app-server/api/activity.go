@@ -125,14 +125,44 @@ func UpdateActivity(c *gin.Context) {
 		return
 	}
 
-	var activity models.Activity
-	if err := c.ShouldBindJSON(&activity); err != nil {
+	// 使用中间结构接收JSON输入，避免时间格式问题
+	var activityInput struct {
+		Id         int64   `json:"id"`
+		Name       string  `json:"name"`
+		Addr       string  `json:"addr"`
+		Intro      string  `json:"intro"`
+		HeadImg    string  `json:"headImg"`
+		UserId     int64   `json:"userId"`
+		CreateTime string  `json:"createTime"`
+		UpdateTime string  `json:"updateTime"`
+		StartTime  string  `json:"startTime"`
+		State      int     `json:"state"`
+		IfDelete   int     `json:"ifDelete"`
+		Lat        float64 `json:"lat"`
+		Lon        float64 `json:"lon"`
+	}
+
+	if err := c.ShouldBindJSON(&activityInput); err != nil {
 		c.JSON(http.StatusBadRequest, &models.ErrorResponse{ErrorMessage: "invalid request format"})
 		return
 	}
 
+	// 创建Activity并设置接收到的字段
+	var activity models.Activity
 	activity.Id = 0
+	activity.Name = activityInput.Name
+	activity.Addr = activityInput.Addr
+	activity.Intro = activityInput.Intro
+	activity.HeadImg = activityInput.HeadImg
+	activity.UserId = jwtUser.Id                                            // 使用JWT用户ID
+	activity.CreateTime = dbActivity.CreateTime                             // 保持原创建时间
+	activity.UpdateTime = utils.GetCurrentTime()                            // 更新为当前时间
+	activity.StartTime = utils.ParseTimeFromString(activityInput.StartTime) // 解析开始时间
+	activity.State = dbActivity.State
 	activity.IfDelete = 0
+	activity.Lat = activityInput.Lat
+	activity.Lon = activityInput.Lon
+
 	dbActivity.UpdateActivityFields(activity)
 
 	// 更新活动信息
@@ -167,14 +197,44 @@ func CreateActivity(c *gin.Context) {
 		c.JSON(http.StatusUnauthorized, &models.ErrorResponse{ErrorMessage: "invalid jwt token"})
 		return
 	}
-	var activity models.Activity
-	if err := c.ShouldBindJSON(&activity); err != nil {
+	// 使用中间结构接收JSON输入，避免时间格式问题
+	var activityInput struct {
+		Id         int64   `json:"id"`
+		Name       string  `json:"name"`
+		Addr       string  `json:"addr"`
+		Intro      string  `json:"intro"`
+		HeadImg    string  `json:"headImg"`
+		UserId     int64   `json:"userId"`
+		CreateTime string  `json:"createTime"`
+		UpdateTime string  `json:"updateTime"`
+		StartTime  string  `json:"startTime"`
+		State      int     `json:"state"`
+		IfDelete   int     `json:"ifDelete"`
+		Lat        float64 `json:"lat"`
+		Lon        float64 `json:"lon"`
+	}
+
+	if err := c.ShouldBindJSON(&activityInput); err != nil {
 		c.JSON(http.StatusBadRequest, &models.ErrorResponse{ErrorMessage: "invalid request format"})
 		return
 	}
-	activity.UserId = jwtUser.Id
+
+	// 创建Activity并设置接收到的字段
+	var activity models.Activity
+	activity.Id = 0
+	activity.Name = activityInput.Name
+	activity.Addr = activityInput.Addr
+	activity.Intro = activityInput.Intro
+	activity.HeadImg = activityInput.HeadImg
+	activity.UserId = jwtUser.Id                                            // 使用JWT用户ID
+	activity.CreateTime = utils.GetCurrentTime()                            // 保持原创建时间
+	activity.UpdateTime = utils.GetCurrentTime()                            // 更新为当前时间
+	activity.StartTime = utils.ParseTimeFromString(activityInput.StartTime) // 解析开始时间
+	activity.State = 0
 	activity.IfDelete = 0
-	activity.Id = 0 // 确保新创建的活动没有ID
+	activity.Lat = activityInput.Lat
+	activity.Lon = activityInput.Lon
+
 	// 创建活动
 	if err := controllers.AddActivity(&activity); err != nil {
 		c.JSON(http.StatusInternalServerError, &models.ErrorResponse{ErrorMessage: "failed to create activity"})

@@ -25,7 +25,7 @@ struct RegisterPage {
     } else {
       //发起注册请求
       let result = await register(this.username, this.password)
-      if (result.success) {
+      if (result.success == true) {
         //提示注册成功跳转到登录页面
         showText("注册成功，即将跳转到登录页面", () => {
           router.back({ url: 'pages/LoginPage' })

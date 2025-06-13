@@ -22,11 +22,19 @@ func GetCurrentTimeFormatted() string {
 func GetCurrentTimeFormattedWithTimezone() string {
 	return time.Now().Format("2006-01-02 15:04:05 -0700")
 }
-func ParseTimeFromString(timeStr string) (time.Time, error) {
-	return time.Parse("2006-01-02 15:04:05", timeStr)
+func ParseTimeFromString(timeStr string) time.Time {
+	timeStrm, err := time.Parse("2006-01-02 15:04:05", timeStr)
+	if err != nil {
+		return time.Time{}
+	}
+	return timeStrm
 }
-func ParseTimeFromStringWithTimezone(timeStr string) (time.Time, error) {
-	return time.Parse("2006-01-02 15:04:05 -0700", timeStr)
+func ParseTimeFromStringWithTimezone(timeStr string) time.Time {
+	timeStrm, err := time.Parse("2006-01-02 15:04:05 -0700", timeStr)
+	if err != nil {
+		return time.Time{}
+	}
+	return timeStrm
 }
 func FormatTimeToString(t time.Time) string {
 	return t.Format("2006-01-02 15:04:05")

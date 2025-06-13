@@ -5,6 +5,7 @@ import { Event } from '../viewmodel/Event' //事件
 import { getEventList } from '../api/EventApi' //调用后台Api，获取活动列表
 import { loginUserAction } from '../utils/UserUtil' //查询登录状态
 import { EventComponent } from '../component/EventComponent'
+import { it } from '@ohos/hypium'
 
 class EvertType {
   name: string
@@ -61,7 +62,10 @@ export default struct HomeViewComponent {
           item.starTime,
           item.lat,
           item.lon,
-          item.state
+          item.state,
+          item.createTime,
+          item.ifDelete,
+          item.updateTime
         )
         this.eventList.push(event)
       })
@@ -81,7 +85,10 @@ export default struct HomeViewComponent {
           item.starTime,
           item.lat,
           item.lon,
-          item.state
+          item.state,
+          item.createTime,
+          item.ifDelete,
+          item.updateTime
         )
         this.eventList.push(event)
       })

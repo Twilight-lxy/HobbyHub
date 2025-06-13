@@ -100,22 +100,13 @@ func GetChatHistory(c *gin.Context) {
 	// 处理时间过滤
 	if startTime != "" || endTime != "" {
 		var startTimeObj, endTimeObj time.Time
-		var err error
 
 		if startTime != "" {
-			startTimeObj, err = utils.ParseTimeFromString(startTime)
-			if err != nil {
-				c.JSON(http.StatusBadRequest, &models.ErrorResponse{ErrorMessage: "invalid starttime format"})
-				return
-			}
+			startTimeObj = utils.ParseTimeFromString(startTime)
 		}
 
 		if endTime != "" {
-			endTimeObj, err = utils.ParseTimeFromString(endTime)
-			if err != nil {
-				c.JSON(http.StatusBadRequest, &models.ErrorResponse{ErrorMessage: "invalid endtime format"})
-				return
-			}
+			endTimeObj = utils.ParseTimeFromString(endTime)
 		}
 
 		var filteredChats []models.Chat

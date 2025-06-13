@@ -15,7 +15,7 @@ import { User } from '../viewmodel/User'
 @Entry
 @Component
 struct EventDetailPage {
-  @State event: Event = new Event(0, 0, "", "", "", "", "", 0, 0, 0)
+  @State event: Event = new Event(0, 0, "", "", "", "", "", 0, 0, 0, "", 0 ,"")
   @State currentUserId: number = 0
   
   aboutToAppear() {
@@ -36,7 +36,7 @@ struct EventDetailPage {
   loadEventDetail(eventId: number) {
     getEventInfo(eventId)
       .then(res => {
-        if (res.success) {
+        if (res.success == true) {
           this.event = res.data as Event
         } else {
           showText(res.errorMessage)
@@ -56,7 +56,7 @@ struct EventDetailPage {
     
     joinEvent(this.event.id, this.currentUserId)
       .then(res => {
-        if (res.success) {
+        if (res.success == true) {
           showText('加入成功')
         } else {
           showText(res.errorMessage)

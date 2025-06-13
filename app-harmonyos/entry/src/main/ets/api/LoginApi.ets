@@ -26,7 +26,7 @@ export function login(username: string, password: string): Promise<ResponseData>
 export function register(username: string, password: string): Promise<ResponseData> {
   let url = `${ServerPath.register}` //常量里注册的url
   let param: http.HttpRequestOptions = {
-    method: http.RequestMethod.POST, //http请求方法
+    method: http.RequestMethod.PUT, //http请求方法
     header: {
       //参数传递使用json数据传递
       'Content-Type': 'application/json'

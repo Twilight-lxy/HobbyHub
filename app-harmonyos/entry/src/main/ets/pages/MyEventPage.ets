@@ -21,7 +21,7 @@ struct MyEventPage{
   getEventList(){
     loginUserAction((user) =>{
       getMyEventList(user.id).then(res=>{
-        if (res.success) {
+        if (res.success == true) {
           this.eventList =  res.data as Event[]
         }
       })
@@ -36,7 +36,7 @@ struct MyEventPage{
         value:"确定",
         action:()=>{
           deleteEvent(eventId).then(res =>{
-            if (res.success) {
+            if (res.success == true) {
               showText("删除成功")
             }else{
               showText('删除失败')
