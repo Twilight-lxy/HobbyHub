@@ -6,6 +6,12 @@ import {BusinessError} from "@kit.BasicServicesKit"
 import {selectImage} from '../utils/UploadUtil'
 import {common} from '@kit.AbilityKit';
 import { BaseUrl } from '../common/Constans'
+import {RouterParam} from '../viewmodel/RouterParam'
+import { reqLocationPermissions } from '../utils/LocaltionUtil'
+import { geoLocationManager } from '@kit.LocationKit'
+import { JSON } from '@kit.ArkTS'
+import { loginUserAction } from '../utils/UserUtil'
+import { User } from '../viewmodel/User'
 
 @Entry
 @Component
@@ -13,8 +19,68 @@ struct EventEditPage{
   @State type:string='add'
   @State event : Event = new Event(0,0,"","","","","",120.39,36.30,0)
   @State showImage : boolean = false
+
+  autoLocation:boolean = false
+  @State imageList:string[] = [
+    '/upload/ic_event1.jpg',
+    '/upload/ic_event2.jpg',
+    '/upload/ic_event3.jpg',
+    '/upload/ic_event4.jpg',
+  ]
+
   //是否显示选择组件
   @State selectShow: boolean= false
+  //页面加载时，默认获取位置的权限，如果获取到权限，就更新event的位置信息
+  aboutToAppear() {
+    //获取活动信息
+    let param = router.getParams() as RouterParam<Event>
+    this.type = param.message
+    if (this.type == 'add') {
+      //初始化活动定位
+      reqLocationPermissions(getContext(this) as common.UIAbilityContext)
+        .then(res =>{
+          if (res) {
+            //获取当前位置信息
+            let requestInfo:geoLocationManager.LocationRequest={
+              "scenario": geoLocationManager.LocationRequestScenario.NAVIGATION,
+              'timeInterval':0,
+              'distanceInterval':0,
+              "maxAccuracy":0
+            }
+            geoLocationManager.getCurrentLocation(requestInfo)
+              .then(location =>{
+                this.autoLocation = true
+                this.event.lat = location.latitude
+                this.event.lon = location.longitude
+
+                //如果地理编码可用，则通过地理编码获取当前位置
+                if (geoLocationManager.isGeocoderAvailable()) {
+                  let reverseGeocodeRequest:geoLocationManager.ReverseGeoCodeRequest = {
+                    latitude:location.latitude,
+                    longitude:location.longitude,
+                    maxItems:1
+                  }
+                  geoLocationManager.getAddressesFromLocation(reverseGeocodeRequest,(err,data)=>{
+                    if (err) {
+                      console.log("getAddressFromLocation err:"+JSON.stringify(err))
+                    }else {
+                      this.event.addr = data[0].placeName as string
+                    }
+                  })
+                }
+              })
+          }else {
+            showText("获取位置信息失败，请手动填写活动位置")
+          }
+        }).catch(()=>{
+        showText("获取位置信息失败，请手动填写活动位置")
+      })
+    }
+    //页面加载时，初始化当前用户id
+    loginUserAction((user:User)=>{
+      this.event.userId = user.id
+    })
+  }
   //添加及活动信息
   addEvent(){
     let event = this.event
@@ -38,8 +104,35 @@ struct EventEditPage{
     }
   }
 
-  //头像选择组件
+  //活动预制图片选择组件
+  @Builder
+  ImageListComponent(){
+    Column(){
+      Text("选择活动图片")
+        .width("90%")
+        .height("10%")
 
+      WaterFlow(){
+        ForEach(this.imageList,(item:string) =>{
+          FlowItem(){
+            Image(`${BaseUrl}${item}`)
+              .width(160)
+              .height(80)
+              .onClick(()=>{
+                this.event.headImg = item
+                this.showImage = false
+              })
+          }
+        })
+      }.layoutDirection(FlexDirection.Column)
+      .columnsTemplate('1fr,1fr')
+      .rowsGap(5)
+      .width("90%")
+      .height("100%")
+    }
+    .width("100%")
+    .height("100%")
+  }
 
   build() {
     Stack(){
@@ -140,12 +233,25 @@ struct EventEditPage{
             })
         }.padding(10)
         .width('100%')
-        // .bindSheet($$this.selectShow,this.ImageListComponent(),{
-        //   height:500,
-        //   backgroundColor:Color.White
-        // })
+        .bindSheet($$this.selectShow,this.ImageListComponent(),{
+          height:500,
+          backgroundColor:Color.White
+        })
       }.width('100%')
       .height('100%')
+
+      if (this.showImage){
+        Column(){
+          Image(`${BaseUrl}${this.event.headImg}`)
+            .width("100%")
+            .objectFit(ImageFit.Cover)
+        }.backgroundColor(Color.White)
+        .width('100%')
+        .height("100%")
+        .onClick(()=>{
+          this.showImage = false
+        })
+      }
     }
 
   }
