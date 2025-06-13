@@ -47,7 +47,7 @@ export default struct HomeViewComponent {
   async getEvents() {
     //已登录
     loginUserAction(async (user: User) => {
-      let result = (await getEventList(user.id)).obj as Event[]
+      let result = (await getEventList()).data as Event[]
       this.eventList = []
       //通过构造方法添加，实现属性的数据监听
       result.forEach(item => {
@@ -67,7 +67,7 @@ export default struct HomeViewComponent {
       })
     }, async () => {
       //默认缺省的信息
-      let result = (await getEventList(0)).obj as Event[]
+      let result = (await getEventList()).data as Event[]
       this.eventList = []
       //通过构造方法添加，实现属性的数据监听
       result.forEach(item => {

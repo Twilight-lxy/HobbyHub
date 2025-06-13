@@ -96,7 +96,7 @@ struct EventEditPage{
             router.back()
           })
         }else{
-          showText(res.info)
+          showText(res.errorMessage)
         }
       })
         .catch((e:BusinessError)=>{
@@ -119,7 +119,7 @@ struct EventEditPage{
             router.back()
           })
         }else{
-          showText(res.info)
+          showText(res.errorMessage)
         }
       })
         .catch((e:BusinessError)=>{

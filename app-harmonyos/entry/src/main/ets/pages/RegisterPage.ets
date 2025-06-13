@@ -31,7 +31,7 @@ struct RegisterPage {
           router.back({ url: 'pages/LoginPage' })
         })
       } else {
-        showText(result.info)
+        showText(result.errorMessage)
       }
     }
   }

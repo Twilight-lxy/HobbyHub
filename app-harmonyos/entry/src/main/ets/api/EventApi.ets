@@ -2,14 +2,14 @@
 
 import http from '@ohos.net.http'; //导入申请http请求权限的依赖库
 import { ServerPath } from "../common/Constans"; //导入服务Api常量
-import { httpRequest, ResultData } from '../utils/HttpRequest' //导入通用http入口
+import { httpRequest , ResponseData} from '../utils/HttpRequest' //导入通用http入口
 //import { Event } from '@kit.ArkTS';
 import {Event} from '../viewmodel/Event'
 
 
 //获取活动列表的方法
-export function getEventList(userId:number,kw:string = ''):Promise<ResultData>{
-  let url = `${ServerPath.eventList}?userId = ${userId} & kw = ${encodeURI(kw)}` //常量里获取的活动列表
+export function getEventList():Promise<ResponseData>{
+  let url = `${ServerPath.eventList}` //常量里获取的活动列表
   let param: http.HttpRequestOptions = {
     method: http.RequestMethod.GET //http请求方法
   }
@@ -18,7 +18,7 @@ export function getEventList(userId:number,kw:string = ''):Promise<ResultData>{
 }
 
 //添加活动
-export function addEvent(ent:Event):Promise<ResultData>{
+export function addEvent(ent:Event):Promise<ResponseData>{
   let url = `${ServerPath.addEvent}`
   let option:http.HttpRequestOptions={
     method:http.RequestMethod.POST,
@@ -32,7 +32,7 @@ export function addEvent(ent:Event):Promise<ResultData>{
 }
 
 //获取我创建的活动
-export function getMyEventList(userId:number):Promise<ResultData>{
+export function getMyEventList(userId:number):Promise<ResponseData>{
   let url = `${ServerPath.myEventList}?userId=${userId}`
   let option:http.HttpRequestOptions={
     method:http.RequestMethod.GET
@@ -40,7 +40,7 @@ export function getMyEventList(userId:number):Promise<ResultData>{
   return httpRequest(url, option)
 }
 //获取单个活动信息
-export function getEventInfo(eventId:number):Promise<ResultData>{
+export function getEventInfo(eventId:number):Promise<ResponseData>{
   let url = `${ServerPath.eventInfo}?eventId=${eventId}`
   let option:http.HttpRequestOptions={
     method:http.RequestMethod.GET
@@ -48,7 +48,7 @@ export function getEventInfo(eventId:number):Promise<ResultData>{
   return httpRequest(url, option)
 }
 //编辑活动
-export function editEvent(ent:Event):Promise<ResultData>{
+export function editEvent(ent:Event):Promise<ResponseData>{
   let url = `${ServerPath.eventInfo}`
   let option:http.HttpRequestOptions={
     method:http.RequestMethod.PUT,
@@ -61,7 +61,7 @@ export function editEvent(ent:Event):Promise<ResultData>{
 }
 
 //删除活动
-export function deleteEvent(eventId:number):Promise<ResultData>{
+export function deleteEvent(eventId:number):Promise<ResponseData>{
   let url = `${ServerPath.deleteEvent}?eventId=${eventId}`
   let option:http.HttpRequestOptions={
     method:http.RequestMethod.DELETE

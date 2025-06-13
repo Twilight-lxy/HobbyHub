@@ -37,9 +37,9 @@ struct EventDetailPage {
     getEventInfo(eventId)
       .then(res => {
         if (res.success) {
-          this.event = res.obj as Event
+          this.event = res.data as Event
         } else {
-          showText(res.info)
+          showText(res.errorMessage)
         }
       })
       .catch((e: BusinessError) => {
@@ -59,7 +59,7 @@ struct EventDetailPage {
         if (res.success) {
           showText('加入成功')
         } else {
-          showText(res.info)
+          showText(res.errorMessage)
         }
       })
       .catch((e: BusinessError) => {

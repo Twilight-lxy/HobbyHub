@@ -4,6 +4,7 @@ import { login } from '../api/LoginApi'
 import { showText } from '../utils/ShowUtil'
 import { router } from '@kit.ArkUI' //arkui 路由
 import { User } from '../viewmodel/User'
+import { getUserInfo } from '../api/UserApi'
 
 @Entry
 @Component
@@ -16,10 +17,11 @@ struct LoginPage {
     //发送登录请求
     let result = await login(this.username, this.password);
     //登录成功
-    if (result.success) {
+    if (result.success == true) {
       try {
+        let userData = await getUserInfo();
         //解析后台相应数据
-        let data = result.obj as User
+        let data = userData.data as User
         let user = new User(data.id, data.username, data.name, data.headImg, data.addr, data.gender, data.lat, data.lon)
 
         //将当前用户信息写入AppStorage
@@ -27,13 +29,13 @@ struct LoginPage {
         AppStorage.setOrCreate("isLogin", true)
 
         //跳转到主页面
-        router.replaceUrl({ url: 'page/Index' })
+        router.replaceUrl({ url: 'pages/Index' })
       } catch (e) {
         console.log(e.message)
       }
     } else {
       //登录失败
-      showText(result.info)
+      showText(result.errorMessage)
     }
   }
 

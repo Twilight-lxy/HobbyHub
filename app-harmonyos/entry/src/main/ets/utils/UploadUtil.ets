@@ -4,7 +4,7 @@ import fs from '@ohos.file.fs';
 import { BusinessError, request } from '@kit.BasicServicesKit';
 import { BaseUrl } from '../common/Constans';
 import { ServerPath } from '../common/Constans';
-import { ResultData } from './HttpRequest';
+import { ResponseData } from './HttpRequest';
 
 
 //选择图库文件并复制到后台程序缓存目录中
@@ -53,8 +53,8 @@ function uploadImage(context: common.UIAbilityContext): Promise<string> {
           //监听响应数据，并返回图片上传后的URL
           uploadTask.on('headerReceive', (header) => {
             let bodyStr = header['body'] as string
-            let body = JSON.parse(bodyStr) as ResultData
-            let url = body.obj.toString()
+            let body = JSON.parse(bodyStr) as ResponseData
+            let url:string  = body.data?.toString() || ""
             resolve(url)
           });
         }).catch((err: BusinessError) => {

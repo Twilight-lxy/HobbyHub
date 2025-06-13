@@ -22,7 +22,7 @@ struct MyEventPage{
     loginUserAction((user) =>{
       getMyEventList(user.id).then(res=>{
         if (res.success) {
-          this.eventList =  res.obj as Event[]
+          this.eventList =  res.data as Event[]
         }
       })
     })
