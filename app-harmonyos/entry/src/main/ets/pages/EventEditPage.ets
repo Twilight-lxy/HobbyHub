@@ -1,6 +1,6 @@
 import {router} from '@kit.ArkUI'
 import {Event} from '../viewmodel/Event'
-import {addEvent} from '../api/EventApi'
+import {addEvent,editEvent} from '../api/EventApi'
 import { showText } from '../utils/ShowUtil'
 import {BusinessError} from "@kit.BasicServicesKit"
 import {selectImage} from '../utils/UploadUtil'
@@ -12,6 +12,7 @@ import { geoLocationManager } from '@kit.LocationKit'
 import { JSON } from '@kit.ArkTS'
 import { loginUserAction } from '../utils/UserUtil'
 import { User } from '../viewmodel/User'
+import { data } from '@kit.TelephonyKit'
 
 @Entry
 @Component
@@ -35,7 +36,9 @@ struct EventEditPage{
     //获取活动信息
     let param = router.getParams() as RouterParam<Event>
     this.type = param.message
-    if (this.type == 'add') {
+    if (this.type == 'edit'){  //页面编辑功能
+      this.event = param.data
+    }else if (this.type == 'add') {
       //初始化活动定位
       reqLocationPermissions(getContext(this) as common.UIAbilityContext)
         .then(res =>{
@@ -104,6 +107,29 @@ struct EventEditPage{
     }
   }
 
+  //编辑方法
+  editEvent(){
+    let event = this.event
+    //检查活动必填信息
+    if (event.name != ''&&event.intro!='' && event.addr!="") {
+      //发起后端创建活动请求
+      editEvent(event).then(res => {
+        if (res.success) {
+          showText("修改成功",()=>{
+            router.back()
+          })
+        }else{
+          showText(res.info)
+        }
+      })
+        .catch((e:BusinessError)=>{
+          showText(e.message)
+        })
+    }else {
+      showText('请填写完整活动信息')
+    }
+  }
+
   //活动预制图片选择组件
   @Builder
   ImageListComponent(){
@@ -148,9 +174,11 @@ struct EventEditPage{
           Button(this.type == 'add'?'发布':'保存')
             .backgroundColor("#ff3551")
             .onClick(()=>{
-              //todo 判断是否新增，新增则向后台发起添加活动
               if (this.type == 'add') {
                 this.addEvent()
+              }
+              if (this.type == 'edit') {
+                this.editEvent()
               }
             })
         }

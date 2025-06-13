@@ -4,6 +4,7 @@
     "pages/LoginPage",
     "pages/RegisterPage",
     "pages/UserEditPage",
-    "pages/EventEditPage"
+    "pages/EventEditPage",
+    "pages/MyEventPage"
   ]
 }
