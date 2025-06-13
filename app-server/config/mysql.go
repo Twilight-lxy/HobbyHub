@@ -100,6 +100,7 @@ func InitDatabase(conf *Config) error {
 		&models.Activity{},
 		&models.ActivityMember{},
 		&models.ActivityComment{},
+		&models.Admin{},
 	)
 
 	if err != nil {

@@ -3,7 +3,6 @@ package api
 import (
 	"log"
 	"net/http"
-	"strconv"
 	"time"
 
 	"hobbyhub-server/controllers"
@@ -50,7 +49,7 @@ func GetUserInfo(c *gin.Context) {
 		}
 	} else if idStr != "" {
 		log.Println("GetUserInfo called with id:", idStr)
-		id, err := strconv.ParseInt(idStr, 10, 64)
+		id, err := utils.StringToInt64(idStr)
 		if err != nil {
 			c.JSON(http.StatusBadRequest, &models.ErrorResponse{ErrorMessage: "invalid user id"})
 			return
@@ -161,7 +160,7 @@ func UserRegister(c *gin.Context) {
 	newUser := &models.User{
 		Username:   req.Username,
 		Password:   utils.HashPassword(req.Password), // 使用哈希函数处理密码
-		CreateTime: time.Now(),
+		CreateTime: utils.GetCurrentTime(),
 	}
 	if err := controllers.AddUser(newUser); err != nil {
 		c.JSON(http.StatusInternalServerError, &models.ErrorResponse{ErrorMessage: "failed to create user"})

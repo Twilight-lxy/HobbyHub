@@ -2,8 +2,6 @@ package api
 
 import (
 	"net/http"
-	"strconv"
-	"time"
 
 	"github.com/gin-gonic/gin"
 
@@ -29,7 +27,7 @@ func GetActivitie(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, &models.ErrorResponse{ErrorMessage: "activity id is required"})
 		return
 	}
-	activityId, err := strconv.ParseInt(activityIdStr, 10, 64)
+	activityId, err := utils.StringToInt64(activityIdStr)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, &models.ErrorResponse{ErrorMessage: "Invalid activity id format"})
 		return
@@ -99,7 +97,7 @@ func UpdateActivity(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, &models.ErrorResponse{ErrorMessage: "activity id is required"})
 		return
 	}
-	activityId, err := strconv.ParseInt(activityIdStr, 10, 64)
+	activityId, err := utils.StringToInt64(activityIdStr)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, &models.ErrorResponse{ErrorMessage: "Invalid activity id format"})
 		return
@@ -203,7 +201,7 @@ func DeleteActivity(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, &models.ErrorResponse{ErrorMessage: "activity id is required"})
 		return
 	}
-	activityId, err := strconv.ParseInt(activityIdStr, 10, 64)
+	activityId, err := utils.StringToInt64(activityIdStr)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, &models.ErrorResponse{ErrorMessage: "Invalid activity id format"})
 		return
@@ -258,7 +256,7 @@ func GetActivityMembers(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, &models.ErrorResponse{ErrorMessage: "activity id is required"})
 		return
 	}
-	activityId, err := strconv.ParseInt(activityIdStr, 10, 64)
+	activityId, err := utils.StringToInt64(activityIdStr)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, &models.ErrorResponse{ErrorMessage: "Invalid activity id format"})
 		return
@@ -292,7 +290,7 @@ func JoinActivity(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, &models.ErrorResponse{ErrorMessage: "activity id is required"})
 		return
 	}
-	activityId, err := strconv.ParseInt(activityIdStr, 10, 64)
+	activityId, err := utils.StringToInt64(activityIdStr)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, &models.ErrorResponse{ErrorMessage: "Invalid activity id format"})
 		return
@@ -314,7 +312,7 @@ func JoinActivity(c *gin.Context) {
 	member := &models.ActivityMember{
 		UserId:     jwtUser.Id,
 		ActivityId: activityId,
-		CreateTime: time.Now(),
+		CreateTime: utils.GetCurrentTime(),
 	}
 
 	if err := controllers.AddActivityMember(member); err != nil {
@@ -343,7 +341,7 @@ func LeaveActivity(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, &models.ErrorResponse{ErrorMessage: "activity id is required"})
 		return
 	}
-	activityId, err := strconv.ParseInt(activityIdStr, 10, 64)
+	activityId, err := utils.StringToInt64(activityIdStr)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, &models.ErrorResponse{ErrorMessage: "Invalid activity id format"})
 		return
@@ -410,11 +408,6 @@ func GetUserActivities(c *gin.Context) {
 		activitys = append(activitys, temp)
 	}
 	// 获取活动信息
-
-	if err != nil {
-		c.JSON(http.StatusNotFound, &models.ErrorResponse{ErrorMessage: "activities not found"})
-		return
-	}
 	c.JSON(http.StatusOK, activitys)
 }
 
@@ -435,7 +428,7 @@ func GetActivityComments(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, &models.ErrorResponse{ErrorMessage: "activity id is required"})
 		return
 	}
-	activityId, err := strconv.ParseInt(activityIdStr, 10, 64)
+	activityId, err := utils.StringToInt64(activityIdStr)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, &models.ErrorResponse{ErrorMessage: "Invalid activity id format"})
 		return
@@ -474,7 +467,7 @@ func AddActivityComment(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, &models.ErrorResponse{ErrorMessage: "activity id is required"})
 		return
 	}
-	activityId, err := strconv.ParseInt(activityIdStr, 10, 64)
+	activityId, err := utils.StringToInt64(activityIdStr)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, &models.ErrorResponse{ErrorMessage: "Invalid activity id format"})
 		return
@@ -502,7 +495,7 @@ func AddActivityComment(c *gin.Context) {
 		UserId:     jwtUser.Id,
 		ActivityId: activityId,
 		Content:    comment.Comment,
-		CreateTime: time.Now(),
+		CreateTime: utils.GetCurrentTime(),
 	}
 
 	if err := controllers.AddActivityComment(&activityComment); err != nil {
@@ -531,7 +524,7 @@ func DeleteActivityComment(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, &models.ErrorResponse{ErrorMessage: "comment id is required"})
 		return
 	}
-	commentId, err := strconv.ParseInt(commentIdStr, 10, 64)
+	commentId, err := utils.StringToInt64(commentIdStr)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, &models.ErrorResponse{ErrorMessage: "Invalid comment id format"})
 		return

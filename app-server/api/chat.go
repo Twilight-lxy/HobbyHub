@@ -3,7 +3,6 @@ package api
 import (
 	"net/http"
 	"sort"
-	"strconv"
 	"time"
 
 	"hobbyhub-server/controllers"
@@ -54,7 +53,7 @@ func GetChatHistory(c *gin.Context) {
 		return
 	}
 
-	toUserId, err := strconv.ParseInt(toUserIdStr, 10, 64)
+	toUserId, err := utils.StringToInt64(toUserIdStr)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, &models.ErrorResponse{ErrorMessage: "invalid to_user_id"})
 		return
@@ -104,7 +103,7 @@ func GetChatHistory(c *gin.Context) {
 		var err error
 
 		if startTime != "" {
-			startTimeObj, err = time.Parse("2006-01-02 15:04:05", startTime)
+			startTimeObj, err = utils.ParseTimeFromString(startTime)
 			if err != nil {
 				c.JSON(http.StatusBadRequest, &models.ErrorResponse{ErrorMessage: "invalid starttime format"})
 				return
@@ -112,7 +111,7 @@ func GetChatHistory(c *gin.Context) {
 		}
 
 		if endTime != "" {
-			endTimeObj, err = time.Parse("2006-01-02 15:04:05", endTime)
+			endTimeObj, err = utils.ParseTimeFromString(endTime)
 			if err != nil {
 				c.JSON(http.StatusBadRequest, &models.ErrorResponse{ErrorMessage: "invalid endtime format"})
 				return
@@ -195,7 +194,7 @@ func SendChat(c *gin.Context) {
 		UserIdFrom: jwtUser.Id,
 		UserIdTo:   req.UserIdTo,
 		Content:    req.Content,
-		CreateTime: time.Now(),
+		CreateTime: utils.GetCurrentTime(),
 		StatusFrom: 1,
 		StatusTo:   1,
 	}
@@ -232,7 +231,7 @@ func DeleteChat(c *gin.Context) {
 		c.JSON(http.StatusUnauthorized, &models.ErrorResponse{ErrorMessage: "unauthorized"})
 		return
 	}
-	chatId, err := strconv.ParseInt(chatIdStr, 10, 64)
+	chatId, err := utils.StringToInt64(chatIdStr)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, &models.ErrorResponse{ErrorMessage: "invalid chat id"})
 		return

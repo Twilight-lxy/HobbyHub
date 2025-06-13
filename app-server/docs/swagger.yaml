@@ -205,7 +205,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/api.simpleActivity'
+              $ref: '#/definitions/models.Activity'
             type: array
         "400":
           description: Bad Request
@@ -589,6 +589,118 @@ paths:
       summary: 获取用户参加的所有活动
       tags:
       - 活动相关接口
+  /v1/admin/activity:
+    put:
+      consumes:
+      - application/json
+      description: 创建一个新的活动
+      parameters:
+      - description: Admin JWT Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 活动内容
+        in: body
+        name: activity
+        required: true
+        schema:
+          $ref: '#/definitions/models.Activity'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Activity'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: 创建活动
+      tags:
+      - 管理相关接口
+  /v1/admin/login:
+    post:
+      consumes:
+      - application/json
+      description: 用于管理员的用户名密码登录
+      parameters:
+      - description: 登录请求体，包含用户名和密码
+        in: body
+        name: loginRequest
+        required: true
+        schema:
+          $ref: '#/definitions/api.UsernameAndPassword'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: JWT Token
+          schema:
+            $ref: '#/definitions/api.JWTResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: 管理员登录
+      tags:
+      - 管理相关接口
+  /v1/admin/users:
+    get:
+      consumes:
+      - application/json
+      description: 获取所有用户信息
+      parameters:
+      - description: Admin JWT Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 页码，默认为1
+        in: query
+        name: page
+        type: integer
+      - description: 每页数量，默认为10
+        in: query
+        name: pageSize
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 用户列表
+          schema:
+            items:
+              $ref: '#/definitions/models.User'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: 获取所有用户
+      tags:
+      - 管理相关接口
   /v1/chat:
     get:
       consumes:

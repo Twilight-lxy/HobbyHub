@@ -47,3 +47,14 @@ func (u *User) UpdateUserFields(newu User) {
 		}
 	}
 }
+
+type Admin struct {
+	Id       int64  `json:"id" gorm:"primaryKey;autoIncrement;comment:'管理员Id'"`
+	Username string `json:"username" gorm:"unique;comment:'用户名'"`
+	Password string `json:"password" gorm:"comment:'密码'"`
+	Name     string `json:"name" gorm:"comment:'姓名'"`
+}
+
+func (Admin) TableName() string {
+	return "admin"
+}

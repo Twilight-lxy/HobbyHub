@@ -63,9 +63,9 @@ func main() {
 		// User routes
 		user := apiV1.Group("/user")
 		{
-			user.GET("/", api.GetUserInfo)
-			user.PUT("/", api.UserRegister)
-			user.POST("/", api.UpdateUserInfo)
+			user.GET("/", api.GetUserInfo)     // 获取用户信息
+			user.PUT("/", api.UserRegister)    // 注册用户
+			user.POST("/", api.UpdateUserInfo) // 更新用户信息
 		}
 		// Chat routes
 		chat := apiV1.Group("/chat")
@@ -104,6 +104,14 @@ func main() {
 			activity.GET("/:id/comment", api.GetActivityComments)             // 获取活动评论
 			activity.PUT("/:id/comment", api.AddActivityComment)              // 添加活动评论
 			activity.DELETE("/comment/:commentId", api.DeleteActivityComment) // 删除活动评论
+		}
+		// Admin routes
+		admin := apiV1.Group("/admin")
+		{
+			admin.GET("/users", api.GetAllUsers)            // 获取所有用户
+			admin.POST("/login", api.AdminLogin)            // 管理员登录
+			admin.GET("/activities", api.GetAllActivities)  // 获取所有活动
+			admin.PUT("/activity", api.AdminCreateActivity) // 创建活动
 		}
 		// Basic file service routes
 		basic := apiV1.Group("/basic")

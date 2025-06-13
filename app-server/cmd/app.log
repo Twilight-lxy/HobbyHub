@@ -1393,3 +1393,242 @@ Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-
 [GIN] 2025/06/12 - 18:01:21 | 200 |            0s |             ::1 | GET      "/api/v1/activity/"
 [GIN-debug] redirecting request 301: /api/v1/activity/ --> /api/v1/activity/
 [GIN] 2025/06/12 - 18:01:23 | 200 |       377.1µs |             ::1 | GET      "/api/v1/activity/"
+2025/06/13 09:17:26 SQLite数据库文件路径已准备: ./database.db
+2025/06/13 09:17:26 成功连接到SQLite数据库: ./database.db
+2025/06/13 09:17:26 所有模型已成功迁移到数据库
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] POST   /api/v1/login             --> hobbyhub-server/api.UserLogin (3 handlers)
+[GIN-debug] GET    /api/v1/user/             --> hobbyhub-server/api.GetUserInfo (3 handlers)
+[GIN-debug] PUT    /api/v1/user/             --> hobbyhub-server/api.UserRegister (3 handlers)
+[GIN-debug] POST   /api/v1/user/             --> hobbyhub-server/api.UpdateUserInfo (3 handlers)
+[GIN-debug] GET    /api/v1/chat/             --> hobbyhub-server/api.GetChatHistory (3 handlers)
+[GIN-debug] POST   /api/v1/chat/             --> hobbyhub-server/api.SendChat (3 handlers)
+[GIN-debug] DELETE /api/v1/chat/:id          --> hobbyhub-server/api.DeleteChat (3 handlers)
+[GIN-debug] GET    /api/v1/friend/           --> hobbyhub-server/api.GetFriendList (3 handlers)
+[GIN-debug] POST   /api/v1/friend/           --> hobbyhub-server/api.SendFriendRequest (3 handlers)
+[GIN-debug] PUT    /api/v1/friend/           --> hobbyhub-server/api.UpdateFriendStatus (3 handlers)
+[GIN-debug] DELETE /api/v1/friend/:id        --> hobbyhub-server/api.DeleteFriend (3 handlers)
+[GIN-debug] POST   /api/v1/file/             --> hobbyhub-server/api.UploadFile (3 handlers)
+[GIN-debug] GET    /api/v1/file/:id          --> hobbyhub-server/api.DownloadFile (3 handlers)
+[GIN-debug] DELETE /api/v1/file/:id          --> hobbyhub-server/api.DeleteFile (3 handlers)
+[GIN-debug] GET    /api/v1/activity/:id      --> hobbyhub-server/api.GetActivitie (3 handlers)
+[GIN-debug] GET    /api/v1/activity/member   --> hobbyhub-server/api.GetUserActivities (3 handlers)
+[GIN-debug] GET    /api/v1/activity/         --> hobbyhub-server/api.GetAllActivitie (3 handlers)
+[GIN-debug] PUT    /api/v1/activity/         --> hobbyhub-server/api.CreateActivity (3 handlers)
+[GIN-debug] POST   /api/v1/activity/:id      --> hobbyhub-server/api.UpdateActivity (3 handlers)
+[GIN-debug] DELETE /api/v1/activity/:id      --> hobbyhub-server/api.DeleteActivity (3 handlers)
+[GIN-debug] GET    /api/v1/activity/:id/member --> hobbyhub-server/api.GetActivityMembers (3 handlers)
+[GIN-debug] PUT    /api/v1/activity/:id/member --> hobbyhub-server/api.JoinActivity (3 handlers)
+[GIN-debug] DELETE /api/v1/activity/:id/member --> hobbyhub-server/api.LeaveActivity (3 handlers)
+[GIN-debug] GET    /api/v1/activity/:id/comment --> hobbyhub-server/api.GetActivityComments (3 handlers)
+[GIN-debug] PUT    /api/v1/activity/:id/comment --> hobbyhub-server/api.AddActivityComment (3 handlers)
+[GIN-debug] DELETE /api/v1/activity/comment/:commentId --> hobbyhub-server/api.DeleteActivityComment (3 handlers)
+[GIN-debug] GET    /api/v1/basic/:filename   --> hobbyhub-server/api.ServeBasicFile (3 handlers)
+[GIN-debug] GET    /swagger/*any             --> github.com/swaggo/gin-swagger.CustomWrapHandler.func1 (3 handlers)
+2025/06/13 09:17:26 服务器启动在 0.0.0.0:8081
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on 0.0.0.0:8081
+2025/06/13 09:18:51 SQLite数据库文件路径已准备: ./database.db
+2025/06/13 09:18:51 成功连接到SQLite数据库: ./database.db
+2025/06/13 09:18:51 所有模型已成功迁移到数据库
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] POST   /api/v1/login             --> hobbyhub-server/api.UserLogin (3 handlers)
+[GIN-debug] GET    /api/v1/user/             --> hobbyhub-server/api.GetUserInfo (3 handlers)
+[GIN-debug] PUT    /api/v1/user/             --> hobbyhub-server/api.UserRegister (3 handlers)
+[GIN-debug] POST   /api/v1/user/             --> hobbyhub-server/api.UpdateUserInfo (3 handlers)
+[GIN-debug] GET    /api/v1/chat/             --> hobbyhub-server/api.GetChatHistory (3 handlers)
+[GIN-debug] POST   /api/v1/chat/             --> hobbyhub-server/api.SendChat (3 handlers)
+[GIN-debug] DELETE /api/v1/chat/:id          --> hobbyhub-server/api.DeleteChat (3 handlers)
+[GIN-debug] GET    /api/v1/friend/           --> hobbyhub-server/api.GetFriendList (3 handlers)
+[GIN-debug] POST   /api/v1/friend/           --> hobbyhub-server/api.SendFriendRequest (3 handlers)
+[GIN-debug] PUT    /api/v1/friend/           --> hobbyhub-server/api.UpdateFriendStatus (3 handlers)
+[GIN-debug] DELETE /api/v1/friend/:id        --> hobbyhub-server/api.DeleteFriend (3 handlers)
+[GIN-debug] POST   /api/v1/file/             --> hobbyhub-server/api.UploadFile (3 handlers)
+[GIN-debug] GET    /api/v1/file/:id          --> hobbyhub-server/api.DownloadFile (3 handlers)
+[GIN-debug] DELETE /api/v1/file/:id          --> hobbyhub-server/api.DeleteFile (3 handlers)
+[GIN-debug] GET    /api/v1/activity/:id      --> hobbyhub-server/api.GetActivitie (3 handlers)
+[GIN-debug] GET    /api/v1/activity/member   --> hobbyhub-server/api.GetUserActivities (3 handlers)
+[GIN-debug] GET    /api/v1/activity/         --> hobbyhub-server/api.GetAllActivitie (3 handlers)
+[GIN-debug] PUT    /api/v1/activity/         --> hobbyhub-server/api.CreateActivity (3 handlers)
+[GIN-debug] POST   /api/v1/activity/:id      --> hobbyhub-server/api.UpdateActivity (3 handlers)
+[GIN-debug] DELETE /api/v1/activity/:id      --> hobbyhub-server/api.DeleteActivity (3 handlers)
+[GIN-debug] GET    /api/v1/activity/:id/member --> hobbyhub-server/api.GetActivityMembers (3 handlers)
+[GIN-debug] PUT    /api/v1/activity/:id/member --> hobbyhub-server/api.JoinActivity (3 handlers)
+[GIN-debug] DELETE /api/v1/activity/:id/member --> hobbyhub-server/api.LeaveActivity (3 handlers)
+[GIN-debug] GET    /api/v1/activity/:id/comment --> hobbyhub-server/api.GetActivityComments (3 handlers)
+[GIN-debug] PUT    /api/v1/activity/:id/comment --> hobbyhub-server/api.AddActivityComment (3 handlers)
+[GIN-debug] DELETE /api/v1/activity/comment/:commentId --> hobbyhub-server/api.DeleteActivityComment (3 handlers)
+[GIN-debug] GET    /api/v1/admin/users       --> hobbyhub-server/api.GetAllUsers (3 handlers)
+[GIN-debug] POST   /api/v1/admin/login       --> hobbyhub-server/api.AdminLogin (3 handlers)
+[GIN-debug] GET    /api/v1/basic/:filename   --> hobbyhub-server/api.ServeBasicFile (3 handlers)
+[GIN-debug] GET    /swagger/*any             --> github.com/swaggo/gin-swagger.CustomWrapHandler.func1 (3 handlers)
+2025/06/13 09:18:51 服务器启动在 0.0.0.0:8081
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on 0.0.0.0:8081
+[GIN] 2025/06/13 - 09:18:59 | 404 |            0s |       127.0.0.1 | GET      "/"
+[GIN] 2025/06/13 - 09:19:04 | 200 |       497.5µs |       127.0.0.1 | GET      "/swagger/index.html"
+[GIN] 2025/06/13 - 09:19:04 | 200 |      2.7179ms |       127.0.0.1 | GET      "/swagger/swagger-ui.css"
+[GIN] 2025/06/13 - 09:19:04 | 200 |      2.4991ms |       127.0.0.1 | GET      "/swagger/swagger-ui-standalone-preset.js"
+[GIN] 2025/06/13 - 09:19:04 | 200 |     11.0164ms |       127.0.0.1 | GET      "/swagger/swagger-ui-bundle.js"
+[GIN] 2025/06/13 - 09:19:04 | 200 |            0s |       127.0.0.1 | GET      "/swagger/favicon-32x32.png"
+[GIN] 2025/06/13 - 09:19:04 | 200 |      1.6554ms |       127.0.0.1 | GET      "/swagger/doc.json"
+2025/06/13 09:20:10 SQLite数据库文件路径已准备: ./database.db
+2025/06/13 09:20:10 成功连接到SQLite数据库: ./database.db
+2025/06/13 09:20:10 所有模型已成功迁移到数据库
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] POST   /api/v1/login             --> hobbyhub-server/api.UserLogin (3 handlers)
+[GIN-debug] GET    /api/v1/user/             --> hobbyhub-server/api.GetUserInfo (3 handlers)
+[GIN-debug] PUT    /api/v1/user/             --> hobbyhub-server/api.UserRegister (3 handlers)
+[GIN-debug] POST   /api/v1/user/             --> hobbyhub-server/api.UpdateUserInfo (3 handlers)
+[GIN-debug] GET    /api/v1/chat/             --> hobbyhub-server/api.GetChatHistory (3 handlers)
+[GIN-debug] POST   /api/v1/chat/             --> hobbyhub-server/api.SendChat (3 handlers)
+[GIN-debug] DELETE /api/v1/chat/:id          --> hobbyhub-server/api.DeleteChat (3 handlers)
+[GIN-debug] GET    /api/v1/friend/           --> hobbyhub-server/api.GetFriendList (3 handlers)
+[GIN-debug] POST   /api/v1/friend/           --> hobbyhub-server/api.SendFriendRequest (3 handlers)
+[GIN-debug] PUT    /api/v1/friend/           --> hobbyhub-server/api.UpdateFriendStatus (3 handlers)
+[GIN-debug] DELETE /api/v1/friend/:id        --> hobbyhub-server/api.DeleteFriend (3 handlers)
+[GIN-debug] POST   /api/v1/file/             --> hobbyhub-server/api.UploadFile (3 handlers)
+[GIN-debug] GET    /api/v1/file/:id          --> hobbyhub-server/api.DownloadFile (3 handlers)
+[GIN-debug] DELETE /api/v1/file/:id          --> hobbyhub-server/api.DeleteFile (3 handlers)
+[GIN-debug] GET    /api/v1/activity/:id      --> hobbyhub-server/api.GetActivitie (3 handlers)
+[GIN-debug] GET    /api/v1/activity/member   --> hobbyhub-server/api.GetUserActivities (3 handlers)
+[GIN-debug] GET    /api/v1/activity/         --> hobbyhub-server/api.GetAllActivitie (3 handlers)
+[GIN-debug] PUT    /api/v1/activity/         --> hobbyhub-server/api.CreateActivity (3 handlers)
+[GIN-debug] POST   /api/v1/activity/:id      --> hobbyhub-server/api.UpdateActivity (3 handlers)
+[GIN-debug] DELETE /api/v1/activity/:id      --> hobbyhub-server/api.DeleteActivity (3 handlers)
+[GIN-debug] GET    /api/v1/activity/:id/member --> hobbyhub-server/api.GetActivityMembers (3 handlers)
+[GIN-debug] PUT    /api/v1/activity/:id/member --> hobbyhub-server/api.JoinActivity (3 handlers)
+[GIN-debug] DELETE /api/v1/activity/:id/member --> hobbyhub-server/api.LeaveActivity (3 handlers)
+[GIN-debug] GET    /api/v1/activity/:id/comment --> hobbyhub-server/api.GetActivityComments (3 handlers)
+[GIN-debug] PUT    /api/v1/activity/:id/comment --> hobbyhub-server/api.AddActivityComment (3 handlers)
+[GIN-debug] DELETE /api/v1/activity/comment/:commentId --> hobbyhub-server/api.DeleteActivityComment (3 handlers)
+[GIN-debug] GET    /api/v1/admin/users       --> hobbyhub-server/api.GetAllUsers (3 handlers)
+[GIN-debug] POST   /api/v1/admin/login       --> hobbyhub-server/api.AdminLogin (3 handlers)
+[GIN-debug] GET    /api/v1/basic/:filename   --> hobbyhub-server/api.ServeBasicFile (3 handlers)
+[GIN-debug] GET    /swagger/*any             --> github.com/swaggo/gin-swagger.CustomWrapHandler.func1 (3 handlers)
+2025/06/13 09:20:10 服务器启动在 0.0.0.0:8081
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on 0.0.0.0:8081
+[GIN] 2025/06/13 - 09:21:07 | 200 |      1.4997ms |       127.0.0.1 | POST     "/api/v1/admin/login"
+[GIN] 2025/06/13 - 09:21:20 | 200 |       1.501ms |       127.0.0.1 | GET      "/api/v1/admin/users"
+[GIN] 2025/06/13 - 09:21:31 | 200 |       629.3µs |       127.0.0.1 | GET      "/api/v1/admin/users?pageSize=2"
+[GIN] 2025/06/13 - 09:21:35 | 200 |         265µs |       127.0.0.1 | GET      "/api/v1/admin/users?page=2&pageSize=2"
+2025/06/13 09:42:25 SQLite数据库文件路径已准备: ./database.db
+2025/06/13 09:42:25 成功连接到SQLite数据库: ./database.db
+2025/06/13 09:42:25 所有模型已成功迁移到数据库
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] POST   /api/v1/login             --> hobbyhub-server/api.UserLogin (3 handlers)
+[GIN-debug] GET    /api/v1/user/             --> hobbyhub-server/api.GetUserInfo (3 handlers)
+[GIN-debug] PUT    /api/v1/user/             --> hobbyhub-server/api.UserRegister (3 handlers)
+[GIN-debug] POST   /api/v1/user/             --> hobbyhub-server/api.UpdateUserInfo (3 handlers)
+[GIN-debug] GET    /api/v1/chat/             --> hobbyhub-server/api.GetChatHistory (3 handlers)
+[GIN-debug] POST   /api/v1/chat/             --> hobbyhub-server/api.SendChat (3 handlers)
+[GIN-debug] DELETE /api/v1/chat/:id          --> hobbyhub-server/api.DeleteChat (3 handlers)
+[GIN-debug] GET    /api/v1/friend/           --> hobbyhub-server/api.GetFriendList (3 handlers)
+[GIN-debug] POST   /api/v1/friend/           --> hobbyhub-server/api.SendFriendRequest (3 handlers)
+[GIN-debug] PUT    /api/v1/friend/           --> hobbyhub-server/api.UpdateFriendStatus (3 handlers)
+[GIN-debug] DELETE /api/v1/friend/:id        --> hobbyhub-server/api.DeleteFriend (3 handlers)
+[GIN-debug] POST   /api/v1/file/             --> hobbyhub-server/api.UploadFile (3 handlers)
+[GIN-debug] GET    /api/v1/file/:id          --> hobbyhub-server/api.DownloadFile (3 handlers)
+[GIN-debug] DELETE /api/v1/file/:id          --> hobbyhub-server/api.DeleteFile (3 handlers)
+[GIN-debug] GET    /api/v1/activity/:id      --> hobbyhub-server/api.GetActivitie (3 handlers)
+[GIN-debug] GET    /api/v1/activity/member   --> hobbyhub-server/api.GetUserActivities (3 handlers)
+[GIN-debug] GET    /api/v1/activity/         --> hobbyhub-server/api.GetAllActivitie (3 handlers)
+[GIN-debug] PUT    /api/v1/activity/         --> hobbyhub-server/api.CreateActivity (3 handlers)
+[GIN-debug] POST   /api/v1/activity/:id      --> hobbyhub-server/api.UpdateActivity (3 handlers)
+[GIN-debug] DELETE /api/v1/activity/:id      --> hobbyhub-server/api.DeleteActivity (3 handlers)
+[GIN-debug] GET    /api/v1/activity/:id/member --> hobbyhub-server/api.GetActivityMembers (3 handlers)
+[GIN-debug] PUT    /api/v1/activity/:id/member --> hobbyhub-server/api.JoinActivity (3 handlers)
+[GIN-debug] DELETE /api/v1/activity/:id/member --> hobbyhub-server/api.LeaveActivity (3 handlers)
+[GIN-debug] GET    /api/v1/activity/:id/comment --> hobbyhub-server/api.GetActivityComments (3 handlers)
+[GIN-debug] PUT    /api/v1/activity/:id/comment --> hobbyhub-server/api.AddActivityComment (3 handlers)
+[GIN-debug] DELETE /api/v1/activity/comment/:commentId --> hobbyhub-server/api.DeleteActivityComment (3 handlers)
+[GIN-debug] GET    /api/v1/admin/users       --> hobbyhub-server/api.GetAllUsers (3 handlers)
+[GIN-debug] POST   /api/v1/admin/login       --> hobbyhub-server/api.AdminLogin (3 handlers)
+[GIN-debug] GET    /api/v1/admin/activities  --> hobbyhub-server/api.GetAllActivities (3 handlers)
+[GIN-debug] PUT    /api/v1/admin/activity    --> hobbyhub-server/api.AdminCreateActivity (3 handlers)
+[GIN-debug] GET    /api/v1/basic/:filename   --> hobbyhub-server/api.ServeBasicFile (3 handlers)
+[GIN-debug] GET    /swagger/*any             --> github.com/swaggo/gin-swagger.CustomWrapHandler.func1 (3 handlers)
+2025/06/13 09:42:25 服务器启动在 0.0.0.0:8081
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on 0.0.0.0:8081
+[GIN] 2025/06/13 - 09:42:25 | 200 |       500.5µs |             ::1 | GET      "/swagger/index.html"
+[GIN] 2025/06/13 - 09:42:25 | 200 |      1.1991ms |             ::1 | GET      "/swagger/swagger-ui-standalone-preset.js"
+[GIN] 2025/06/13 - 09:42:25 | 200 |       500.1µs |             ::1 | GET      "/swagger/swagger-ui.css"
+[GIN] 2025/06/13 - 09:42:25 | 200 |      4.1142ms |             ::1 | GET      "/swagger/swagger-ui-bundle.js"
+[GIN] 2025/06/13 - 09:42:25 | 200 |            0s |             ::1 | GET      "/swagger/favicon-32x32.png"
+[GIN] 2025/06/13 - 09:42:25 | 200 |       518.5µs |             ::1 | GET      "/swagger/doc.json"
+2025/06/13 09:42:55 SQLite数据库文件路径已准备: ./database.db
+2025/06/13 09:42:55 成功连接到SQLite数据库: ./database.db
+2025/06/13 09:42:55 所有模型已成功迁移到数据库
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] POST   /api/v1/login             --> hobbyhub-server/api.UserLogin (3 handlers)
+[GIN-debug] GET    /api/v1/user/             --> hobbyhub-server/api.GetUserInfo (3 handlers)
+[GIN-debug] PUT    /api/v1/user/             --> hobbyhub-server/api.UserRegister (3 handlers)
+[GIN-debug] POST   /api/v1/user/             --> hobbyhub-server/api.UpdateUserInfo (3 handlers)
+[GIN-debug] GET    /api/v1/chat/             --> hobbyhub-server/api.GetChatHistory (3 handlers)
+[GIN-debug] POST   /api/v1/chat/             --> hobbyhub-server/api.SendChat (3 handlers)
+[GIN-debug] DELETE /api/v1/chat/:id          --> hobbyhub-server/api.DeleteChat (3 handlers)
+[GIN-debug] GET    /api/v1/friend/           --> hobbyhub-server/api.GetFriendList (3 handlers)
+[GIN-debug] POST   /api/v1/friend/           --> hobbyhub-server/api.SendFriendRequest (3 handlers)
+[GIN-debug] PUT    /api/v1/friend/           --> hobbyhub-server/api.UpdateFriendStatus (3 handlers)
+[GIN-debug] DELETE /api/v1/friend/:id        --> hobbyhub-server/api.DeleteFriend (3 handlers)
+[GIN-debug] POST   /api/v1/file/             --> hobbyhub-server/api.UploadFile (3 handlers)
+[GIN-debug] GET    /api/v1/file/:id          --> hobbyhub-server/api.DownloadFile (3 handlers)
+[GIN-debug] DELETE /api/v1/file/:id          --> hobbyhub-server/api.DeleteFile (3 handlers)
+[GIN-debug] GET    /api/v1/activity/:id      --> hobbyhub-server/api.GetActivitie (3 handlers)
+[GIN-debug] GET    /api/v1/activity/member   --> hobbyhub-server/api.GetUserActivities (3 handlers)
+[GIN-debug] GET    /api/v1/activity/         --> hobbyhub-server/api.GetAllActivitie (3 handlers)
+[GIN-debug] PUT    /api/v1/activity/         --> hobbyhub-server/api.CreateActivity (3 handlers)
+[GIN-debug] POST   /api/v1/activity/:id      --> hobbyhub-server/api.UpdateActivity (3 handlers)
+[GIN-debug] DELETE /api/v1/activity/:id      --> hobbyhub-server/api.DeleteActivity (3 handlers)
+[GIN-debug] GET    /api/v1/activity/:id/member --> hobbyhub-server/api.GetActivityMembers (3 handlers)
+[GIN-debug] PUT    /api/v1/activity/:id/member --> hobbyhub-server/api.JoinActivity (3 handlers)
+[GIN-debug] DELETE /api/v1/activity/:id/member --> hobbyhub-server/api.LeaveActivity (3 handlers)
+[GIN-debug] GET    /api/v1/activity/:id/comment --> hobbyhub-server/api.GetActivityComments (3 handlers)
+[GIN-debug] PUT    /api/v1/activity/:id/comment --> hobbyhub-server/api.AddActivityComment (3 handlers)
+[GIN-debug] DELETE /api/v1/activity/comment/:commentId --> hobbyhub-server/api.DeleteActivityComment (3 handlers)
+[GIN-debug] GET    /api/v1/admin/users       --> hobbyhub-server/api.GetAllUsers (3 handlers)
+[GIN-debug] POST   /api/v1/admin/login       --> hobbyhub-server/api.AdminLogin (3 handlers)
+[GIN-debug] GET    /api/v1/admin/activities  --> hobbyhub-server/api.GetAllActivities (3 handlers)
+[GIN-debug] PUT    /api/v1/admin/activity    --> hobbyhub-server/api.AdminCreateActivity (3 handlers)
+[GIN-debug] GET    /api/v1/basic/:filename   --> hobbyhub-server/api.ServeBasicFile (3 handlers)
+[GIN-debug] GET    /swagger/*any             --> github.com/swaggo/gin-swagger.CustomWrapHandler.func1 (3 handlers)
+2025/06/13 09:42:55 服务器启动在 0.0.0.0:8081
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on 0.0.0.0:8081
+[GIN] 2025/06/13 - 09:42:56 | 200 |       306.3µs |             ::1 | GET      "/swagger/index.html"
+[GIN] 2025/06/13 - 09:42:56 | 200 |         506µs |             ::1 | GET      "/swagger/swagger-ui.css"
+[GIN] 2025/06/13 - 09:42:56 | 200 |      1.9984ms |             ::1 | GET      "/swagger/swagger-ui-standalone-preset.js"
+[GIN] 2025/06/13 - 09:42:56 | 200 |      5.0112ms |             ::1 | GET      "/swagger/swagger-ui-bundle.js"
+[GIN] 2025/06/13 - 09:42:56 | 200 |      1.0004ms |             ::1 | GET      "/swagger/doc.json"

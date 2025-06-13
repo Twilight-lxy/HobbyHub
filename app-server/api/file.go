@@ -8,9 +8,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
-	"strconv"
 	"strings"
-	"time"
 
 	"hobbyhub-server/config"
 	"hobbyhub-server/controllers"
@@ -93,7 +91,7 @@ func UploadFile(c *gin.Context) {
 		FileType:     fileExt,
 		FileSize:     header.Size,
 		FileHash:     filehash,
-		CreateTime:   time.Now(),
+		CreateTime:   utils.GetCurrentTime(),
 		UpLoadUserId: jwtUser.Id,
 	}
 	if err := controllers.AddFile(fileInfo); err != nil {
@@ -182,7 +180,7 @@ func DownloadFile(c *gin.Context) {
 		return
 	}
 
-	fileId, err := strconv.ParseInt(fileIdStr, 10, 64)
+	fileId, err := utils.StringToInt64(fileIdStr)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, &models.ErrorResponse{ErrorMessage: "Invalid fileId format"})
 		return
@@ -238,7 +236,7 @@ func DeleteFile(c *gin.Context) {
 		return
 	}
 
-	fileId, err := strconv.ParseInt(fileIdStr, 10, 64)
+	fileId, err := utils.StringToInt64(fileIdStr)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, &models.ErrorResponse{ErrorMessage: "Invalid fileId format"})
 		return

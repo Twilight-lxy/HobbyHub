@@ -49,6 +49,9 @@ func (dv *DatabaseViewer) setupViews() {
 		AddItem("📁 文件 (file)", "查看文件信息", '7', func() {
 			dv.showTable("file")
 		}).
+		AddItem("👮 管理员 (admin)", "查看管理员信息", '8', func() {
+			dv.showTable("admin")
+		}).
 		AddItem("🔄 刷新", "刷新当前表", 'r', func() {
 			dv.Refresh()
 		})
@@ -121,6 +124,8 @@ func (dv *DatabaseViewer) showTable(tableName string) {
 		dv.showActivityMemberTable()
 	case "file":
 		dv.showFileTable()
+	case "admin":
+		dv.showAdminTable()
 	default:
 		dv.statusBar.SetText(fmt.Sprintf("[red]未知表: %s[-]", tableName))
 	}
@@ -350,6 +355,34 @@ func (dv *DatabaseViewer) showFileTable() {
 		dv.tableView.SetCell(row, 3, tview.NewTableCell(file.CreateTime.Format("2006-01-02 15:04:05")))
 	}
 	dv.statusBar.SetText(fmt.Sprintf("[green]已加载 %d 条文件记录[-]", len(files)))
+	dv.tableView.ScrollToBeginning()
+}
+
+func (dv *DatabaseViewer) showAdminTable() {
+	dv.tableView.SetCell(0, 0, tview.NewTableCell("管理员表数据").
+		SetTextColor(tcell.ColorYellow).
+		SetAlign(tview.AlignCenter))
+	dv.tableView.Clear()
+	// 设置表头
+	headers := []string{"ID", "用户名", "名称"}
+	for i, header := range headers {
+		dv.tableView.SetCell(0, i, tview.NewTableCell(header).
+			SetTextColor(tcell.ColorYellow).
+			SetAlign(tview.AlignCenter).
+			SetSelectable(false))
+	}
+	admins, err := controllers.GetAllAdmins()
+	if err != nil {
+		dv.statusBar.SetText(fmt.Sprintf("[red]加载管理员数据失败: %v[-]", err))
+		return
+	}
+	for i, admin := range admins {
+		row := i + 1
+		dv.tableView.SetCell(row, 0, tview.NewTableCell(strconv.FormatInt(admin.Id, 10)))
+		dv.tableView.SetCell(row, 1, tview.NewTableCell(admin.Username))
+		dv.tableView.SetCell(row, 2, tview.NewTableCell(admin.Name))
+	}
+	dv.statusBar.SetText(fmt.Sprintf("[green]已加载 %d 条管理员记录[-]", len(admins)))
 	dv.tableView.ScrollToBeginning()
 }
 

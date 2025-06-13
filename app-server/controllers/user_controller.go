@@ -141,3 +141,24 @@ func CountUserRelations(userId int64) (map[string]int64, error) {
 
 	return result, nil
 }
+func GetAdminById(adminId int64) (*models.Admin, error) {
+	var admin models.Admin
+	if err := config.DB.Where("id = ?", adminId).First(&admin).Error; err != nil {
+		return nil, err
+	}
+	return &admin, nil
+}
+func GetAdminByUserName(username string) (*models.Admin, error) {
+	var admin models.Admin
+	if err := config.DB.Where("username = ?", username).First(&admin).Error; err != nil {
+		return nil, err
+	}
+	return &admin, nil
+}
+func GetAllAdmins() ([]models.Admin, error) {
+	var admins []models.Admin
+	if err := config.DB.Find(&admins).Error; err != nil {
+		return nil, err
+	}
+	return admins, nil
+}

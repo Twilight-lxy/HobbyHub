@@ -5,7 +5,6 @@ import (
 	"hobbyhub-server/models"
 	"hobbyhub-server/utils"
 	"net/http"
-	"strconv"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -140,7 +139,7 @@ func SendFriendRequest(c *gin.Context) {
 			UserId:     jwtUser.Id,
 			FriendId:   request.UserId,
 			Status:     3,
-			CreateTime: time.Now(),
+			CreateTime: utils.GetCurrentTime(),
 		}
 
 		if err := controllers.AddFriend(friend); err != nil {
@@ -238,7 +237,7 @@ func DeleteFriend(c *gin.Context) {
 		return
 	}
 
-	friendId, err := strconv.ParseInt(id, 10, 64)
+	friendId, err := utils.StringToInt64(id)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, &models.ErrorResponse{ErrorMessage: "invalid friend ID format"})
 		return

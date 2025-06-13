@@ -264,3 +264,119 @@ func TestCountUserRelations(t *testing.T) {
 	assert.Nil(t, relations)
 	assert.NoError(t, mock2.ExpectationsWereMet())
 }
+func TestGetAdminById(t *testing.T) {
+	mock, teardown := SetupMockDB(t)
+	defer teardown()
+
+	adminId := int64(1)
+	expectedAdmin := &models.Admin{Id: adminId, Username: "testadmin"}
+
+	rows := sqlmock.NewRows([]string{"id", "username"}).
+		AddRow(expectedAdmin.Id, expectedAdmin.Username)
+
+	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `admin` WHERE id = ? ORDER BY `admin`.`id` LIMIT ?")).
+		WithArgs(adminId, 1).
+		WillReturnRows(rows)
+
+	admin, err := GetAdminById(adminId)
+	assert.NoError(t, err)
+	assert.Equal(t, expectedAdmin.Id, admin.Id)
+	assert.Equal(t, expectedAdmin.Username, admin.Username)
+	assert.NoError(t, mock.ExpectationsWereMet())
+
+	// Test not found
+	mock2, teardown2 := SetupMockDB(t)
+	defer teardown2()
+
+	mock2.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `admin` WHERE id = ? ORDER BY `admin`.`id` LIMIT ?")).
+		WithArgs(adminId, 1).
+		WillReturnError(gorm.ErrRecordNotFound)
+
+	admin, err = GetAdminById(adminId)
+	assert.Nil(t, admin)
+	assert.ErrorIs(t, err, gorm.ErrRecordNotFound)
+	assert.NoError(t, mock2.ExpectationsWereMet())
+}
+func TestGetAllUsers(t *testing.T) {
+	mock, teardown := SetupMockDB(t)
+	defer teardown()
+
+	expectedUsers := []models.User{
+		{Id: 1, Username: "user1"},
+		{Id: 2, Username: "user2"},
+	}
+
+	rows := sqlmock.NewRows([]string{"id", "username"}).
+		AddRow(expectedUsers[0].Id, expectedUsers[0].Username).
+		AddRow(expectedUsers[1].Id, expectedUsers[1].Username)
+
+	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `user`")).
+		WillReturnRows(rows)
+
+	users, err := GetAllUsers()
+	assert.NoError(t, err)
+	assert.Equal(t, len(expectedUsers), len(users))
+	assert.Equal(t, expectedUsers[0].Id, users[0].Id)
+	assert.Equal(t, expectedUsers[0].Username, users[0].Username)
+	assert.Equal(t, expectedUsers[1].Id, users[1].Id)
+	assert.Equal(t, expectedUsers[1].Username, users[1].Username)
+	assert.NoError(t, mock.ExpectationsWereMet())
+}
+func TestGetAdminByUserName(t *testing.T) {
+	mock, teardown := SetupMockDB(t)
+	defer teardown()
+
+	userName := "testadmin"
+	expectedAdmin := &models.Admin{Id: 1, Username: userName}
+
+	rows := sqlmock.NewRows([]string{"id", "username"}).
+		AddRow(expectedAdmin.Id, expectedAdmin.Username)
+
+	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `admin` WHERE username = ? ORDER BY `admin`.`id` LIMIT ?")).
+		WithArgs(userName, 1).
+		WillReturnRows(rows)
+
+	admin, err := GetAdminByUserName(userName)
+	assert.NoError(t, err)
+	assert.Equal(t, expectedAdmin.Id, admin.Id)
+	assert.Equal(t, expectedAdmin.Username, admin.Username)
+	assert.NoError(t, mock.ExpectationsWereMet())
+
+	// Test not found
+	mock2, teardown2 := SetupMockDB(t)
+	defer teardown2()
+
+	mock2.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `admin` WHERE username = ? ORDER BY `admin`.`id` LIMIT ?")).
+		WithArgs(userName, 1).
+		WillReturnError(gorm.ErrRecordNotFound)
+
+	admin, err = GetAdminByUserName(userName)
+	assert.Nil(t, admin)
+	assert.ErrorIs(t, err, gorm.ErrRecordNotFound)
+	assert.NoError(t, mock2.ExpectationsWereMet())
+}
+func TestGetAllAdmins(t *testing.T) {
+	mock, teardown := SetupMockDB(t)
+	defer teardown()
+
+	expectedAdmins := []models.Admin{
+		{Id: 1, Username: "admin1"},
+		{Id: 2, Username: "admin2"},
+	}
+
+	rows := sqlmock.NewRows([]string{"id", "username"}).
+		AddRow(expectedAdmins[0].Id, expectedAdmins[0].Username).
+		AddRow(expectedAdmins[1].Id, expectedAdmins[1].Username)
+
+	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `admin`")).
+		WillReturnRows(rows)
+
+	admins, err := GetAllAdmins()
+	assert.NoError(t, err)
+	assert.Equal(t, len(expectedAdmins), len(admins))
+	assert.Equal(t, expectedAdmins[0].Id, admins[0].Id)
+	assert.Equal(t, expectedAdmins[0].Username, admins[0].Username)
+	assert.Equal(t, expectedAdmins[1].Id, admins[1].Id)
+	assert.Equal(t, expectedAdmins[1].Username, admins[1].Username)
+	assert.NoError(t, mock.ExpectationsWereMet())
+}
