@@ -1,9 +1,9 @@
 import request from '@/utils/request'
 
-// 获取用户信息
+// 获取所有用户信息
 export function getUserInfo() {
   return request({
-    url: '/user/info',
+    url: '/api/v1/admin/users',
     method: 'get'
   })
 }

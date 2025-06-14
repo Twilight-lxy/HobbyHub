@@ -257,7 +257,7 @@
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
-
+import { setToken, setAdmin,getToken } from '@/utils/auth'
 // 查询参数
 const queryParams = reactive({
   username: '',
@@ -276,8 +276,8 @@ const dateRange = ref([])
 const userList = ref([
   {
     id: 1,
-    username: 'admin',
-    nickname: '管理员',
+    username: getToken(),
+    nickname: getToken(),
     avatar: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
     phone: '13800138000',
     email: 'admin@example.com',

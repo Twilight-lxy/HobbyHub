@@ -20,7 +20,7 @@ const routes = [
         path: 'dashboard',
         name: 'Dashboard',
         component: () => import('@/views/dashboard/index.vue'),
-        meta: { title: '仪表盘', icon: 'Odometer' }
+        meta: { title: '主页面', icon: 'Odometer' }
       }
     ]
   },
@@ -34,14 +34,14 @@ const routes = [
         path: 'list',
         name: 'UserList',
         component: () => import('@/views/user/list.vue'),
-        meta: { title: '用户列表' }
+        meta: { title: '查看用户列表' }
       },
       {
-        path: 'detail/:id',
-        name: 'UserDetail',
-        component: () => import('@/views/user/detail.vue'),
-        meta: { title: '用户详情', hidden: true }
-      }
+        path: 'message',
+        name: 'UserMessage',
+        component: () => import('@/views/user/message.vue'),
+        meta: { title: '用户评论管理' }
+      },
     ]
   },
   {
@@ -83,48 +83,9 @@ const routes = [
     ]
   },
   {
-    path: '/order',
-    component: Layout,
-    redirect: '/order/list',
-    meta: { title: '参与记录', icon: 'List' },
-    children: [
-      {
-        path: 'list',
-        name: 'OrderList',
-        component: () => import('@/views/order/list.vue'),
-        meta: { title: '参与记录列表' }
-      },
-      {
-        path: 'detail/:id',
-        name: 'OrderDetail',
-        component: () => import('@/views/order/detail.vue'),
-        meta: { title: '参与记录详情', hidden: true }
-      }
-    ]
-  },
-  {
-    path: '/system',
-    component: Layout,
-    redirect: '/system/role',
-    meta: { title: '系统管理', icon: 'Setting' },
-    children: [
-      {
-        path: 'role',
-        name: 'Role',
-        component: () => import('@/views/system/role.vue'),
-        meta: { title: '角色管理' }
-      },
-      {
-        path: 'log',
-        name: 'Log',
-        component: () => import('@/views/system/log.vue'),
-        meta: { title: '操作日志' }
-      }
-    ]
-  },
-  {
     path: '/profile',
     component: Layout,
+    redirect: '/profile/index',
     children: [
       {
         path: 'index',
@@ -133,11 +94,6 @@ const routes = [
         meta: { title: '个人中心', icon: 'UserFilled', hidden: true }
       }
     ]
-  },
-  {
-    path: '/:pathMatch(.*)*',
-    component: () => import('@/views/error/404.vue'),
-    meta: { hidden: true }
   }
 ]
 

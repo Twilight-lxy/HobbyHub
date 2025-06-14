@@ -1,14 +1,5 @@
 import request from '@/utils/request'
 
-// 获取活动列表
-export function getActivityList(params) {
-  return request({
-    url: '/product/list',
-    method: 'get',
-    params
-  })
-}
-
 // 获取活动详情
 export function getActivityDetail(id) {
   return request({
@@ -20,7 +11,7 @@ export function getActivityDetail(id) {
 // 创建活动
 export function createActivity(data) {
   return request({
-    url: '/product',
+    url: '/api/v1/admin/activity',
     method: 'post',
     data
   })
@@ -42,12 +33,3 @@ export function deleteActivity(id) {
     method: 'delete'
   })
 }
-
-// 上架/下架活动
-export function toggleActivityStatus(id, isActive) {
-  return request({
-    url: `/product/status/${id}`,
-    method: 'put',
-    data: { isActive }
-  })
-} 

@@ -1,244 +1,324 @@
 <template>
-  <div class="category-container">
-    <div class="category-header">
-      <h2>活动分类管理</h2>
-      <el-button type="primary" @click="handleAdd">添加分类</el-button>
-    </div>
-    
-    <el-table
-      v-loading="loading"
-      :data="categoryList"
-      border
-      style="width: 100%"
-    >
-      <el-table-column prop="id" label="ID" width="80" />
-      <el-table-column prop="name" label="分类名称" />
-      <el-table-column prop="usageCount" label="使用次数" width="100" />
-      <el-table-column prop="createTime" label="创建时间" width="180">
-        <template #default="scope">
-          {{ formatDate(scope.row.createTime) }}
-        </template>
-      </el-table-column>
-      <el-table-column label="操作" width="200" fixed="right">
-        <template #default="scope">
-          <el-button size="small" @click="handleEdit(scope.row)">编辑</el-button>
-          <el-button 
-            size="small" 
-            type="danger" 
-            @click="handleDelete(scope.row)"
-            :disabled="scope.row.usageCount > 0"
-          >删除</el-button>
-        </template>
-      </el-table-column>
-    </el-table>
-    
-    <!-- 分页 -->
-    <div class="pagination-container">
+  <div class="order-list-container">
+    <!-- 搜索区域 -->
+    <el-card class="search-card">
+      <el-form :inline="true" :model="queryParams" class="search-form">
+        <el-form-item label="用户名">
+          <el-input v-model="queryParams.username" placeholder="请输入用户名" clearable />
+        </el-form-item>
+        <el-form-item label="活动名称">
+          <el-input v-model="queryParams.activityName" placeholder="请输入活动名称" clearable />
+        </el-form-item>
+        <el-form-item label="创建时间">
+          <el-date-picker
+            v-model="dateRange"
+            type="daterange"
+            range-separator="至"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+            value-format="YYYY-MM-DD"
+          />
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="handleQuery">
+            <el-icon><Search /></el-icon>
+            搜索
+          </el-button>
+          <el-button @click="resetQuery">
+            <el-icon><Refresh /></el-icon>
+            重置
+          </el-button>
+        </el-form-item>
+      </el-form>
+    </el-card>
+
+    <!-- 表格区域 -->
+    <el-card class="table-card">
+      <template #header>
+        <div class="card-header">
+          <span>参与记录列表</span>
+          <div class="right">
+            <el-button type="primary" @click="handleAdd">
+              <el-icon><Plus /></el-icon>
+              新增记录
+            </el-button>
+            <el-button type="danger" :disabled="!selectedIds.length" @click="handleBatchDelete">
+              <el-icon><Delete /></el-icon>
+              批量删除
+            </el-button>
+            <el-button type="success" @click="handleExport">
+              <el-icon><Download /></el-icon>
+              导出
+            </el-button>
+          </div>
+        </div>
+      </template>
+      
+      <!-- 表格 -->
+      <el-table
+        v-loading="loading"
+        :data="orderList"
+        @selection-change="handleSelectionChange"
+      >
+        <el-table-column type="selection" width="55" />
+        <el-table-column label="记录ID" prop="id" width="80" />
+        <el-table-column label="用户" width="120">
+          <template #default="{ row }">
+            <div class="user-info">
+              <span>{{ row.user?.username || '未知用户' }}</span>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column label="活动信息">
+          <template #default="{ row }">
+            <div class="activity-info">
+              <div>{{ row.product?.name || '未知活动' }}</div>
+              <div class="activity-category">{{ row.product?.category || '未知分类' }}</div>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column label="参与人数" prop="count" width="100" />
+        <el-table-column label="总人数" width="100">
+          <template #default="{ row }">
+            {{ row.totalPrice || 0 }}
+          </template>
+        </el-table-column>
+        <el-table-column label="参与时间" prop="createTime" width="180" />
+        <el-table-column label="操作" width="220" fixed="right">
+          <template #default="{ row }">
+            <el-button type="primary" link @click="handleView(row)">
+              <el-icon><View /></el-icon>
+              查看
+            </el-button>
+            <el-button type="primary" link @click="handleEdit(row)">
+              <el-icon><Edit /></el-icon>
+              编辑
+            </el-button>
+            <el-button type="danger" link @click="handleDelete(row)">
+              <el-icon><Delete /></el-icon>
+              删除
+            </el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+      
+      <!-- 分页 -->
       <el-pagination
-        v-model:current-page="currentPage"
-        v-model:page-size="pageSize"
+        v-if="total > 0"
+        v-model:current-page="queryParams.pageNum"
+        v-model:page-size="queryParams.pageSize"
         :page-sizes="[10, 20, 50, 100]"
-        layout="total, sizes, prev, pager, next, jumper"
         :total="total"
+        layout="total, sizes, prev, pager, next, jumper"
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
       />
-    </div>
-    
-    <!-- 添加/编辑对话框 -->
-    <el-dialog
-      v-model="dialogVisible"
-      :title="isEdit ? '编辑分类' : '添加分类'"
-      width="500px"
-    >
-      <el-form 
-        ref="formRef" 
-        :model="form" 
-        :rules="rules" 
-        label-width="100px"
-      >
-        <el-form-item label="分类名称" prop="name">
-          <el-input v-model="form.name" placeholder="请输入分类名称" />
-        </el-form-item>
-      </el-form>
-      <template #footer>
-        <span class="dialog-footer">
-          <el-button @click="dialogVisible = false">取消</el-button>
-          <el-button type="primary" @click="submitForm">确定</el-button>
-        </span>
-      </template>
-    </el-dialog>
+    </el-card>
   </div>
 </template>
 
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import request from '@/utils/request'
+import { getOrderList, deleteOrder } from '@/api/order'
 
-// 数据列表
-const categoryList = ref([])
-const loading = ref(false)
-const currentPage = ref(1)
-const pageSize = ref(10)
-const total = ref(0)
+const router = useRouter()
 
-// 表单相关
-const dialogVisible = ref(false)
-const isEdit = ref(false)
-const formRef = ref(null)
-const form = reactive({
-  id: null,
-  name: ''
+// 查询参数
+const queryParams = reactive({
+  username: '',
+  activityName: '',
+  startTime: '',
+  endTime: '',
+  pageNum: 1,
+  pageSize: 10
 })
 
-// 表单验证规则
-const rules = {
-  name: [
-    { required: true, message: '请输入分类名称', trigger: 'blur' },
-    { min: 2, max: 20, message: '长度在 2 到 20 个字符', trigger: 'blur' }
-  ]
+// 日期范围
+const dateRange = ref([])
+
+// 参与记录列表
+const orderList = ref([])
+
+// 选中的记录ID
+const selectedIds = ref([])
+
+// 总数
+const total = ref(0)
+
+// 加载状态
+const loading = ref(false)
+
+// 监听日期范围变化
+const watchDateRange = () => {
+  if (dateRange.value && dateRange.value.length === 2) {
+    queryParams.startTime = dateRange.value[0]
+    queryParams.endTime = dateRange.value[1]
+  } else {
+    queryParams.startTime = ''
+    queryParams.endTime = ''
+  }
 }
 
-// 格式化日期
-const formatDate = (dateString) => {
-  if (!dateString) return ''
-  const date = new Date(dateString)
-  return date.toLocaleString()
-}
-
-// 获取分类列表
+// 获取参与记录列表
 const getList = async () => {
   loading.value = true
+  watchDateRange()
   try {
-    const res = await request.get('/api/tabs/list')
-    if (res && res.code === 200) {
-      const data = res.data || []
-      categoryList.value = data
-      total.value = data.length
-    } else {
-      ElMessage.error(res.msg || '获取分类列表失败')
-    }
+    const res = await getOrderList({
+      ...queryParams,
+      pageNum: queryParams.pageNum - 1 // 后端从0开始计数
+    })
+    orderList.value = res.data.records || []
+    total.value = res.data.total || 0
   } catch (error) {
-    console.error('获取分类列表失败', error)
-    ElMessage.error('获取分类列表失败')
+    console.error('获取参与记录列表失败', error)
   } finally {
     loading.value = false
   }
 }
 
+// 处理查询
+const handleQuery = () => {
+  queryParams.pageNum = 1
+  getList()
+}
+
+// 重置查询
+const resetQuery = () => {
+  Object.assign(queryParams, {
+    username: '',
+    activityName: '',
+    startTime: '',
+    endTime: '',
+    pageNum: 1,
+    pageSize: 10
+  })
+  dateRange.value = []
+  getList()
+}
+
+// 处理选择变化
+const handleSelectionChange = (selection) => {
+  selectedIds.value = selection.map(item => item.id)
+}
+
 // 处理分页大小变化
-const handleSizeChange = (val) => {
-  pageSize.value = val
+const handleSizeChange = (size) => {
+  queryParams.pageSize = size
   getList()
 }
 
 // 处理页码变化
-const handleCurrentChange = (val) => {
-  currentPage.value = val
+const handleCurrentChange = (page) => {
+  queryParams.pageNum = page
   getList()
 }
 
-// 添加分类
+// 处理查看
+const handleView = (row) => {
+  router.push(`/order/detail/${row.id}`)
+}
+
+// 处理新增
 const handleAdd = () => {
-  isEdit.value = false
-  form.id = null
-  form.name = ''
-  dialogVisible.value = true
+  ElMessage.info('功能开发中')
 }
 
-// 编辑分类
+// 处理编辑
 const handleEdit = (row) => {
-  isEdit.value = true
-  form.id = row.id
-  form.name = row.name
-  dialogVisible.value = true
+  ElMessage.info('功能开发中')
 }
 
-// 删除分类
+// 处理删除
 const handleDelete = (row) => {
-  if (row.usageCount > 0) {
-    ElMessage.warning('该分类已被使用，无法删除')
-    return
-  }
-  
-  ElMessageBox.confirm(`确定要删除分类"${row.name}"吗？`, '提示', {
+  ElMessageBox.confirm(`确定要删除该参与记录吗？`, '提示', {
     confirmButtonText: '确定',
     cancelButtonText: '取消',
     type: 'warning'
   }).then(async () => {
     try {
-      const res = await request.delete(`/api/tabs/${row.id}`)
-      if (res && res.code === 200) {
-        ElMessage.success('删除成功')
-        getList()
-      } else {
-        ElMessage.error(res.msg || '删除失败')
-      }
+      await deleteOrder(row.id)
+      ElMessage.success('删除成功')
+      getList()
     } catch (error) {
-      console.error('删除失败', error)
       ElMessage.error('删除失败')
     }
   }).catch(() => {})
 }
 
-// 提交表单
-const submitForm = () => {
-  formRef.value.validate(async (valid) => {
-    if (valid) {
-      try {
-        let res
-        if (isEdit.value) {
-          res = await request.put(`/api/tabs/${form.id}`, form)
-        } else {
-          res = await request.post('/api/tabs', form)
-        }
-        
-        if (res && res.code === 200) {
-          dialogVisible.value = false
-          ElMessage.success(isEdit.value ? '更新成功' : '添加成功')
-          getList()
-        } else {
-          ElMessage.error(res.msg || (isEdit.value ? '更新失败' : '添加失败'))
-        }
-      } catch (error) {
-        console.error(isEdit.value ? '更新失败' : '添加失败', error)
-        ElMessage.error(isEdit.value ? '更新失败' : '添加失败')
-      }
+// 处理批量删除
+const handleBatchDelete = () => {
+  if (selectedIds.value.length === 0) {
+    ElMessage.warning('请选择要删除的记录')
+    return
+  }
+  
+  ElMessageBox.confirm(`确定要删除选中的${selectedIds.value.length}条记录吗？`, '提示', {
+    confirmButtonText: '确定',
+    cancelButtonText: '取消',
+    type: 'warning'
+  }).then(async () => {
+    try {
+      // 批量删除
+      await Promise.all(selectedIds.value.map(id => deleteOrder(id)))
+      ElMessage.success('批量删除成功')
+      getList()
+    } catch (error) {
+      ElMessage.error('批量删除失败')
     }
-  })
+  }).catch(() => {})
 }
 
-// 初始化
+// 处理导出
+const handleExport = () => {
+  ElMessage.info('导出功能开发中')
+}
+
 onMounted(() => {
   getList()
 })
 </script>
 
 <style lang="scss" scoped>
-.category-container {
-  padding: 20px;
-  background-color: #fff;
-  border-radius: 4px;
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
-  
-  .category-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.order-list-container {
+  .search-card {
     margin-bottom: 20px;
-    
-    h2 {
-      margin: 0;
-      font-size: 18px;
-      font-weight: 600;
-    }
   }
   
-  .pagination-container {
-    margin-top: 20px;
-    display: flex;
-    justify-content: flex-end;
+  .table-card {
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      
+      .right {
+        display: flex;
+        gap: 10px;
+      }
+    }
+    
+    .user-info {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .activity-info {
+      display: flex;
+      flex-direction: column;
+      
+      .activity-category {
+        font-size: 12px;
+        color: #909399;
+        margin-top: 5px;
+      }
+    }
+    
+    .el-pagination {
+      margin-top: 20px;
+      justify-content: flex-end;
+    }
   }
 }
 </style> 

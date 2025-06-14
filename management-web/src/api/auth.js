@@ -1,15 +1,15 @@
 import request from '@/utils/request'
 
-// 登录
+// 管理员登录
 export function login(data) {
   return request({
-    url: '/auth/login',
+    url: '/api/v1/admin/login',
     method: 'post',
     data
   })
 }
 
-// 注销
+// 管理员注销
 export function logout() {
   return request({
     url: '/auth/logout',

@@ -125,7 +125,12 @@ const routes = [
       {
         path: '/user/list',
         component: () => import('@/views/user/list.vue'),
-        meta: { title: '用户列表' }
+        meta: { title: '查看用户列表' }
+      },
+      {
+        path: '/user/message',
+        component: () => import('@/views/user/message.vue'),
+        meta: { title: '用户评论管理' }
       }
     ]
   }
