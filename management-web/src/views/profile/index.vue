@@ -243,7 +243,7 @@ const getAdminInfo = async () => {
       phone: '13800138000',
       email: 'admin@example.com',
       createTime: '2023-01-15 08:30:00',
-      lastLoginTime: '2023-06-15 14:20:00'
+      lastLoginTime: '2025-06-16 11:20:00'
     }
     
     // 初始化表单数据
