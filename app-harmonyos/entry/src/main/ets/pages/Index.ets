@@ -3,6 +3,7 @@
 import HomeViewComponent from '../view/HomeViewComponent'
 import { UserInfoViewComponent } from '../view/UserInfoViewComponent';
 import { EventViewComponent } from '../view/EventViewComponent';
+import { FriendsViewController } from '../view/FriendsViewController';
 import { router } from '@kit.ArkUI';
 
 @Entry
@@ -65,7 +66,7 @@ struct Index {
           }.tabBar(this.EndBar("活动", $r('app.media.ic_event_on'), $r('app.media.ic_event_off'), 1))
 
           TabContent() {
-            //todo 点击好友跳转页面
+            FriendsViewController()
           }.tabBar(this.EndBar("好友", $r('app.media.ic_friends_on'), $r('app.media.ic_friends_off'), 2))
 
           TabContent() {

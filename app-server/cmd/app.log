@@ -2305,3 +2305,92 @@ Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-
 [GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
 Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
 [GIN-debug] Listening and serving HTTP on 0.0.0.0:8081
+2025/06/14 20:15:53 SQLite数据库文件路径已准备: ./database.db
+2025/06/14 20:15:53 成功连接到SQLite数据库: ./database.db
+2025/06/14 20:15:53 所有模型已成功迁移到数据库
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] POST   /api/v1/login             --> hobbyhub-server/api.UserLogin (3 handlers)
+[GIN-debug] GET    /api/v1/user/             --> hobbyhub-server/api.GetUserInfo (3 handlers)
+[GIN-debug] PUT    /api/v1/user/             --> hobbyhub-server/api.UserRegister (3 handlers)
+[GIN-debug] POST   /api/v1/user/             --> hobbyhub-server/api.UpdateUserInfo (3 handlers)
+[GIN-debug] GET    /api/v1/chat/             --> hobbyhub-server/api.GetChatHistory (3 handlers)
+[GIN-debug] POST   /api/v1/chat/             --> hobbyhub-server/api.SendChat (3 handlers)
+[GIN-debug] DELETE /api/v1/chat/:id          --> hobbyhub-server/api.DeleteChat (3 handlers)
+[GIN-debug] GET    /api/v1/friend/           --> hobbyhub-server/api.GetFriendList (3 handlers)
+[GIN-debug] POST   /api/v1/friend/           --> hobbyhub-server/api.SendFriendRequest (3 handlers)
+[GIN-debug] PUT    /api/v1/friend/           --> hobbyhub-server/api.UpdateFriendStatus (3 handlers)
+[GIN-debug] DELETE /api/v1/friend/:id        --> hobbyhub-server/api.DeleteFriend (3 handlers)
+[GIN-debug] POST   /api/v1/file/             --> hobbyhub-server/api.UploadFile (3 handlers)
+[GIN-debug] GET    /api/v1/file/:id          --> hobbyhub-server/api.DownloadFile (3 handlers)
+[GIN-debug] DELETE /api/v1/file/:id          --> hobbyhub-server/api.DeleteFile (3 handlers)
+[GIN-debug] GET    /api/v1/activity/:id      --> hobbyhub-server/api.GetActivitie (3 handlers)
+[GIN-debug] GET    /api/v1/activity/member   --> hobbyhub-server/api.GetUserActivities (3 handlers)
+[GIN-debug] GET    /api/v1/activity/         --> hobbyhub-server/api.GetAllActivitie (3 handlers)
+[GIN-debug] PUT    /api/v1/activity/         --> hobbyhub-server/api.CreateActivity (3 handlers)
+[GIN-debug] POST   /api/v1/activity/:id      --> hobbyhub-server/api.UpdateActivity (3 handlers)
+[GIN-debug] DELETE /api/v1/activity/:id      --> hobbyhub-server/api.DeleteActivity (3 handlers)
+[GIN-debug] GET    /api/v1/activity/:id/member --> hobbyhub-server/api.GetActivityMembers (3 handlers)
+[GIN-debug] PUT    /api/v1/activity/:id/member --> hobbyhub-server/api.JoinActivity (3 handlers)
+[GIN-debug] DELETE /api/v1/activity/:id/member --> hobbyhub-server/api.LeaveActivity (3 handlers)
+[GIN-debug] GET    /api/v1/activity/:id/comment --> hobbyhub-server/api.GetActivityComments (3 handlers)
+[GIN-debug] PUT    /api/v1/activity/:id/comment --> hobbyhub-server/api.AddActivityComment (3 handlers)
+[GIN-debug] DELETE /api/v1/activity/comment/:commentId --> hobbyhub-server/api.DeleteActivityComment (3 handlers)
+[GIN-debug] GET    /api/v1/admin/users       --> hobbyhub-server/api.GetAllUsers (3 handlers)
+[GIN-debug] POST   /api/v1/admin/login       --> hobbyhub-server/api.AdminLogin (3 handlers)
+[GIN-debug] GET    /api/v1/admin/activities  --> hobbyhub-server/api.GetAllActivities (3 handlers)
+[GIN-debug] PUT    /api/v1/admin/activity    --> hobbyhub-server/api.AdminCreateActivity (3 handlers)
+[GIN-debug] GET    /api/v1/basic/:filename   --> hobbyhub-server/api.ServeBasicFile (3 handlers)
+[GIN-debug] GET    /swagger/*any             --> github.com/swaggo/gin-swagger.CustomWrapHandler.func1 (3 handlers)
+2025/06/14 20:15:53 服务器启动在 0.0.0.0:8081
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on 0.0.0.0:8081
+[GIN-debug] redirecting request 307: /api/v1/user/ --> /api/v1/user/
+[GIN] 2025/06/14 - 20:15:57 | 200 |     15.2307ms |    172.28.160.1 | PUT      "/api/v1/user/"
+[GIN] 2025/06/14 - 20:16:12 | 200 |         205µs |    172.28.160.1 | POST     "/api/v1/login"
+2025/06/14 20:16:12 GetUserInfo called with JWT token
+[GIN] 2025/06/14 - 20:16:12 | 200 |       585.5µs |    172.28.160.1 | GET      "/api/v1/user/"
+[GIN] 2025/06/14 - 20:16:12 | 200 |       506.3µs |    172.28.160.1 | GET      "/api/v1/activity/"
+[GIN-debug] redirecting request 301: /api/v1/activity/ --> /api/v1/activity/?userId=6
+[GIN] 2025/06/14 - 20:16:12 | 200 |            0s |    172.28.160.1 | GET      "/api/v1/activity/?userId=6"
+[GIN] 2025/06/14 - 20:16:12 | 404 |            0s |    172.28.160.1 | GET      "/eventMember/list?eventId=5"
+[GIN] 2025/06/14 - 20:16:12 | 404 |            0s |    172.28.160.1 | GET      "/eventMember/list?eventId=4"
+[GIN] 2025/06/14 - 20:16:12 | 404 |            0s |    172.28.160.1 | GET      "/eventMember/list?eventId=3"
+[GIN] 2025/06/14 - 20:16:12 | 404 |            0s |    172.28.160.1 | GET      "/eventMember/list?eventId=2"
+[GIN] 2025/06/14 - 20:16:12 | 404 |            0s |    172.28.160.1 | GET      "/eventMember/list?eventId=1"
+[GIN-debug] redirecting request 301: /api/v1/activity/ --> /api/v1/activity/?userId=6
+[GIN] 2025/06/14 - 20:16:13 | 200 |       635.5µs |    172.28.160.1 | GET      "/api/v1/activity/?userId=6"
+[GIN] 2025/06/14 - 20:16:13 | 404 |            0s |    172.28.160.1 | GET      "/eventMember/list?eventId=5"
+[GIN] 2025/06/14 - 20:16:13 | 404 |            0s |    172.28.160.1 | GET      "/eventMember/list?eventId=4"
+[GIN] 2025/06/14 - 20:16:13 | 404 |            0s |    172.28.160.1 | GET      "/eventMember/list?eventId=3"
+[GIN] 2025/06/14 - 20:16:13 | 404 |            0s |    172.28.160.1 | GET      "/eventMember/list?eventId=2"
+[GIN] 2025/06/14 - 20:16:13 | 404 |            0s |    172.28.160.1 | GET      "/eventMember/list?eventId=1"
+[GIN] 2025/06/14 - 20:22:03 | 200 |       525.7µs |    172.28.160.1 | GET      "/api/v1/activity/"
+[GIN] 2025/06/14 - 20:22:11 | 200 |            0s |    172.28.160.1 | POST     "/api/v1/login"
+2025/06/14 20:22:11 GetUserInfo called with JWT token
+[GIN] 2025/06/14 - 20:22:11 | 200 |       505.9µs |    172.28.160.1 | GET      "/api/v1/user/"
+[GIN] 2025/06/14 - 20:22:11 | 200 |      1.5044ms |    172.28.160.1 | GET      "/api/v1/activity/"
+[GIN-debug] redirecting request 301: /api/v1/activity/ --> /api/v1/activity/?userId=2
+[GIN] 2025/06/14 - 20:22:16 | 200 |         504µs |    172.28.160.1 | GET      "/api/v1/activity/?userId=2"
+[GIN] 2025/06/14 - 20:22:16 | 404 |            0s |    172.28.160.1 | GET      "/eventMember/list?eventId=5"
+[GIN] 2025/06/14 - 20:22:16 | 404 |            0s |    172.28.160.1 | GET      "/eventMember/list?eventId=4"
+[GIN] 2025/06/14 - 20:22:16 | 404 |            0s |    172.28.160.1 | GET      "/eventMember/list?eventId=2"
+[GIN] 2025/06/14 - 20:22:16 | 404 |            0s |    172.28.160.1 | GET      "/eventMember/list?eventId=3"
+[GIN] 2025/06/14 - 20:22:16 | 404 |            0s |    172.28.160.1 | GET      "/eventMember/list?eventId=1"
+[GIN] 2025/06/14 - 20:23:49 | 200 |       596.3µs |    172.28.160.1 | GET      "/api/v1/activity/"
+[GIN] 2025/06/14 - 20:23:56 | 200 |            0s |    172.28.160.1 | POST     "/api/v1/login"
+2025/06/14 20:23:56 GetUserInfo called with JWT token
+[GIN] 2025/06/14 - 20:23:56 | 200 |       505.2µs |    172.28.160.1 | GET      "/api/v1/user/"
+[GIN] 2025/06/14 - 20:23:56 | 200 |            0s |    172.28.160.1 | GET      "/api/v1/activity/"
+[GIN-debug] redirecting request 301: /api/v1/activity/ --> /api/v1/activity/?userId=2
+[GIN] 2025/06/14 - 20:23:57 | 200 |       562.8µs |    172.28.160.1 | GET      "/api/v1/activity/?userId=2"
+[GIN] 2025/06/14 - 20:23:57 | 404 |            0s |    172.28.160.1 | GET      "/eventMember/list?eventId=5"
+[GIN] 2025/06/14 - 20:23:57 | 404 |            0s |    172.28.160.1 | GET      "/eventMember/list?eventId=4"
+[GIN] 2025/06/14 - 20:23:58 | 404 |            0s |    172.28.160.1 | GET      "/eventMember/list?eventId=3"
+[GIN] 2025/06/14 - 20:23:58 | 404 |            0s |    172.28.160.1 | GET      "/eventMember/list?eventId=2"
+[GIN] 2025/06/14 - 20:23:58 | 404 |            0s |    172.28.160.1 | GET      "/eventMember/list?eventId=1"
