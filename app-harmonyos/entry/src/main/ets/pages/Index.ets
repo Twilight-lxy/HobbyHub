@@ -2,6 +2,7 @@
 
 import HomeViewComponent from '../view/HomeViewComponent'
 import { UserInfoViewComponent } from '../view/UserInfoViewComponent';
+import { router } from '@kit.ArkUI';
 
 @Entry
 @Component
@@ -10,6 +11,26 @@ struct Index {
   @State currentIndex: number = 0;
   //是否可见，用于判断是否登录，登录后可见
   @State pageVisible: boolean = false;
+  
+  // 添加页面显示生命周期方法
+  onPageShow() {
+    try {
+      // 检查全局刷新标志
+      if (globalThis.needRefreshHome === true) {
+        // 重置标志
+        globalThis.needRefreshHome = false;
+        // 如果需要刷新，则切换pageVisible状态触发刷新
+        this.pageVisible = !this.pageVisible;
+        // 短暂延迟后再切换回来，确保触发两次变化
+        setTimeout(() => {
+          this.pageVisible = !this.pageVisible;
+        }, 100);
+      }
+    } catch (error) {
+      // 处理可能的异常
+      console.error('刷新首页出错:', error);
+    }
+  }
 
   //动态构造组件
   @Builder

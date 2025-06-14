@@ -35,12 +35,13 @@ export default struct HomeViewComponent {
   //定义监听目标函数
   async onPageVisibilityChange() {
     //获取活动列表
+    console.info('HomeViewComponent: pageVisible changed, refreshing events')
     this.getEvents()
-
   }
 
   //arkTs 生命周期
   aboutToAppear() { //当前页面加载时，调用
+    console.info('HomeViewComponent: aboutToAppear, loading events')
     this.getEvents()
   }
 
@@ -157,10 +158,11 @@ export default struct HomeViewComponent {
       }
       .layoutDirection(FlexDirection.Column) //布局的主轴方向为列方向
       .columnsTemplate('1fr 1fr') //将容器呈两列排布
-      .columnsGap(5)
-      .rowsGap(5)
-      .width('90%')
+      .columnsGap(8) // 减小列间距
+      .rowsGap(10)
+      .width('94%') // 增加容器宽度
       .height('50%')
+      .margin({ top: 10, bottom: 10 })
     }
     .width('100%')
     .height('100%')

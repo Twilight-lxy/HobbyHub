@@ -19,12 +19,16 @@ struct EventDetailPage {
   @State currentUserId: number = 0
   
   aboutToAppear() {
-    // 获取路由参数中的活动ID
-    let param = router.getParams() as RouterParam<number>
-    let eventId = param.data
+    // 获取路由参数
+    let param = router.getParams() as RouterParam<Event>
     
-    // 加载活动详情
-    this.loadEventDetail(eventId)
+    if (param && param.data) {
+      // 如果是从活动列表点击进入，直接使用传递的活动数据
+      this.event = param.data
+    } else if (param && param.message === 'id' && typeof param.data === 'number') {
+      // 如果只传递了ID，则加载活动详情
+      this.loadEventDetail(param.data as number)
+    }
     
     // 获取当前登录用户ID
     loginUserAction((user: User) => {
@@ -67,6 +71,29 @@ struct EventDetailPage {
       })
   }
   
+  // 根据图片路径获取对应的本地资源
+  private getImageResource(path: string): Resource | string {
+    if (!path) return $r('app.media.ic_swiper_1') // 默认图片
+    
+    // 如果是event_image_格式的路径，转换为本地资源
+    if (path.includes('event_image_')) {
+      const match = path.match(/event_image_(\d+)/)
+      if (match && match[1]) {
+        const index = parseInt(match[1])
+        switch (index) {
+          case 1: return $r('app.media.ic_swiper_1')
+          case 2: return $r('app.media.ic_swiper_2')
+          case 3: return $r('app.media.ic_swiper_3')
+          case 4: return $r('app.media.bg_eventinfo')
+          default: return $r('app.media.ic_swiper_1')
+        }
+      }
+    }
+    
+    // 其他情况返回完整的远程URL路径
+    return `${BaseUrl}${path}`
+  }
+  
   build() {
     Stack({ alignContent: Alignment.Bottom }) {
       Column() {
@@ -92,7 +119,7 @@ struct EventDetailPage {
         Scroll() {
           Column() {
             // 活动图片
-            Image(this.event.headImg ? `${BaseUrl}${this.event.headImg}` : $r('app.media.ic_swiper_1'))
+            Image(this.getImageResource(this.event.headImg))
               .width('100%')
               .height(200)
               .objectFit(ImageFit.Cover)

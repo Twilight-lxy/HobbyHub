@@ -20,17 +20,18 @@ struct EventEditPage{
   @State type:string='add'
   @State event : Event = new Event(0,0,"","","","","",120.39,36.30,0,"",0,"")
   @State showImage : boolean = false
+  @State selectedImageIndex: number = -1
 
   autoLocation:boolean = false
-  @State imageList:string[] = [
-    '/upload/ic_event1.jpg',
-    '/upload/ic_event2.jpg',
-    '/upload/ic_event3.jpg',
-    '/upload/ic_event4.jpg',
+  @State imageList:Resource[] = [
+    $r('app.media.ic_swiper_1'),
+    $r('app.media.ic_swiper_2'),
+    $r('app.media.ic_swiper_3'),
+    $r('app.media.bg_eventinfo')
   ]
 
   //是否显示选择组件
-  @State selectShow: boolean= false
+  @State selectShow: boolean = false
   //页面加载时，默认获取位置的权限，如果获取到权限，就更新event的位置信息
   aboutToAppear() {
     //获取活动信息
@@ -38,6 +39,22 @@ struct EventEditPage{
     this.type = param.message
     if (this.type == 'edit'){  //页面编辑功能
       this.event = param.data
+      
+      // 如果有已选图片，尝试根据图片路径找到对应的索引
+      if (this.event.headImg && this.event.headImg.includes('event_image_')) {
+        try {
+          // 从路径中提取索引
+          const match = this.event.headImg.match(/event_image_(\d+)/)
+          if (match && match[1]) {
+            const index = parseInt(match[1]) - 1
+            if (index >= 0 && index < this.imageList.length) {
+              this.selectedImageIndex = index
+            }
+          }
+        } catch (error) {
+          console.error('解析图片路径出错:', error)
+        }
+      }
     }else if (this.type == 'add') {
       //初始化活动定位
       reqLocationPermissions(getContext(this) as common.UIAbilityContext)
@@ -87,13 +104,21 @@ struct EventEditPage{
   //添加及活动信息
   addEvent(){
     let event = this.event
+    // 如果选择了图片，设置图片路径
+    if (this.selectedImageIndex >= 0 && this.selectedImageIndex < this.imageList.length) {
+      // 这里我们使用索引作为图片标识，实际应用中可能需要更复杂的处理
+      event.headImg = `/upload/event_image_${this.selectedImageIndex + 1}.jpg`
+    }
+    
     //检查活动必填信息
     if (event.name != ''&&event.intro!='' && event.addr!="") {
       //发起后端创建活动请求
       addEvent(event).then(res => {
         if (res.success == true) {
           showText("添加成功",()=>{
-            router.back()
+            // 返回首页，使用全局AppStorage存储刷新标志
+            globalThis.needRefreshHome = true;
+            router.back();
           })
         }else{
           showText(res.errorMessage)
@@ -110,13 +135,21 @@ struct EventEditPage{
   //编辑方法
   editEvent(){
     let event = this.event
+    // 如果选择了图片，设置图片路径
+    if (this.selectedImageIndex >= 0 && this.selectedImageIndex < this.imageList.length) {
+      // 这里我们使用索引作为图片标识，实际应用中可能需要更复杂的处理
+      event.headImg = `/upload/event_image_${this.selectedImageIndex + 1}.jpg`
+    }
+    
     //检查活动必填信息
     if (event.name != ''&&event.intro!='' && event.addr!="") {
       //发起后端创建活动请求
       editEvent(event).then(res => {
         if (res.success == true) {
           showText("修改成功",()=>{
-            router.back()
+            // 返回首页，使用全局AppStorage存储刷新标志
+            globalThis.needRefreshHome = true;
+            router.back();
           })
         }else{
           showText(res.errorMessage)
@@ -134,30 +167,63 @@ struct EventEditPage{
   @Builder
   ImageListComponent(){
     Column(){
-      Text("选择活动图片")
-        .width("90%")
-        .height("10%")
+      Row() {
+        Text("选择活动图片")
+          .fontSize(18)
+          .fontWeight(FontWeight.Medium)
+        Blank()
+        Button("关闭")
+          .backgroundColor(Color.Transparent)
+          .fontColor("#ff3551")
+          .onClick(() => {
+            this.selectShow = false
+          })
+      }
+      .width("90%")
+      .padding(10)
 
       WaterFlow(){
-        ForEach(this.imageList,(item:string) =>{
+        ForEach(this.imageList, (item: Resource, index: number) => {
           FlowItem(){
-            Image(`${BaseUrl}${item}`)
-              .width(160)
-              .height(80)
-              .onClick(()=>{
-                this.event.headImg = item
-                this.showImage = false
-              })
+            Column() {
+              Image(item)
+                .width(160)
+                .height(120)
+                .objectFit(ImageFit.Cover)
+                .borderRadius(8)
+                .onClick(() => {
+                  this.selectedImageIndex = index
+                  this.event.headImg = index.toString() // 存储索引而非资源路径
+                  this.selectShow = false
+                })
+              
+              // 如果当前图片已选中，显示选中标记
+              if (this.selectedImageIndex === index) {
+                Row() {
+                  Text("已选择")
+                    .fontSize(14)
+                    .fontColor("#ff3551")
+                }
+                .width("100%")
+                .justifyContent(FlexAlign.Center)
+                .margin({top: 5})
+              }
+            }
+            .padding(5)
           }
         })
-      }.layoutDirection(FlexDirection.Column)
-      .columnsTemplate('1fr,1fr')
-      .rowsGap(5)
+      }
+      .layoutDirection(FlexDirection.Column)
+      .columnsTemplate('1fr 1fr')
+      .columnsGap(10)
+      .rowsGap(10)
       .width("90%")
-      .height("100%")
+      .height("90%")
     }
     .width("100%")
     .height("100%")
+    .backgroundColor(Color.White)
+    .borderRadius({topLeft: 16, topRight: 16})
   }
 
   build() {
@@ -230,52 +296,64 @@ struct EventEditPage{
           .padding(10)
 
         Row(){
-          if (this.event.headImg != ''){
-            Image($r(`${BaseUrl}${this.event.headImg}`))
+          if (this.selectedImageIndex >= 0 && this.selectedImageIndex < this.imageList.length){
+            Image(this.imageList[this.selectedImageIndex])
               .width(80)
               .height(80)
-                .margin({right:20})
+              .margin({right:20})
+              .borderRadius(8)
               .onClick(()=>{
-                //因为是模拟器，无法调用Picker，通过半模态转场模拟活动图片
-                this.showImage = true //状态值
-                //通过Picker选择图片
-                // selectImage((getContext(this)) as common.UIAbilityContext)
-                //   .then(url =>{
-                //     this.event.headImg = url
-                //   })
-                //   .then()
+                //点击已选图片，显示大图预览
+                this.showImage = true
               })
           }
           Image($r('app.media.ic_img_add'))
             .width(80)
             .height(80)
             .onClick(()=>{
-              //因为是模拟器，无法调用Picker，通过半模态转场模拟活动图片
-              this.showImage = true //状态值
-              //通过Picker选择图片
-              // selectImage((getContext(this)) as common.UIAbilityContext)
-              //   .then(url =>{
-              //     this.event.headImg = url
-              //   })
-              //   .then()
+              //显示底部图片选择面板
+              this.selectShow = true
             })
         }.padding(10)
         .width('100%')
-        .bindSheet($$this.selectShow,this.ImageListComponent(),{
-          height:500,
-          backgroundColor:Color.White
+        .bindSheet(this.selectShow, this.ImageListComponent(), {
+          height: '50%',
+          backgroundColor: Color.White
         })
       }.width('100%')
       .height('100%')
 
-      if (this.showImage){
+      // 图片预览层
+      if (this.showImage && this.selectedImageIndex >= 0 && this.selectedImageIndex < this.imageList.length){
         Column(){
-          Image(`${BaseUrl}${this.event.headImg}`)
-            .width("100%")
-            .objectFit(ImageFit.Cover)
-        }.backgroundColor(Color.White)
+          // 添加关闭按钮
+          Row() {
+            Blank()
+            Button() {
+              Image($r('app.media.ic_back'))
+                .width(24)
+                .height(24)
+            }
+            .backgroundColor(Color.Transparent)
+            .width(40)
+            .height(40)
+            .margin(10)
+            .onClick(() => {
+              this.showImage = false
+            })
+          }
+          .width('100%')
+          
+          // 显示大图
+          Image(this.imageList[this.selectedImageIndex])
+            .width("90%")
+            .objectFit(ImageFit.Contain)
+        }
+        .backgroundColor(Color.Black)
+        .opacity(0.9)
         .width('100%')
         .height("100%")
+        .justifyContent(FlexAlign.Center)
         .onClick(()=>{
           this.showImage = false
         })

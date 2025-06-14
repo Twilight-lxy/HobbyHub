@@ -1,5 +1,5 @@
 //后端接口定义
-export const BaseUrl = 'http://192.168.1.9:8081' //Zhuanyong5G
+export const BaseUrl = 'http://172.28.160.1:8081' //Zhuanyong5G
 
 //后端接口的路径
 export const ServerPath: Record<string, string> = {
