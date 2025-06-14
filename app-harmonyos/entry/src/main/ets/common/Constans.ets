@@ -13,6 +13,35 @@ export const ServerPath: Record<string, string> = {
   'deleteEvent':'/api/v1/activity/{id}',//删除活动
   'eventList':'/api/v1/activity/',//获取所有活动
   'getUserInfo':'/api/v1/user/',//获取用户信息
+
+
+
+
+  'isJoin': '/event/isJoin', // 检查是否加入活动接口
+  'teamList': '/eventMember/teamList', // 获取活动团队列表接口
+  'getComment': '/eventComment/listByEventId', // 获取活动评论接口
+  'addComment': '/eventComment/insert', // 添加活动评论接口
+
+  'eventMemberList': '/eventMember/list', // 获取活动成员列表接口
+  'sendApply': '/friend/sendApply', // 发送好友申请接口
+  'applyList': '/friend/applyList', // 获取好友申请列表接口
+  'friendList': '/friend/getFriendList', // 获取好友列表接口
+  'processApply': '/friend/processApply', // 处理好友申请接口
+  'friendStatus': '/friend/status', // 获取好友状态接口
+  'userInfo': '/user/info', // 获取用户信息接口
+  'updatePassword': '/user/updatePassword', // 修改密码接口
+  'RecommendEvent': '/event/recommend', // 推荐活动接口
+  'UpdateUserInfo': '/user/update', // 更新用户信息接口（不修改头像）
+  'searchList': '/event/searchEventInfoList', // 搜索活动接口
+
+
+
+
+  'uploadImg': '/upload/uploadFile', // 文件上传接口
+
+  'chatList': '/chat/byUserIdFromAndTo', // 获取聊天记录接口
+  'chatAdd': '/chat/insert', // 新增聊天记录接口
+  'idEventList':'/v1/activity/{id}' //根据用户id查找活动
 }
 
 //app存储的数据库

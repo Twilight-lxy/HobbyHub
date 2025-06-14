@@ -13,7 +13,7 @@ export function joinEvent(eventId: number, userId: number): Promise<ResponseData
 
 // 获取活动成员列表
 export function getEventMembers(eventId: number): Promise<ResponseData> {
-  let url = `${ServerPath.join}/list?eventId=${eventId}`;
+  let url = `${ServerPath.eventMemberList}?eventId=${eventId}`;
   let option: http.HttpRequestOptions = {
     method: http.RequestMethod.GET
   };

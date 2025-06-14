@@ -2,6 +2,7 @@
 
 import HomeViewComponent from '../view/HomeViewComponent'
 import { UserInfoViewComponent } from '../view/UserInfoViewComponent';
+import { EventViewComponent } from '../view/EventViewComponent';
 import { router } from '@kit.ArkUI';
 
 @Entry
@@ -60,7 +61,7 @@ struct Index {
           }.tabBar(this.EndBar("首页", $r('app.media.ic_home_on'), $r('app.media.ic_home_off'), 0))
 
           TabContent() {
-            //todo 点击活动跳转页面
+            EventViewComponent()
           }.tabBar(this.EndBar("活动", $r('app.media.ic_event_on'), $r('app.media.ic_event_off'), 1))
 
           TabContent() {
