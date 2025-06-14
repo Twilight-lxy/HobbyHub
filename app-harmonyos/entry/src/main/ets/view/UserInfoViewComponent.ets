@@ -36,13 +36,13 @@ export struct UserInfoViewComponent {
   //操作列表定义
   menuList: MenuItem[] = [
     new MenuItem($r('app.media.ic_user_menu_event'), "管理活动", () => {
-      router.pushUrl({ url: 'page/MyEventPage' })
+      router.pushUrl({ url: 'pages/MyEventPage' })
     }),
     new MenuItem($r('app.media.ic_user_menu_setting'), "用户管理", () => {
-      router.pushUrl({ url: 'page/UserEditPage' })
+      router.pushUrl({ url: 'pages/UserEditPage' })
     }),
     new MenuItem($r('app.media.ic_user_menu_security'), "修改密码", () => {
-      router.pushUrl({ url: 'page/ResetPasswordPage' })
+      router.pushUrl({ url: 'pages/ResetPasswordPage' })
     }),
     new MenuItem($r('app.media.ic_user_menu_about'), "关于我们", () => {
       showText("隐私声明：\t\n" +

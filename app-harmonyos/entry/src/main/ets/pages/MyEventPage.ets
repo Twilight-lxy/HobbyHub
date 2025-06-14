@@ -52,15 +52,39 @@ struct MyEventPage{
       }
     })
   }
+  
+  // 根据图片路径获取对应的本地资源
+  private getImageResource(path: string): Resource | string {
+    if (!path) return $r('app.media.ic_img_add') // 默认图片
+    
+    // 如果是event_image_格式的路径，转换为本地资源
+    if (path.includes('event_image_')) {
+      const match = path.match(/event_image_(\d+)/)
+      if (match && match[1]) {
+        const index = parseInt(match[1])
+        switch (index) {
+          case 1: return $r('app.media.ic_swiper_1')
+          case 2: return $r('app.media.ic_swiper_2')
+          case 3: return $r('app.media.ic_swiper_3')
+          case 4: return $r('app.media.bg_eventinfo')
+          default: return $r('app.media.ic_img_add')
+        }
+      }
+    }
+    
+    // 其他情况返回完整的远程URL路径
+    return `${BaseUrl}${path}`
+  }
 
   //活动组件
   @Builder
   MyEvent(item:Event,index:number){
     Row(){
-      Image(`${BaseUrl}${item.headImg}`)
+      Image(this.getImageResource(item.headImg))
         .height(80)
         .width(140)
-        .borderStyle(10)
+        .borderRadius(8)
+        .objectFit(ImageFit.Cover)
 
       Column(){
         Text(item.name)
