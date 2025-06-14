@@ -114,19 +114,6 @@ const loginRules = {
 
 // 初始化管理员账号
 const initAdmin = async () => {
-  try {
-    // 使用axios直接发送请求，不使用request工具
-    const response = await axios.post('/api/v1/admin/login')
-    if (response.data.code === 200) {
-      console.log('管理员账号初始化成功:', response.data.msg)
-    }
-  } catch (error) {
-    console.error('初始化管理员账号失败', error)
-    if (error.response) {
-      console.error('错误状态码:', error.response.status)
-      console.error('错误信息:', error.response.data)
-    }
-  }
 }
 
 // 处理登录
@@ -142,13 +129,13 @@ const handleLogin = () => {
           password: loginForm.password
         })
         if (response.status === 200) {
-          const { token } = response.data.token
+          const token = response.data.token
           // 调试信息
-          console.log('登录成功，获取到的令牌:', token)
           // 保存登录状态，确保token完整保存
           if (token!=0) {
             // 使用auth工具类保存令牌和管理员信息
             setToken(token)
+            console.log('登录成功，获取到的令牌:', token)
             ElMessage.success('登录成功')
             router.push('/')
           } else {
