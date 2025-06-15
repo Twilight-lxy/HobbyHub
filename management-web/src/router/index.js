@@ -57,28 +57,10 @@ const routes = [
         meta: { title: '活动列表' }
       },
       {
-        path: 'category',
-        name: 'ActivityCategory',
-        component: () => import('@/views/activity/category.vue'),
-        meta: { title: '活动分类' }
-      },
-      {
         path: 'create',
         name: 'ActivityCreate',
-        component: () => import('@/views/activity/form.vue'),
+        component: () => import('@/views/activity/create.vue'),
         meta: { title: '创建活动' }
-      },
-      {
-        path: 'edit/:id',
-        name: 'ActivityEdit',
-        component: () => import('@/views/activity/form.vue'),
-        meta: { title: '编辑活动', hidden: true }
-      },
-      {
-        path: 'detail/:id',
-        name: 'ActivityDetail',
-        component: () => import('@/views/activity/detail.vue'),
-        meta: { title: '活动详情', hidden: true }
       }
     ]
   },

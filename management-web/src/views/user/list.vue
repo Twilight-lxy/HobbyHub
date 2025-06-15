@@ -34,7 +34,7 @@
 
     <!-- 数据统计卡片 -->
     <el-row :gutter="20" class="stats-card-container">
-      <el-col :span="8">
+      <el-col :span="12">
         <el-card class="stats-card" shadow="hover">
           <div class="stats-content">
             <div class="stats-title">总用户数</div>
@@ -46,19 +46,7 @@
           </div>
         </el-card>
       </el-col>
-      <el-col :span="8">
-        <el-card class="stats-card" shadow="hover">
-          <div class="stats-content">
-            <div class="stats-title">活跃用户</div>
-            <div class="stats-value">{{ activeUsers }}</div>
-            <div class="stats-trend positive">
-              <i class="el-icon-caret-top"></i>
-              <span>12.5% 较上月</span>
-            </div>
-          </div>
-        </el-card>
-      </el-col>
-      <el-col :span="8">
+      <el-col :span="12">
         <el-card class="stats-card" shadow="hover">
           <div class="stats-content">
             <div class="stats-title">今日新增</div>
@@ -119,13 +107,6 @@
             {{ formatDate(row.createTime) }}
           </template>
         </el-table-column>
-        <el-table-column label="状态" width="100">
-          <template #default="{ row }">
-            <el-tag :type="row.status === 'active' ? 'success' : row.status === 'pending' ? 'warning' : 'danger'">
-              {{ statusText[row.status] }}
-            </el-tag>
-          </template>
-        </el-table-column>
         <el-table-column label="操作" width="220" fixed="right">
           <template #default="{ row }">
             <el-button type="primary" link size="small" @click="handleView(row)">
@@ -160,18 +141,10 @@
 import { ref, reactive, onMounted } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { useRouter } from 'vue-router'
-// 引入axios和获取token的函数
 import axios from 'axios'
 import { getToken } from '@/utils/auth'
 
 const router = useRouter()
-
-// 状态文本映射
-const statusText = {
-  active: '活跃',
-  pending: '待审核',
-  disabled: '已禁用'
-}
 
 // 查询参数
 const queryParams = reactive({
@@ -203,7 +176,6 @@ const loading = ref(false)
 
 // 统计数据
 const totalUsers = ref(0)
-const activeUsers = ref(0)
 const todayNewUsers = ref(0)
 const trendClass = ref('positive')
 const trendText = ref('8.2% 较上月')
@@ -252,7 +224,17 @@ const filterUsers = () => {
   
   // 更新统计数据
   totalUsers.value = filtered.length
-  activeUsers.value = filtered.filter(user => user.status === 'active').length
+  
+  // 计算今日新增用户 (假设当前日期为2025-06-15)
+  const today = new Date('2025-06-15')
+  todayNewUsers.value = filtered.filter(user => {
+    const userDate = new Date(user.createTime)
+    return (
+      userDate.getFullYear() === today.getFullYear() &&
+      userDate.getMonth() === today.getMonth() &&
+      userDate.getDate() === today.getDate()
+    )
+  }).length
   
   // 分页处理
   const startIndex = (queryParams.pageNum - 1) * queryParams.pageSize
@@ -266,7 +248,6 @@ const filterUsers = () => {
 const getList = async () => {
   loading.value = true
   try {
-    // 发起API请求获取用户数据
     const response = await axios.get('/api/v1/admin/users', {
       headers: {
         Authorization: getToken()
@@ -278,9 +259,18 @@ const getList = async () => {
     
     // 更新统计数据
     totalUsers.value = userData.value.length
-    activeUsers.value = userData.value.filter(user => user.status === 'active').length
     
-    // 应用过滤和分页
+    // 计算今日新增用户 (假设当前日期为2025-06-15)
+    const today = new Date('2025-06-15')
+    todayNewUsers.value = userData.value.filter(user => {
+      const userDate = new Date(user.createTime)
+      return (
+        userDate.getFullYear() === today.getFullYear() &&
+        userDate.getMonth() === today.getMonth() &&
+        userDate.getDate() === today.getDate()
+      )
+    }).length
+    
     watchDateRange()
     filterUsers()
   } catch (error) {
@@ -365,14 +355,12 @@ const handleDelete = (row) => {
     type: 'warning'
   }).then(async () => {
     try {
-      // 调用API删除用户
       await axios.delete(`/api/v1/admin/users/${row.id}`, {
         headers: {
           Authorization: getToken()
         }
       })
       
-      // 从本地数据中移除
       userData.value = userData.value.filter(user => user.id !== row.id)
       
       ElMessage.success('删除成功')
@@ -397,7 +385,6 @@ const handleBatchDelete = () => {
     type: 'warning'
   }).then(async () => {
     try {
-      // 批量删除
       await Promise.all(selectedIds.value.map(id => 
         axios.delete(`/api/v1/admin/users/${id}`, {
           headers: {
@@ -406,7 +393,6 @@ const handleBatchDelete = () => {
         })
       ))
       
-      // 更新本地数据
       userData.value = userData.value.filter(user => !selectedIds.value.includes(user.id))
       
       ElMessage.success('批量删除成功')
@@ -430,5 +416,68 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-/* 样式保持不变 */
+.user-management-container {
+  .search-card {
+    margin-bottom: 20px;
+  }
+  
+  .stats-card-container {
+    margin-bottom: 20px;
+    
+    .stats-card {
+      height: 120px;
+      
+      .stats-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 100%;
+        
+        .stats-title {
+          font-size: 14px;
+          color: #909399;
+          margin-bottom: 5px;
+        }
+        
+        .stats-value {
+          font-size: 28px;
+          font-weight: bold;
+          color: #303133;
+          margin-bottom: 10px;
+        }
+        
+        .stats-trend {
+          font-size: 12px;
+          color: #606266;
+          
+          &.positive {
+            color: #67c23a;
+          }
+          
+          &.negative {
+            color: #e6a23c;
+          }
+        }
+      }
+    }
+  }
+  
+  .table-card {
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      
+      .right-actions {
+        display: flex;
+        gap: 10px;
+      }
+    }
+    
+    .el-pagination {
+      margin-top: 20px;
+      justify-content: flex-end;
+    }
+  }
+}
 </style>

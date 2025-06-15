@@ -112,9 +112,9 @@ const routes = [
         meta: { title: '活动列表' }
       },
       {
-        path: '/activity/category',
-        component: () => import('@/views/activity/category.vue'),
-        meta: { title: '活动分类' }
+        path: '/activity/create',
+        component: () => import('@/views/activity/create.vue'),
+        meta: { title: '活动创建' }
       }
     ]
   },
@@ -125,12 +125,12 @@ const routes = [
       {
         path: '/user/list',
         component: () => import('@/views/user/list.vue'),
-        meta: { title: '查看用户列表' }
+        meta: { title: '用户列表' }
       },
       {
         path: '/user/message',
         component: () => import('@/views/user/message.vue'),
-        meta: { title: '用户评论管理' }
+        meta: { title: '评论管理' }
       }
     ]
   }
