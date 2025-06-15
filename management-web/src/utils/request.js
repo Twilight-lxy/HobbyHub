@@ -7,7 +7,17 @@ const service = axios.create({
   baseURL: '', // 基础URL，使用代理时留空
   timeout: 10000 // 请求超时时间
 })
+import request from '@/utils/request';
 
+// 获取订单列表
+export const getOrderList = (params) => {
+  return request.get('/api/order/list', { params });
+};
+
+// 删除订单
+export const deleteOrder = (id) => {
+  return request.delete(`/api/order/${id}`);
+};
 // 请求拦截器
 service.interceptors.request.use(
   config => {
