@@ -61,8 +61,4 @@ src/
 
 ## 接口文档
 
-系统默认连接到`http://localhost:8080/api`作为后端API地址，可以在`src/utils/request.js`中修改。
-
-## 许可证
-
-[MIT](LICENSE)
+系统默认连接到 `http://localhost:8080/api`作为后端API地址，可以在 `src/utils/request.js`中修改。
